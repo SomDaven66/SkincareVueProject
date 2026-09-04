@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import CategoryCard from './components/CategoryCard.vue';
+import Feature from './components/Feature.vue';
+import ProductCart from './components/ProductCart.vue';
+import SummerDis from './components/SummerDis.vue';
+
+
 </script>
 
 <template>
-  <HelloWorld />
+  <CategoryCard/>
+  <SummerDis/>
+  <Feature/>
+  <ProductCart/>
 </template>
