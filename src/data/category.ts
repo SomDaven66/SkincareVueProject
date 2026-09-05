@@ -28,7 +28,7 @@ export const Category: Category[] = [
     id: 4,
     name: 'Sunscreen',
     itemCount: 9,
-    image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=400&q=80',
+    image: 'https://i.pinimg.com/736x/fb/d3/76/fbd376accf760295da019df7e560ed43.jpg',
   },
   {
     id: 5,
