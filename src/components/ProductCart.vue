@@ -2,7 +2,9 @@
 import { ref, computed } from 'vue'
 import { Products } from '../data/Products'
 
-const categories = ['All', 'Sunscreen', 'Cleanser', 'Foam', 'Serum', 'Moisturizer'] as const
+const categories = ['All', 'Sunscreen', 'Cleanser', 'Foam', 'Serum', 'Moisturizer', 'Eye Care', 'Toner', 
+  'Mask'
+] as const
 const activeCategory = ref<string>('All')
 const cartCount = ref<number>(0)
 const wishlistedIds = ref<number[]>([])
@@ -107,8 +109,8 @@ const addToCart = (): void => {
               </span>
               
               <div class="flex items-center space-x-1">
-                <span class="text-xs text-black">★</span>
-                <span class="text-xs font-bold text-black">{{ item.rating }}</span>
+                <span class="text-xs text-yellow-400">★</span>
+                <span class="text-xs font-bold text-yellow-400">{{ item.rating }}</span>
                 <span class="text-[10px] text-black/40">({{ item.reviews }})</span>
               </div>
             </div>

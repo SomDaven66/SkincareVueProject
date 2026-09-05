@@ -1,7 +1,7 @@
 export interface Product {
   id: number
   name: string
-  category: 'Sunscreen' | 'Cleanser' | 'Foam' | 'Serum' | 'Moisturizer'
+  category: 'Sunscreen' | 'Cleanser' | 'Foam' | 'Serum' | 'Moisturizer' | 'Eye Care' | 'Toner' | 'Mask'
   price: number
   rating: number
   reviews: number
@@ -13,13 +13,13 @@ export interface Product {
 export const Products: Product[] = [
   {
     id: 1,
-    name: "UV Shield Daily Sunscreen SPF 50+",
+    name: "Skin 1004 Water fit Sun-Serum Daily Sunscreen SPF 50+",
     category: "Sunscreen",
     price: 32.00,
     rating: 4.9,
     reviews: 142,
     tag: "Best Seller",
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=600"
+    image: "https://i.pinimg.com/736x/18/25/72/182572b59c46a3a84e69dadc25a4e7e6.jpg"
   },
   {
     id: 2,
@@ -68,5 +68,23 @@ export const Products: Product[] = [
     rating: 4.6,
     reviews: 64,
     image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=600"
-  }
+  },
+  {
+    "id": 7,
+    "name": "Peptide Brightening Eye Cream",
+    "category": "Eye Care",
+    "price": 18.00,
+    "rating": 4.8,
+    "reviews": 112,
+    "image": "https://i.pinimg.com/736x/f3/c9/af/f3c9afeb47a285cf9e7f8d2d6c6cd4d5.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Caffeine & Hyaluronic Acid Eye Serum",
+    "category": "Eye Care",
+    "price": 46.00,
+    "rating": 4.5,
+    "reviews": 89,
+    "image": "https://i.pinimg.com/736x/30/07/11/30071192957825388f0cb7d794b931f9.jpg"
+  },
 ]
