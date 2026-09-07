@@ -1,6 +1,35 @@
-# Vue 3 + TypeScript + Vite
+# Skincare Project
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is a skincare website built with Vue 3, TypeScript and Tailwind CSS.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
-"# SkincareVueProject" 
+in the components contain main folder there are:
+layout: for contain navbar,
+router: for contain index.ts(main router),
+view: Home,About, shop,collection,Profile,contact,AddtoCard(contain the product that user add)
+
+And also in the componet have 2 file  about HeroSection and collectionCard .
+
+add more route: collection/:category
+login 
+register
+ passwordresest
+ wishlish
+ orders
+ setting
+ 
+
+ and also add more folder store using pinia
+
+## Technologies
+
+- Vue 3
+- TypeScript
+- Tailwind CSS
+- Vue Router
+- Vite
+
+## Installation
+
+```bash
+npm install
+npm run dev
