@@ -15,6 +15,15 @@ import Wishlist from "../view/wishlist.vue";
 import Myorders from "../view/Myorders.vue";
 import Setting from "../view/Setting.vue";
 
+import AdminProfile from "../admin/AdminProfile.vue";
+import AdminDashboard from "../admin/AdminDashboard.vue";
+import Adminorder from "../admin/Adminorder.vue";
+import AdminUser from "../admin/AdminUser.vue";
+import AdminProduct from "../admin/AdminProduct.vue";
+import AdminAddproduct from "../admin/AdminAddproduct.vue";
+
+
+
 const routes = [
   {
     path: "/",
@@ -71,6 +80,30 @@ const routes = [
   {
     path:'/setting',
     component:Setting
+  },
+  {
+    path:'/admin',
+    component:AdminDashboard
+  },
+  {
+    path:'/admin/profile',
+    component:AdminProfile
+  },
+  {
+    path: "/admin/orders",
+    component: Adminorder
+  },
+  {
+  path: "/admin/users",
+  component: AdminUser
+  },
+  {
+    path: "/admin/product",
+    component: AdminProduct
+  },
+  {
+    path: "/admin/product/add",
+    component: AdminAddproduct
   }
 ];
 

@@ -1,31 +1,60 @@
-<script setup >
-import { ref } from 'vue';
-import Navbar from './components/layout/Navbar.vue';
-import Afterlognav from './components/layout/Afterlognav.vue';
+```vue
+<script setup>
+import { ref, computed } from 'vue'
 
-const isLoggedIn=ref(
-  localStorage.getItem("currentUser")!==null || sessionStorage.getItem("currentUser")!==null
-);
-  const handleloginSuccess=()=>{
-    isLoggedIn.value=true;
-  };
-  const handlelogout=()=>{
-    localStorage.removeItem("currentUser");
-    sessionStorage.removeItem("currentUser");
-    isLoggedIn.value=false;
-  }
-  
+import Navbar from './components/layout/Navbar.vue'
+import Afterlognav from './components/layout/Afterlognav.vue'
 
+const currentUser = ref(
+  JSON.parse(
+    localStorage.getItem('currentUser') ||
+    sessionStorage.getItem('currentUser') ||
+    'null'
+  )
+)
+
+const isLoggedIn = computed(() => {
+  return currentUser.value !== null
+})
+
+const isAdmin = computed(() => {
+  return currentUser.value?.role === 'admin'
+})
+
+const handleloginSuccess = () => {
+  const user =
+    localStorage.getItem('currentUser') ||
+    sessionStorage.getItem('currentUser')
+
+  currentUser.value = user ? JSON.parse(user) : null
+}
+
+const handlelogout = () => {
+  localStorage.removeItem('currentUser')
+  sessionStorage.removeItem('currentUser')
+
+  currentUser.value = null
+}
 </script>
 
 <template>
-  <Afterlognav 
-  v-if="isLoggedIn"
 
-  />
+  <!-- ================= NORMAL USER ================= -->
+
   <Navbar
-  v-else
+    v-if="!isLoggedIn"
   />
-<router-view @login-success="handleloginSuccess">
-</router-view>
+
+  <Afterlognav
+    v-else-if="!isAdmin"
+  />
+
+  <!-- ================= PAGE ================= -->
+
+  <router-view
+    @login-success="handleloginSuccess"
+    @logout="handlelogout"
+  />
+
 </template>
+```

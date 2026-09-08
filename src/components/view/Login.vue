@@ -135,51 +135,105 @@
     </div>
 </template>
 
-<script setup >
-
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { useRouter } from "vue-router";
 import {
-    X,
-    UserRoundKey  } from 'lucide-vue-next';
-import { ref } from 'vue';
+  X,
+  UserRoundKey
+} from "lucide-vue-next";
+import { ref } from "vue";
 
-const router=useRouter();
-function closeLogin(){
-    router.back();
+const router = useRouter();
+
+function closeLogin() {
+  router.back();
 }
-const email=ref("");
-const password=ref("");
-const message=ref("");
-const remember=ref(false);
-const emit=defineEmits(["lgin-success"])
-const login=()=>{
-    let users=[];
-  
+
+const email = ref("");
+const password = ref("");
+const message = ref("");
+const remember = ref(false);
+
+const emit = defineEmits(["login-success"]);
+
+// ================= CREATE DEFAULT ADMIN =================
+
+const storedUsers = localStorage.getItem("users");
+let users = storedUsers ? JSON.parse(storedUsers) : [];
+
+const adminExists = users.some(
+  (user: any) => user.email === "admin@lumieskin.com"
+);
+
+if (!adminExists) {
+  users.push({
+    id: 1,
+    name: "Admin",
+    email: "admin@lumieskin.com",
+    password: "admin888",
+    role: "admin"
+  });
+
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
+// ================= LOGIN =================
+
+const login = () => {
+  let loginUsers = [];
+
   try {
     const storedUsers = localStorage.getItem("users");
-    users = storedUsers ? JSON.parse(storedUsers) : [];
-  } catch (e) {
-    console.error("Failed to parse users from local storage", e);
-    users = [];
-  }
-  const user=users.find(user=>
-    user.email===email.value&&user.password===password.value
-  );
-  if(!user){
-    message.value="Invalid email or password";
-    return
-  }
-  // Remember me
-  if (remember.value) {
-    localStorage.setItem("currentUser", JSON.stringify(user));
-    } else {
-    sessionStorage.setItem("currentUser", JSON.stringify(user));
-    }
-  message.value="Login success";
-  emit("login-success");
-  router.push("/");
-}
 
+    loginUsers = storedUsers
+      ? JSON.parse(storedUsers)
+      : [];
+  } catch (e) {
+    console.error(
+      "Failed to parse users from local storage",
+      e
+    );
+
+    loginUsers = [];
+  }
+
+  const user = loginUsers.find(
+    (user: any) =>
+      user.email === email.value &&
+      user.password === password.value
+  );
+
+  if (!user) {
+    message.value = "Invalid email or password";
+    return;
+  }
+
+  // ================= REMEMBER ME =================
+
+  if (remember.value) {
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(user)
+    );
+  } else {
+    sessionStorage.setItem(
+      "currentUser",
+      JSON.stringify(user)
+    );
+  }
+
+  message.value = "Login success";
+
+  emit("login-success");
+
+  // ================= ROLE REDIRECT =================
+
+  if (user.role === "admin") {
+    router.push("/admin");
+  } else {
+    router.push("/");
+  }
+};
 </script>
 
 <style scoped>

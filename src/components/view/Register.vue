@@ -276,6 +276,7 @@ const register=()=>{
     name:name.value,
     email:email.value,
     password:password.value,
+    role:"user"
 
   }
   
