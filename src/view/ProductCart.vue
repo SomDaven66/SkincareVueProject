@@ -223,7 +223,7 @@ const clearFilters = (): void => {
               :to="`/products/${item.id}`"
               class="px-4 py-2.5 bg-[#F5F5F5] text-black font-bold text-sm rounded-full shadow-sm hover:bg-black hover:text-[#DCFFB6] transition-all duration-300 flex items-center space-x-1.5 active:scale-95"
             >
-              View Details
+              View Detail
             </RouterLink>
           </div>
         </div>
