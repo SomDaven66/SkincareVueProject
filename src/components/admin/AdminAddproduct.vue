@@ -1,0 +1,247 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import {
+  ArrowLeft,
+  Package,
+  Save,
+  Image as ImageIcon,
+} from "lucide-vue-next";
+
+const router = useRouter();
+
+const name = ref("");
+const price = ref<number | null>(null);
+const category = ref("acne-care");
+const description = ref("");
+const image = ref("");
+
+const categories = [
+  { value: "acne-care", label: "Acne Care" },
+  { value: "hydration", label: "Hydration" },
+  { value: "brightening", label: "Brightening" },
+  { value: "sun-care", label: "Sun Care" },
+  { value: "lip-care", label: "Lip Care" },
+  { value: "body-care", label: "Body Care" },
+  { value: "cleansers", label: "Cleansers" },
+  { value: "serums", label: "Serums" },
+];
+
+function goBack() {
+  router.push("/admin/product");
+}
+
+function addProduct() {
+  if (
+    !name.value.trim() ||
+    price.value === null ||
+    !description.value.trim() ||
+    !image.value.trim()
+  ) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const newProduct = {
+    id: Date.now(),
+    name: name.value.trim(),
+    price: price.value,
+    category: category.value,
+    description: description.value.trim(),
+    image: image.value.trim(),
+  };
+
+  console.log("New product:", newProduct);
+
+  alert("Product added successfully!");
+
+  router.push("/admin/products");
+}
+</script>
+
+<template>
+  <div>
+    <!-- CONTENT -->
+    <main class="px-4 py-8 sm:px-6">
+
+      <div class="mx-auto max-w-4xl">
+
+        <form
+          @submit.prevent="addProduct"
+          class="rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm sm:p-8"
+        >
+
+          <!-- SECTION TITLE -->
+          <div class="mb-8">
+            <h2 class="text-lg font-bold text-[#0F3D2E]">
+              Product Information
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Enter the information for your new product.
+            </p>
+          </div>
+
+          <!-- PRODUCT NAME -->
+          <div class="mb-6">
+            <label
+              for="name"
+              class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+            >
+              Product Name
+            </label>
+
+            <input
+              id="name"
+              v-model="name"
+              type="text"
+              placeholder="Example: Gentle Acne Cleanser"
+              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+            />
+          </div>
+
+          <!-- PRICE + CATEGORY -->
+          <div class="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+            <!-- PRICE -->
+            <div>
+              <label
+                for="price"
+                class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+              >
+                Price
+              </label>
+
+              <div class="relative">
+                <span
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-500"
+                >
+                  $
+                </span>
+
+                <input
+                  id="price"
+                  v-model="price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="15.00"
+                  class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] py-3 pl-9 pr-4 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                />
+              </div>
+            </div>
+
+            <!-- CATEGORY -->
+            <div>
+              <label
+                for="category"
+                class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+              >
+                Category
+              </label>
+
+              <select
+                id="category"
+                v-model="category"
+                class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+              >
+                <option
+                  v-for="item in categories"
+                  :key="item.value"
+                  :value="item.value"
+                >
+                  {{ item.label }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="mb-6">
+            <label
+              for="description"
+              class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+            >
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              v-model="description"
+              rows="5"
+              placeholder="Write a description about the product..."
+              class="w-full resize-none rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+            ></textarea>
+          </div>
+
+          <!-- IMAGE URL -->
+          <div class="mb-8">
+            <label
+              for="image"
+              class="mb-2 flex items-center gap-2 text-sm font-semibold text-[#0F3D2E]"
+            >
+              <ImageIcon :size="17" />
+              Product Image URL
+            </label>
+
+            <input
+              id="image"
+              v-model="image"
+              type="url"
+              placeholder="https://example.com/product.jpg"
+              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+            />
+
+            <!-- IMAGE PREVIEW -->
+            <div
+              v-if="image"
+              class="mt-4 flex items-center gap-4 rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] p-4"
+            >
+              <img
+                :src="image"
+                alt="Product preview"
+                class="h-20 w-20 rounded-xl border border-[#DCE6DC] object-cover"
+              />
+
+              <div>
+                <p class="text-sm font-semibold text-[#0F3D2E]">
+                  Image Preview
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                  Your product image will appear here.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- BUTTONS -->
+          <div
+            class="flex flex-col-reverse gap-3 border-t border-[#DCE6DC] pt-6 sm:flex-row sm:justify-end"
+          >
+
+            <button
+              type="button"
+              @click="goBack"
+              class="rounded-xl border border-[#DCE6DC] px-6 py-3 text-sm font-semibold text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="flex items-center justify-center gap-2 rounded-xl bg-[#0F3D2E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+            >
+              <Save :size="18" />
+              Add Product
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </main>
+  </div>
+</template>
