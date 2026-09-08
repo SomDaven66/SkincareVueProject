@@ -104,7 +104,7 @@
 
 
         <router-link
-          to="/product"
+          to="/products"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
