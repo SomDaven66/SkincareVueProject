@@ -15,6 +15,17 @@ import Wishlist from "../view/wishlist.vue";
 import Myorders from "../view/Myorders.vue";
 import Setting from "../view/Setting.vue";
 
+import AdminLayout from "../layout/AdminLayout.vue";
+import AdminProfile from "../admin/AdminProfile.vue";
+import AdminDashboard from "../admin/AdminDashboard.vue";
+import Adminorder from "../admin/Adminorder.vue";
+import AdminUser from "../admin/AdminUser.vue";
+import AdminProduct from "../admin/AdminProduct.vue";
+import AdminAddproduct from "../admin/AdminAddproduct.vue";
+import AdminSettings from "../admin/AdminSettings.vue";
+
+
+
 const routes = [
   {
     path: "/",
@@ -71,6 +82,45 @@ const routes = [
   {
     path:'/setting',
     component:Setting
+  },
+  {
+    path: '/admin',
+    component: AdminLayout,
+    meta: { requiresAdmin: true },
+    children: [
+      {
+        path: '',
+        redirect: '/admin/dashboard'
+      },
+      {
+        path: 'dashboard',
+        component: AdminDashboard
+      },
+      {
+        path: 'profile',
+        component: AdminProfile
+      },
+      {
+        path: 'orders',
+        component: Adminorder
+      },
+      {
+        path: 'users',
+        component: AdminUser
+      },
+      {
+        path: 'product',
+        component: AdminProduct
+      },
+      {
+        path: 'product/add',
+        component: AdminAddproduct
+      },
+      {
+        path: 'settings',
+        component: AdminSettings
+      }
+    ]
   }
 ];
 
@@ -91,6 +141,31 @@ const router = createRouter({
       top: 0,
     };
   },
+});
+
+// ================= NAVIGATION GUARDS =================
+router.beforeEach((to, from, next) => {
+  const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
+  
+  if (requiresAdmin) {
+    const currentUserRaw = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+    if (!currentUserRaw) {
+      next('/login');
+    } else {
+      try {
+        const currentUser = JSON.parse(currentUserRaw);
+        if (currentUser.role === 'admin') {
+          next();
+        } else {
+          next('/'); // Not an admin, redirect to home
+        }
+      } catch (e) {
+        next('/login');
+      }
+    }
+  } else {
+    next(); // Always allow normal routes
+  }
 });
 
 export default router;

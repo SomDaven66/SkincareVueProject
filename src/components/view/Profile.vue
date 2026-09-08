@@ -1,6 +1,8 @@
 ```vue
 <template>
-  <div class="min-h-screen bg-[#F9FBF7] px-4 py-10 sm:px-6 lg:py-14">
+  <!-- user -->
+  
+      <div class="min-h-screen bg-[#F9FBF7] px-4 py-10 sm:px-6 lg:py-14">
 
     <div class="mx-auto max-w-6xl">
 
@@ -494,6 +496,9 @@
 
     </div>
   </div>
+  
+
+  
 </template>
 
 
@@ -514,6 +519,7 @@ interface User {
   name: string;
   email: string;
   password: string;
+  role: "user" | "admin";
 }
 
 
@@ -533,6 +539,7 @@ if (storedUser) {
     console.error("Error reading user:", error);
   }
 }
+
 
 
 // ================= EDIT PROFILE =================

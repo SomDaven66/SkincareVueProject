@@ -390,5 +390,6 @@ const currentUser = computed(() => {
     return null;
   }
 });
+    
 </script>
 ```
