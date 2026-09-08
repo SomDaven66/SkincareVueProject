@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import {
@@ -14,6 +14,8 @@ import {
   Pencil,
   Trash2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-vue-next";
 
 import type { Product } from "../../data/Product";
@@ -76,6 +78,43 @@ const filteredProducts = computed(() => {
     return matchesSearch && matchesCategory;
   });
 });
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+watch([searchQuery, selectedCategory], () => {
+  currentPage.value = 1;
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredProducts.value.length / itemsPerPage);
+});
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredProducts.value.slice(start, end);
+});
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+}
+
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+}
+
+function goToPage(page: number) {
+  currentPage.value = page;
+}
 
 /* =========================================================
    STATISTICS
@@ -342,7 +381,7 @@ function deleteProduct(product: Product) {
             <!-- Desktop Products -->
 
             <div
-              v-for="product in filteredProducts"
+              v-for="product in paginatedProducts"
               :key="product.id"
               class="hidden grid-cols-[70px_1fr_150px_120px_130px] items-center gap-4 border-b border-[#E5ECE5] px-6 py-4 transition last:border-b-0 hover:bg-[#F9FBF7] md:grid"
             >
@@ -430,7 +469,7 @@ function deleteProduct(product: Product) {
             ================================================== -->
 
             <div
-              v-for="product in filteredProducts"
+              v-for="product in paginatedProducts"
               :key="`mobile-${product.id}`"
               class="border-b border-[#E5ECE5] p-4 last:border-b-0 md:hidden"
             >
@@ -507,9 +546,70 @@ function deleteProduct(product: Product) {
 
           </div>
 
-          <!-- Results -->
+          <!-- Pagination UI -->
 
-          <p class="mt-4 text-sm text-gray-500">
+          <div
+            v-if="totalPages > 1"
+            class="mt-6 flex items-center justify-between border-t border-[#DCE6DC] pt-4"
+          >
+            <div class="hidden sm:block">
+              <p class="text-sm text-gray-500">
+                Showing
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ (currentPage - 1) * itemsPerPage + 1 }}
+                </span>
+                to
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ Math.min(currentPage * itemsPerPage, filteredProducts.length) }}
+                </span>
+                of
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ filteredProducts.length }}
+                </span>
+                results
+              </p>
+            </div>
+            
+            <div class="flex flex-1 justify-between sm:justify-end gap-2">
+              <button
+                @click="prevPage"
+                :disabled="currentPage === 1"
+                class="inline-flex items-center gap-1 rounded-xl border border-[#DCE6DC] bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#F9FBF7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft :size="16" />
+                Previous
+              </button>
+              
+              <div class="hidden sm:flex gap-1 items-center">
+                <button
+                  v-for="page in totalPages"
+                  :key="page"
+                  @click="goToPage(page)"
+                  :class="[
+                    'flex h-9 w-9 items-center justify-center rounded-xl border text-sm font-medium transition',
+                    currentPage === page 
+                      ? 'border-[#0F3D2E] bg-[#0F3D2E] text-white' 
+                      : 'border-[#DCE6DC] bg-white text-gray-700 hover:bg-[#F9FBF7]'
+                  ]"
+                >
+                  {{ page }}
+                </button>
+              </div>
+
+              <button
+                @click="nextPage"
+                :disabled="currentPage === totalPages"
+                class="inline-flex items-center gap-1 rounded-xl border border-[#DCE6DC] bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#F9FBF7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+                <ChevronRight :size="16" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Text (for single page) -->
+
+          <p v-else class="mt-4 text-sm text-gray-500">
             Showing
             <span class="font-semibold text-[#0F3D2E]">
               {{ filteredProducts.length }}
