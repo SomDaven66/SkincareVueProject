@@ -2,21 +2,20 @@
 import Navbar from './components/layout/Navbar.vue';
 import CategoryCard from './components/CategoryCard.vue';
 import Feature from './components/Feature.vue';
-import ProductCart from './components/ProductCart.vue';
 import SummerDis from './components/SummerDis.vue';
 
 
 </script>
 
 <template>
+  <div>
 
+<nav>
   <Navbar/>
-
-<router-view>
-
+</nav>
   <CategoryCard/>
   <SummerDis/>
   <Feature/>
-  <ProductCart/>
-</router-view>
+<router-view/>
+ </div>
 </template>

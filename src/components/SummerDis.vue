@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <button
+          <router-link to="/products"
             type="button"
             class="mt-8 px-8 py-3 text-sm font-semibold rounded-full inline-block transition-colors duration-200"
             style="background-color: #A8C3A0; color: #0F3D2E;"
@@ -56,7 +56,7 @@
             @click="shopNow"
           >
             Shop the Sale
-          </button>
+          </router-link>
         </div>
 
         <!-- Right: Product cards -->
