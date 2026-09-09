@@ -1,12 +1,16 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router' // 1. Import useRoute
+import { useRoute } from 'vue-router' // 1. Use useRoute instead of useRouter
 
 import Navbar from './components/layout/Navbar.vue'
 import Afterlognav from './components/layout/Afterlognav.vue'
+import Footer from './components/Footer.vue'
+import SummerDis from './components/SummerDis.vue'
 import CategoryCard from './components/CategoryCard.vue'
+import Feature from './components/Feature.vue'
+import FeedBack from './components/FeedBack.vue'
 
-const route = useRouter() // 3. Get route reference
+const route = useRoute() // 2. Correct hook for current route properties
 
 // Check if user is currently on the home page
 const isHomePage = computed(() => route.path === '/')
@@ -39,26 +43,25 @@ const handlelogout = () => {
 </script>
 
 <template>
+  <div class="app-layout">
+    <!-- NAVBAR -->
+    <Navbar v-if="!isLoggedIn" />
 
-  <!-- ================= NAVBAR ================= -->
+    <Afterlognav v-else-if="!isAdmin" />
 
-  <Navbar
-    v-if="!isLoggedIn"
-  />
+    <!-- PAGE CONTENT -->
+    <router-view
+      @login-success="handleloginSuccess"
+      @logout="handlelogout"
+    />
 
-  <Afterlognav
-    v-else-if="!isAdmin"
-  />
+    <!-- SUMMER DISCOUNT (Rendered under homepage content, before Footer) -->
+    <CategoryCard v-if="isHomePage" />
+    <Feature v-if="isHomePage" />
+    <SummerDis v-if="isHomePage" />
+    <FeedBack v-if="isHomePage" />
 
-  <!-- ================= Category Card ================= -->
-
-  <CategoryCard v-if="CategoryCard" />
-
-  <!-- ================= PAGE ================= -->
-
-  <router-view
-    @login-success="handleloginSuccess"
-    @logout="handlelogout"
-  />
-
+    <!-- FOOTER -->
+    <Footer />
+  </div>
 </template>

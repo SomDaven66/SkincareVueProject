@@ -18,7 +18,7 @@
       </div>
 
       <!-- One Row, Three Columns (stays a single row on every screen size; scrolls on small screens) -->
-     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
   <article
     v-for="product in products"
     :key="product.id"
@@ -89,7 +89,7 @@ const products: Product[] = [
     name: 'Hydrating Cream Cleanser',
     description: 'A gentle, sulfate-free cleanser that removes impurities without stripping moisture.',
     price: 28,
-    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80',
+    image: 'https://i.pinimg.com/736x/49/d3/fb/49d3fb91cb0c7b743b54bd915fe1193e.jpg',
     badge: 'Bestseller',
   },
   {
@@ -97,33 +97,20 @@ const products: Product[] = [
     name: 'Botanical Repair Serum',
     description: 'Lightweight serum infused with plant extracts to restore radiance and elasticity.',
     price: 42,
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80',
-    badge: 'New',
+    image: 'https://i.pinimg.com/736x/97/28/12/972812a81d3d9080e402949517dcccb1.jpg',
+    badge: 'Popular',
   },
+  
   {
     id: 3,
-    name: 'Nourishing Sage Moisturizer',
-    description: 'Rich, non-greasy formula that locks in hydration for a calm, balanced complexion.',
-    price: 36,
-    image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 4,
-    name: 'Renewing Vitamin C Toner',
-    description: 'Brightens dull skin and preps your complexion to better absorb serums and creams.',
-    price: 24,
-    image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 5,
     name: 'Calming Clay Face Mask',
     description: 'A weekly reset that draws out impurities while soothing redness and irritation.',
     price: 32,
-    image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=80',
-    badge: 'Popular',
+    image: 'https://i.pinimg.com/736x/f2/d3/9a/f2d39a6986051514d641a70ef1f77d38.jpg',
+    badge: 'New',
   },
   {
-    id: 6,
+    id: 4,
     name: 'Restorative Night Oil',
     description: 'A featherlight blend of botanical oils that works overnight to repair and replenish.',
     price: 48,

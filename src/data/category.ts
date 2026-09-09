@@ -44,33 +44,28 @@ export const Category: Category[] = [
   },
   {
     id: 7,
-    name: 'Foam',
+    name: 'Cleanser',
     itemCount: 9,
-    image: 'https://i.pinimg.com/736x/f5/85/11/f5851169678583819b15116ce989b776.jpg',
+    image: 'https://i.pinimg.com/736x/49/d3/fb/49d3fb91cb0c7b743b54bd915fe1193e.jpg',
   },
+  
   {
     id: 8,
-    name: 'Masks',
-    itemCount: 11,
-    image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80',
+    name: 'Toner',
+    itemCount: 9,
+    image: 'https://i.pinimg.com/736x/67/dc/82/67dc82003f78f4466e5c15d545948e32.jpg',
   },
   {
     id: 9,
-    name: 'Toner',
-    itemCount: 9,
-    image: 'https://i.pinimg.com/736x/f5/85/11/f5851169678583819b15116ce989b776.jpg',
-  },
-  {
-    id: 10,
     name: 'Essence',
     itemCount: 9,
-    image: 'https://i.pinimg.com/736x/f5/85/11/f5851169678583819b15116ce989b776.jpg',
+    image: 'https://i.pinimg.com/736x/63/2d/04/632d04830315aec185a0bdea098347ce.jpg',
   },
   {
     id: 11,
     name: 'Face Mist',
     itemCount: 9,
-    image: 'https://i.pinimg.com/736x/f5/85/11/f5851169678583819b15116ce989b776.jpg',
-  },
+    image: 'https://i.pinimg.com/736x/04/12/84/041284ea38ddacb6222ac7189c9089f6.jpg',
+  }
   
 ]

@@ -24,6 +24,7 @@ import AdminUser from "../admin/AdminUser.vue";
 import AdminProduct from "../admin/AdminProduct.vue";
 import AdminAddproduct from "../admin/AdminAddproduct.vue";
 import AdminSettings from "../admin/AdminSettings.vue";
+import MainCollection from "../MainCollection.vue";
 
 
 
@@ -71,6 +72,10 @@ const routes = [
   {
     path: "/passwordreset",
     component: PasswordReset,
+  },
+  {
+    path: "/collection",
+    component: MainCollection,
   },
   {
     path: "/collection/:category",

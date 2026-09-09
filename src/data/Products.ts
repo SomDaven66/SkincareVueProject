@@ -2930,5 +2930,27 @@ export const Products: Product[] = [
       ingredients: ["Vitamin C"],
       benefits: ["Improves skin texture and tone", "Boosts hydration and radiance"],
       sizes: ["30ml"],
-    }
+    },
+    {
+    id: 32,
+    name: "Foxtale Skin Radiance Clay Mask",
+    brand: "Foxtale",
+    category: "Mask",
+    price: 13.0,
+    rating: 4.9,
+    reviews: 103,
+    badge: "New",
+    tag: "New",
+    images: {
+      img1: "https://i.pinimg.com/736x/f2/d3/9a/f2d39a6986051514d641a70ef1f77d38.jpg",
+      img2: "https://i.pinimg.com/236x/12/30/91/123091c9803c82b20da6d26ac2b0f31c.jpg",
+      img3: "https://i.pinimg.com/736x/d6/24/40/d62440bcdb61303c3dd8cf52336e1450.jpg",
+      img4: "https://i.pinimg.com/736x/39/bd/5f/39bd5fd0206001ffaa8824705b7cc250.jpg"
+    },
+    description: "Purifying clay mask that absorbs oil buildup while delivering brightening vitamins for instant skin radiance.",
+    skinType: ["Oily", "Combination"],
+    ingredients: ["Kaolin Clay", "Vitamin C", "French Pink Clay"],
+    benefits: ["Detoxifies pores", "Brightens skin tone", "Removes excess sebum"],
+    sizes: [ "100g" ]
+  },
 ];

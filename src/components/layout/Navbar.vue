@@ -119,6 +119,21 @@
 
 
         <router-link
+          to="/collection"
+          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          active-class="text-[#0F3D2E]"
+        >
+          Collection
+
+          <span
+            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
+                   bg-[#0F3D2E] transition-all duration-300
+                   group-hover:w-full"
+          ></span>
+        </router-link>
+
+
+        <router-link
           to="/about"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
