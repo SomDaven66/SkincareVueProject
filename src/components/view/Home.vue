@@ -1,11 +1,11 @@
 <template>
   <!-- ================= HERO ================= -->
   <section
-    class="group relative min-h-[680px] overflow-hidden sm:min-h-[720px] lg:min-h-[calc(100vh-88px)]"
+    class="min-h-[680px] overflow-hidden group relative sm:min-h-[720px] lg:min-h-[calc(100vh-88px)]"
   >
     <!-- ================= BACKGROUND ================= -->
     <div
-      class="absolute inset-0 bg-cover bg-[65%_center] sm:bg-[60%_center] lg:bg-center"
+      class="bg-cover bg-[65%_center] absolute inset-0 sm:bg-[60%_center] lg:bg-center"
       :style="{
         backgroundImage: `url(${slides[currentSlide].image})`,
       }"
@@ -13,24 +13,24 @@
 
     <!-- ================= MOBILE OVERLAY ================= -->
     <div
-      class="absolute inset-0 bg-[#F9FBF7]/65 lg:hidden"
+      class="bg-[#F9FBF7]/65 absolute inset-0 lg:hidden"
     ></div>
 
     <!-- ================= DESKTOP GRADIENT ================= -->
     <div
-      class="absolute inset-0 hidden bg-gradient-to-r from-[#F9FBF7]/95 via-[#F9FBF7]/25 to-transparent lg:block"
+      class="bg-gradient-to-r absolute inset-0 hidden from-[#F9FBF7]/95 via-[#F9FBF7]/25 to-transparent lg:block"
     ></div>
 
     <!-- ================= CONTENT ================= -->
     <div
-      class="relative z-10 mx-auto flex min-h-[680px] max-w-7xl items-center px-5 py-16 sm:min-h-[720px] sm:px-8 sm:py-20 lg:min-h-[calc(100vh-88px)] lg:px-8 lg:py-20"
+      class="px-5 py-16 z-10 mx-auto min-h-[680px] max-w-7xl relative flex items-center sm:min-h-[720px] sm:px-8 sm:py-20 lg:min-h-[calc(100vh-88px)] lg:px-8 lg:py-20"
     >
       <div
         class="w-full max-w-2xl text-center sm:text-left"
       >
         <!-- ================= BADGE ================= -->
         <div
-          class="mb-5 inline-flex items-center gap-2 rounded-full border border-[#DCE6DC] bg-white/75 px-3 py-1.5 text-[10px] font-medium tracking-wide text-[#0F3D2E] shadow-sm backdrop-blur-md sm:mb-6 sm:px-4 sm:py-2 sm:text-xs"
+          class="mb-5 gap-2 px-3 py-1.5 rounded-full border border-[#DCE6DC] bg-white/75 text-[10px] font-medium text-[#0F3D2E] shadow-sm inline-flex items-center tracking-wide backdrop-blur-md sm:mb-6 sm:px-4 sm:py-2 sm:text-xs"
         >
           <span
             class="h-1.5 w-1.5 rounded-full bg-[#7A9E7E] sm:h-2 sm:w-2"
@@ -45,19 +45,19 @@
 
         <!-- ================= SMALL TEXT ================= -->
         <p
-          class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#7A9E7E] sm:mb-4 sm:text-sm sm:tracking-[0.35em]"
+          class="mb-3 text-xs font-semibold text-[#7A9E7E] uppercase tracking-[0.25em] sm:mb-4 sm:text-sm sm:tracking-[0.35em]"
         >
           {{ slides[currentSlide].smallText }}
         </p>
 
         <!-- ================= HEADING ================= -->
         <h1
-          class="mx-auto max-w-xl text-4xl font-semibold leading-[1.08] tracking-tight text-[#0F3D2E] sm:mx-0 sm:text-5xl md:text-6xl lg:max-w-2xl lg:text-7xl"
+          class="mx-auto max-w-xl text-4xl font-semibold text-[#0F3D2E] leading-[1.08] tracking-tight sm:mx-0 sm:text-5xl md:text-6xl lg:max-w-2xl lg:text-7xl"
         >
           {{ slides[currentSlide].title }}
 
           <span
-            class="mt-1 block font-serif text-3xl italic font-normal text-[#7A9E7E] sm:mt-2 sm:text-5xl md:text-6xl lg:text-7xl"
+            class="mt-1 font-serif text-3xl font-normal text-[#7A9E7E] block italic sm:mt-2 sm:text-5xl md:text-6xl lg:text-7xl"
           >
             {{ slides[currentSlide].highlight }}
           </span>
@@ -65,19 +65,19 @@
 
         <!-- ================= DESCRIPTION ================= -->
         <p
-          class="mx-auto mt-5 max-w-lg text-sm leading-7 text-gray-600 sm:mx-0 sm:mt-7 sm:text-base sm:leading-8 md:text-lg"
+          class="mt-5 mx-auto max-w-lg text-sm text-gray-600 leading-7 sm:mx-0 sm:mt-7 sm:text-base sm:leading-8 md:text-lg"
         >
           {{ slides[currentSlide].description }}
         </p>
 
         <!-- ================= BUTTONS ================= -->
         <div
-          class="mt-7 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
+          class="flex-col mt-7 gap-3 flex items-center sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
         >
           <!-- Shop Now -->
           <router-link
             to="/products"
-            class="group/btn inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#0F3D2E] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#0F3D2E]/15 transition-all duration-300 hover:-translate-y-1 hover:bg-[#174A3A] hover:shadow-xl sm:w-auto sm:px-7 sm:py-4"
+            class="gap-3 px-6 py-3.5 w-full justify-center rounded-full bg-[#0F3D2E] text-sm font-semibold text-white shadow-lg shadow-[#0F3D2E]/15 group/btn inline-flex items-center transition-all duration-300 hover:-translate-y-1 hover:bg-[#174A3A] hover:shadow-xl sm:w-auto sm:px-7 sm:py-4"
           >
             Shop Now
 
@@ -90,7 +90,7 @@
           <!-- Explore -->
           <router-link
             to="/collection"
-            class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#0F3D2E]/30 bg-white/60 px-6 py-3.5 text-sm font-semibold text-[#0F3D2E] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#0F3D2E] hover:bg-white sm:w-auto sm:px-7 sm:py-4"
+            class="gap-2 px-6 py-3.5 w-full justify-center rounded-full border border-[#0F3D2E]/30 bg-white/60 text-sm font-semibold text-[#0F3D2E] inline-flex items-center backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#0F3D2E] hover:bg-white sm:w-auto sm:px-7 sm:py-4"
           >
             Explore Collection
           </router-link>
@@ -98,19 +98,19 @@
 
         <!-- ================= MINI FEATURES ================= -->
         <div
-          class="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[11px] font-medium text-gray-500 sm:mt-10 sm:justify-start sm:gap-x-7 sm:text-xs"
+          class="flex-wrap mt-8 gap-x-5 gap-y-2 justify-center text-[11px] font-medium text-gray-500 flex sm:mt-10 sm:justify-start sm:gap-x-7 sm:text-xs"
         >
-          <div class="flex items-center gap-1.5">
+          <div class="gap-1.5 flex items-center">
             <span class="text-[#7A9E7E]">✓</span>
             Gentle Ingredients
           </div>
 
-          <div class="flex items-center gap-1.5">
+          <div class="gap-1.5 flex items-center">
             <span class="text-[#7A9E7E]">✓</span>
             Skin-Loving Care
           </div>
 
-          <div class="flex items-center gap-1.5">
+          <div class="gap-1.5 flex items-center">
             <span class="text-[#7A9E7E]">✓</span>
             Everyday Glow
           </div>
@@ -122,7 +122,7 @@
     <button
       @click="previousSlide"
       aria-label="Previous slide"
-      class="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:left-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:left-8"
+      class="top-1/2 z-20 h-10 w-10 justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg absolute left-3 flex -translate-y-1/2 items-center backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:left-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:left-8"
     >
       <ArrowLeft
         class="h-4 w-4 sm:h-5 sm:w-5"
@@ -134,7 +134,7 @@
     <button
       @click="nextSlide"
       aria-label="Next slide"
-      class="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:right-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:right-8"
+      class="top-1/2 z-20 h-10 w-10 justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg absolute right-3 flex -translate-y-1/2 items-center backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:right-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:right-8"
     >
       <ArrowRight
         class="h-4 w-4 sm:h-5 sm:w-5"
@@ -144,7 +144,7 @@
 
     <!-- ================= BOTTOM CONTROLS ================= -->
     <div
-      class="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full bg-white/65 px-4 py-2.5 backdrop-blur-md sm:bottom-8 sm:gap-5 sm:px-5 sm:py-3"
+      class="gap-3 px-4 py-2.5 bottom-5 z-20 rounded-full bg-white/65 absolute left-1/2 flex -translate-x-1/2 items-center backdrop-blur-md sm:bottom-8 sm:gap-5 sm:px-5 sm:py-3"
     >
       <!-- Slide Number -->
       <span
@@ -154,18 +154,14 @@
       </span>
 
       <!-- Dots -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
+      <div class="gap-1.5 flex items-center sm:gap-2">
         <button
           v-for="(_, index) in slides"
           :key="index"
           @click="currentSlide = index"
           :aria-label="`Go to slide ${index + 1}`"
-          :class="
-            currentSlide === index
-              ? 'w-6 bg-[#0F3D2E] sm:w-8'
-              : 'w-1.5 bg-[#A8C3A0] sm:w-2'
-          "
-          class="h-1.5 rounded-full transition-all duration-500"
+          class="
+            bg-[#0F3D2E] bg-[#A8C3A0] h-1.5 rounded-full currentSlide === index ? 'w-6 sm:w-8' : 'w-1.5 sm:w-2' transition-all duration-500"
         ></button>
       </div>
 
@@ -179,19 +175,19 @@
 
     <!-- ================= PROGRESS BAR ================= -->
     <div
-      class="absolute bottom-0 left-0 h-1 bg-[#0F3D2E] transition-all duration-300"
+      class="bottom-0 h-1 bg-[#0F3D2E] absolute left-0 transition-all duration-300"
       :style="{
         width: `${((currentSlide + 1) / slides.length) * 100}%`,
       }"
     ></div>
   </section>
   <!-- feature -->
-  <section class="bg-[#F9FBF7] py-20">
-  <div class="mx-auto max-w-7xl px-6">
+  <section class="py-20 bg-[#F9FBF7]">
+  <div class="px-6 mx-auto max-w-7xl">
 
     <!-- Heading -->
     <div class="mb-12 text-center">
-      <p class="mb-2 text-sm font-medium uppercase tracking-widest text-[#7A9E7E]">
+      <p class="mb-2 text-sm font-medium text-[#7A9E7E] uppercase tracking-widest">
         Why Lumie Skin
       </p>
 
@@ -199,7 +195,7 @@
         Everything Your Skin Deserves
       </h2>
 
-      <p class="mx-auto mt-4 max-w-2xl text-gray-600">
+      <p class="mt-4 mx-auto max-w-2xl text-gray-600">
         Thoughtfully selected skincare products designed to
         help you build a simple and effective routine.
       </p>
@@ -209,8 +205,8 @@
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
       <!-- Feature 1 -->
-      <div class="rounded-2xl border border-[#DCE6DC] bg-white p-6 text-center">
-        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]">
+      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
+        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
           <Leaf 
            :size="30"
             :stroke-width="1.8"
@@ -222,14 +218,14 @@
           Natural Ingredients
         </h3>
 
-        <p class="mt-3 text-sm leading-6 text-gray-600">
+        <p class="mt-3 text-sm text-gray-600 leading-6">
           Gentle ingredients carefully selected for healthy-looking skin.
         </p>
       </div>
 
       <!-- Feature 2 -->
-      <div class="rounded-2xl border border-[#DCE6DC] bg-white p-6 text-center">
-        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]">
+      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
+        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
           <Sparkles
           :size="30"
           :stroke-width="1.8"
@@ -241,14 +237,14 @@
           Dermatologist Tested
         </h3>
 
-        <p class="mt-3 text-sm leading-6 text-gray-600">
+        <p class="mt-3 text-sm text-gray-600 leading-6">
           Skincare selected with quality and skin safety in mind.
         </p>
       </div>
 
       <!-- Feature 3 -->
-      <div class="rounded-2xl border border-[#DCE6DC] bg-white p-6 text-center">
-        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]">
+      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
+        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
           <Truck
           :size="30"
           :stroke-width="1.8"
@@ -260,14 +256,14 @@
           Fast & Safe Delivery
         </h3>
 
-        <p class="mt-3 text-sm leading-6 text-gray-600">
+        <p class="mt-3 text-sm text-gray-600 leading-6">
           Get your favorite skincare products delivered safely to your door.
         </p>
       </div>
 
       <!-- Feature 4 -->
-      <div class="rounded-2xl border border-[#DCE6DC] bg-white p-6 text-center">
-        <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]">
+      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
+        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
           <LockKeyhole
           :size="30"
           :stroke-width="1.8"
@@ -279,7 +275,7 @@
           Secure Payment
         </h3>
 
-        <p class="mt-3 text-sm leading-6 text-gray-600">
+        <p class="mt-3 text-sm text-gray-600 leading-6">
           Enjoy a simple and secure checkout experience.
         </p>
       </div>
@@ -289,13 +285,13 @@
 </section>
       <!-- collection -->
       <!-- ================= COLLECTION ================= -->
-<section class="bg-[#F9FBF7] py-20">
-  <div class="mx-auto max-w-7xl px-6">
+<section class="py-20 bg-[#F9FBF7]">
+  <div class="px-6 mx-auto max-w-7xl">
 
     <!-- Heading -->
     <div class="mb-12 text-center">
       <p
-        class="mb-2 text-sm font-medium uppercase tracking-widest text-[#7A9E7E]"
+        class="mb-2 text-sm font-medium text-[#7A9E7E] uppercase tracking-widest"
       >
         Explore Our Collections
       </p>
@@ -304,7 +300,7 @@
         Find What Your Skin Needs
       </h2>
 
-      <p class="mx-auto mt-4 max-w-2xl text-gray-600">
+      <p class="mt-4 mx-auto max-w-2xl text-gray-600">
         Explore our carefully selected skincare collections designed
         for different skin needs.
       </p>

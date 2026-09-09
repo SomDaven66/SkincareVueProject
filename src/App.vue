@@ -1,9 +1,15 @@
-```vue
 <script setup>
 import { ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router' // 1. Import useRoute
 
 import Navbar from './components/layout/Navbar.vue'
 import Afterlognav from './components/layout/Afterlognav.vue'
+import CategoryCard from './components/CategoryCard.vue'
+
+const route = useRouter() // 3. Get route reference
+
+// Check if user is currently on the home page
+const isHomePage = computed(() => route.path === '/')
 
 const currentUser = ref(
   JSON.parse(
@@ -13,13 +19,8 @@ const currentUser = ref(
   )
 )
 
-const isLoggedIn = computed(() => {
-  return currentUser.value !== null
-})
-
-const isAdmin = computed(() => {
-  return currentUser.value?.role === 'admin'
-})
+const isLoggedIn = computed(() => currentUser.value !== null)
+const isAdmin = computed(() => currentUser.value?.role === 'admin')
 
 const handleloginSuccess = () => {
   const user =
@@ -39,7 +40,7 @@ const handlelogout = () => {
 
 <template>
 
-  <!-- ================= NORMAL USER ================= -->
+  <!-- ================= NAVBAR ================= -->
 
   <Navbar
     v-if="!isLoggedIn"
@@ -49,6 +50,10 @@ const handlelogout = () => {
     v-else-if="!isAdmin"
   />
 
+  <!-- ================= Category Card ================= -->
+
+  <CategoryCard v-if="CategoryCard" />
+
   <!-- ================= PAGE ================= -->
 
   <router-view
@@ -57,4 +62,3 @@ const handlelogout = () => {
   />
 
 </template>
-```
