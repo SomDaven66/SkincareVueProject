@@ -1,151 +1,369 @@
-<script setup lang="ts">
-import { 
-  Leaf, 
-  Sparkles, 
-  Droplets, 
-  ShieldCheck 
-} from 'lucide-vue-next'
-</script>
-
+```vue
 <template>
-  <div class="min-h-screen bg-[#F9FBF7]">
-    <!-- ================= HERO SECTION ================= -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <!-- Decorative circles -->
-      <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#A8C3A0]/20 blur-3xl"></div>
-      <div class="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#7A9E7E]/15 blur-3xl"></div>
+  <div class="min-h-screen bg-[#F9FBF7] text-[#0F3D2E]">
 
-      <div class="relative mx-auto max-w-4xl text-center">
-        <p class="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#7A9E7E]">
-          Our Story
-        </p>
-        <h1 class="text-4xl font-bold tracking-tight text-[#0F3D2E] sm:text-5xl md:text-6xl">
-          Skincare Rooted in <br class="hidden sm:block" />
-          <span class="font-serif italic font-normal text-[#7A9E7E]">Nature & Science</span>
-        </h1>
-        <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#536B59]">
-          At LUMIÉ, we believe that everyone deserves to feel confident in their own skin. 
-          Our mission is to create clean, effective, and gentle skincare solutions that enhance your natural beauty.
-        </p>
-      </div>
-    </section>
+    <!-- ================= HERO ================= -->
+    <section class="overflow-hidden">
+      <div
+        class="mx-auto grid max-w-7xl items-center gap-12 px-6 py-12 sm:py-16 lg:grid-cols-2 lg:px-8 lg:py-24"
+      >
 
-    <!-- ================= IMAGE GRID SECTION ================= -->
-    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="h-80 overflow-hidden rounded-2xl md:col-span-2 lg:col-span-2">
-          <img 
-            src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1000&auto=format&fit=crop" 
-            alt="Skincare ingredients" 
-            class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-          />
-        </div>
-        <div class="h-80 overflow-hidden rounded-2xl">
-          <img 
-            src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&w=600&auto=format&fit=crop" 
-            alt="Texture of cream" 
-            class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-          />
-        </div>
-      </div>
-    </section>
+        <!-- LEFT CONTENT -->
+        <div class="max-w-xl">
+          <span
+            class="inline-block rounded-full bg-[#A8C3A0]/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0F3D2E]"
+          >
+            About Lumie Skin
+          </span>
 
-    <!-- ================= OUR VALUES ================= -->
-    <section class="bg-white py-20">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-16 text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-[#0F3D2E] sm:text-4xl">Our Core Values</h2>
-          <p class="mt-4 text-[#536B59]">What drives us to create the best for your skin.</p>
-        </div>
+          <h1
+            class="mt-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl"
+          >
+            Skincare that makes
+            <span class="text-[#7A9E7E]"> your skin feel good.</span>
+          </h1>
 
-        <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <!-- Value 1 -->
-          <div class="flex flex-col items-center text-center">
-            <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#F4F8F1]">
-              <Leaf class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold text-[#0F3D2E]">Clean Ingredients</h3>
-            <p class="text-sm leading-6 text-[#536B59]">We source only the finest natural ingredients, free from harmful chemicals and toxins.</p>
-          </div>
+          <p
+            class="mt-6 text-base leading-8 text-gray-600 sm:text-lg"
+          >
+            At Lumie Skin, we believe skincare should be simple, gentle,
+            and enjoyable. We bring together carefully selected products
+            designed to help you create a routine that works for you.
+          </p>
 
-          <!-- Value 2 -->
-          <div class="flex flex-col items-center text-center">
-            <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#F4F8F1]">
-              <ShieldCheck class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold text-[#0F3D2E]">Dermatologist Tested</h3>
-            <p class="text-sm leading-6 text-[#536B59]">Every formula is rigorously tested to ensure safety and efficacy for all skin types.</p>
-          </div>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <RouterLink
+              to="/products"
+              class="rounded-full bg-[#0F3D2E] px-7 py-3.5 text-sm font-semibold text-white transition duration-300 hover:bg-[#174A3A]"
+            >
+              Explore Our Products
+            </RouterLink>
 
-          <!-- Value 3 -->
-          <div class="flex flex-col items-center text-center">
-            <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#F4F8F1]">
-              <Droplets class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold text-[#0F3D2E]">Deep Hydration</h3>
-            <p class="text-sm leading-6 text-[#536B59]">Our products are designed to nourish and hydrate deeply, restoring your skin's moisture barrier.</p>
-          </div>
-
-          <!-- Value 4 -->
-          <div class="flex flex-col items-center text-center">
-            <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#F4F8F1]">
-              <Sparkles class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
-            </div>
-            <h3 class="mb-2 text-lg font-bold text-[#0F3D2E]">Visible Results</h3>
-            <p class="text-sm leading-6 text-[#536B59]">We combine nature with science to deliver skincare that actually works and gives you a radiant glow.</p>
+            <RouterLink
+              to="/contact"
+              class="rounded-full border border-[#DCE6DC] bg-white px-7 py-3.5 text-sm font-semibold text-[#0F3D2E] transition duration-300 hover:bg-[#F4F8F1]"
+            >
+              Contact Us
+            </RouterLink>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ================= FOUNDER SECTION ================= -->
-    <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div class="overflow-hidden rounded-[2.5rem] bg-[#0F3D2E] shadow-2xl">
-        <div class="grid grid-cols-1 lg:grid-cols-2">
-          <div class="flex flex-col justify-center p-10 sm:p-16 lg:p-20">
-            <h2 class="text-3xl font-bold text-white sm:text-4xl">A message from our founder</h2>
-            <p class="mt-6 text-lg leading-8 text-[#A8C3A0]">
-              "I started LUMIÉ because I couldn't find skincare that was both gentle enough for my sensitive skin and effective enough to show real results. 
-              We've poured our hearts into creating a line that you can trust, love, and rely on every single day."
-            </p>
-            <div class="mt-8">
-              <p class="font-bold text-white">Eleanor Smith</p>
-              <p class="text-sm text-[#7A9E7E]">Founder & CEO</p>
-            </div>
-          </div>
-          <div class="h-80 lg:h-auto">
-            <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" 
-              alt="Founder" 
-              class="h-full w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+        <!-- RIGHT IMAGE -->
+        <div class="relative mx-auto w-full max-w-lg">
+
+          <!-- Decorative circles -->
+          <div
+            class="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[#A8C3A0]/40"
+          ></div>
+
+          <div
+            class="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#7A9E7E]/20"
+          ></div>
+
+          <!-- Image Card -->
+          <div
+            class="relative overflow-hidden rounded-[2rem] bg-[#F4F8F1] p-3 shadow-xl"
+          >
+            <img
+              src="https://i.pinimg.com/736x/a9/df/75/a9df759e23e3746a307f72dabccd88b9.jpg"
+              alt="Lumie Skin Hydration Collection"
+              class="h-[460px] w-full rounded-[1.5rem] object-cover"
             />
+
+            <!-- Floating Label -->
+            <div
+              class="absolute bottom-8 left-8 rounded-2xl bg-white/95 px-5 py-4 shadow-lg backdrop-blur-sm"
+            >
+              <p class="text-xs uppercase tracking-widest text-[#7A9E7E]">
+                Our Collection
+              </p>
+
+              <p class="mt-1 text-lg font-bold text-[#0F3D2E]">
+                Hydration
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= CTA SECTION ================= -->
-    <section class="py-16 text-center">
-      <h2 class="text-2xl font-bold text-[#0F3D2E] sm:text-3xl">Ready to glow?</h2>
-      <p class="mt-4 text-[#536B59]">Discover the perfect routine for your skin type today.</p>
-      <div class="mt-8 flex justify-center gap-4">
-        <router-link 
-          to="/products" 
-          class="rounded-full bg-[#0F3D2E] px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#0F3D2E]/20 transition-all hover:-translate-y-1 hover:bg-[#174A3A] hover:shadow-xl"
-        >
-          Shop Now
-        </router-link>
-        <router-link 
-          to="/contact" 
-          class="rounded-full border border-[#DCE6DC] bg-white px-8 py-3.5 text-sm font-semibold text-[#0F3D2E] shadow-sm transition-all hover:border-[#7A9E7E] hover:bg-[#F4F8F1]"
-        >
-          Contact Us
-        </router-link>
+
+    <!-- ================= OUR STORY ================= -->
+    <section class="bg-white py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]"
+          >
+            Our Story
+          </p>
+
+          <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
+            Beauty doesn't need to be complicated.
+          </h2>
+
+          <p class="mt-6 leading-8 text-gray-600">
+            Lumie Skin was created around one simple idea:
+            skincare should feel easy, calming, and enjoyable.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+
+          <!-- Card 1 -->
+          <div
+            class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
+            >
+              ♡
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold">
+              Skin First
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-600">
+              We believe healthy-looking skin starts with understanding
+              what your skin needs.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
+            >
+              ✦
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold">
+              Quality Matters
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-600">
+              We focus on products that are thoughtfully selected
+              for everyday skincare routines.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
+            >
+              ❋
+            </div>
+
+            <h3 class="mt-6 text-xl font-bold">
+              Keep It Simple
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-600">
+              Good skincare doesn't have to mean a shelf full of
+              products. Simple can be effective.
+            </p>
+          </div>
+
+        </div>
       </div>
     </section>
+
+
+    <!-- ================= MISSION ================= -->
+    <section class="bg-[#F4F8F1] py-20">
+      <div
+        class="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:px-8"
+      >
+
+        <!-- Text -->
+        <div>
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]"
+          >
+            Our Mission
+          </p>
+
+          <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+            Helping you feel confident in your own skin.
+          </h2>
+
+          <p class="mt-6 leading-8 text-gray-600">
+            We want skincare to be something you look forward to,
+            not something that feels overwhelming.
+          </p>
+
+          <p class="mt-4 leading-8 text-gray-600">
+            From cleansing and hydration to brightening and sun care,
+            Lumie Skin makes it easier to discover products that fit
+            naturally into your everyday routine.
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-4">
+
+          <div class="rounded-3xl bg-white p-7 shadow-sm">
+            <p class="text-3xl font-bold text-[#0F3D2E]">
+              8+
+            </p>
+
+            <p class="mt-2 text-sm text-gray-500">
+              Skincare collections
+            </p>
+          </div>
+
+          <div class="rounded-3xl bg-white p-7 shadow-sm">
+            <p class="text-3xl font-bold text-[#0F3D2E]">
+              100%
+            </p>
+
+            <p class="mt-2 text-sm text-gray-500">
+              Focus on your skin
+            </p>
+          </div>
+
+          <div class="rounded-3xl bg-white p-7 shadow-sm">
+            <p class="text-3xl font-bold text-[#0F3D2E]">
+              Daily
+            </p>
+
+            <p class="mt-2 text-sm text-gray-500">
+              Skincare made simple
+            </p>
+          </div>
+
+          <div class="rounded-3xl bg-white p-7 shadow-sm">
+            <p class="text-3xl font-bold text-[#0F3D2E]">
+              You
+            </p>
+
+            <p class="mt-2 text-sm text-gray-500">
+              Always at the center
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= VALUES ================= -->
+    <section class="bg-white py-20">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+        <div class="text-center">
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]"
+          >
+            What We Believe
+          </p>
+
+          <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
+            Our values
+          </h2>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+
+          <div
+            class="rounded-3xl border border-[#DCE6DC] p-8"
+          >
+            <span
+              class="text-sm font-bold text-[#7A9E7E]"
+            >
+              01
+            </span>
+
+            <h3 class="mt-5 text-xl font-bold">
+              Gentle Care
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-500">
+              Treat your skin with patience, consistency, and care.
+            </p>
+          </div>
+
+          <div
+            class="rounded-3xl border border-[#DCE6DC] p-8"
+          >
+            <span
+              class="text-sm font-bold text-[#7A9E7E]"
+            >
+              02
+            </span>
+
+            <h3 class="mt-5 text-xl font-bold">
+              Honest Beauty
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-500">
+              Skincare is about caring for your skin, not chasing perfection.
+            </p>
+          </div>
+
+          <div
+            class="rounded-3xl border border-[#DCE6DC] p-8"
+          >
+            <span
+              class="text-sm font-bold text-[#7A9E7E]"
+            >
+              03
+            </span>
+
+            <h3 class="mt-5 text-xl font-bold">
+              Everyday Confidence
+            </h3>
+
+            <p class="mt-3 leading-7 text-gray-500">
+              We want you to feel comfortable and confident in your own skin.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+    <section class="bg-[#F4F8F1] py-20">
+      <div class="mx-auto max-w-3xl px-6 text-center lg:px-8">
+
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]">
+          Start Your Journey
+        </p>
+
+        <h2 class="mt-4 text-3xl font-bold text-[#0F3D2E] sm:text-4xl">
+          Find what your skin loves.
+        </h2>
+
+        <p class="mt-5 leading-7 text-gray-600">
+          Explore our skincare collections and build a routine
+          that feels right for you.
+        </p>
+
+        <RouterLink
+          to="/products"
+          class="mt-8 inline-block rounded-full bg-[#0F3D2E] px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:bg-[#174A3A]"
+        >
+          Shop Collection
+        </RouterLink>
+
+      </div>
+    </section>
+
   </div>
 </template>
 
-<style scoped>
-/* Optional specific styling for the about page */
+<script setup lang="ts">
+</script>
+
+<style scoped lang="scss">
 </style>
+```

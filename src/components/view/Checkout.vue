@@ -5,7 +5,7 @@
       <!-- ================= HEADER ================= -->
       <div class="mb-8">
         <router-link
-          to="/cart"
+          to="/addtocard"
           class="mb-4 inline-flex items-center gap-2 text-sm font-medium text-[#7A9E7E] transition hover:text-[#0F3D2E]"
         >
           <!-- Arrow Left Icon -->
@@ -800,7 +800,7 @@ function goToOrders(): void {
 </script>
 
 
-<style scoped lang="scss">
+<style scoped >
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 5px;

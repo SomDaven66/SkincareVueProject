@@ -103,7 +103,7 @@
 
 
         <router-link
-          to="/product"
+          to="/products"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
@@ -287,31 +287,36 @@
 
         
           <router-link to="/" 
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]
           "
           >
             Home
           </router-link>
-          <router-link to="/product"
+          <router-link to="/products"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         Product
         </router-link>
           <router-link to="/about"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         About 
         </router-link>
           <router-link to="/cart"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         Cart
         </router-link>
           <router-link to="/contact"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
@@ -321,7 +326,9 @@
         
           <div class="my-2 border-t border-[#E5ECE5]">
                <router-link 
+               
           to="/profile"
+          @click="closeMenu"
           class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#0F3D2E] transition hover:bg-[#F3F7F2]"
     "
           
@@ -369,6 +376,10 @@ const isMenuOpen = ref(false);
 function toggleMenu(): void {
   isMenuOpen.value = !isMenuOpen.value;
 }
+// close menu
+    function closeMenu() {
+    isMenuOpen.value = false;
+  }
 
 
 // ================= CURRENT USER =================

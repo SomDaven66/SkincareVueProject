@@ -1,6 +1,103 @@
-# Vue 3 + TypeScript + Vite
+# SkincareVueProject
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project is a skincare website built with Vue 3, TypeScript, Vite, and Tailwind CSS.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
-"# SkincareVueProject" 
+## Project Setup
+
+This project uses Vue 3 `<script setup>` SFCs with TypeScript.
+
+Learn more about Vue TypeScript support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+
+## Project Structure
+
+Inside the `src/components` folder:
+
+### `layout`
+
+Contains layout components such as:
+
+* Navbar
+* Afterlognav
+* AdminLayout
+
+### `router`
+
+Contains the main Vue Router configuration:
+
+* `index.ts`
+
+### `view`
+
+Contains the main pages of the website:
+
+* Home
+* About
+* Shop
+* Collection
+* Profile
+* Contact
+* AddtoCard
+* Login
+* Register
+* PasswordReset
+* Wishlist
+* Orders
+* Setting
+
+### Other Components
+
+The project also contains reusable components such as:
+
+* HeroSection
+* CategoryCard
+* CollectionCard
+* Feature
+* SummerDis
+
+## Routes
+
+The project includes routes such as:
+
+* `/`
+* `/shop`
+* `/collection`
+* `/collection/:category`
+* `/about`
+* `/contact`
+* `/profile`
+* `/addtocard`
+* `/login`
+* `/register`
+* `/passwordreset`
+* `/wishlist`
+* `/orders`
+* `/setting`
+
+## State Management
+
+The project uses **Pinia** for state management.
+
+The store is located inside the `src/stores` folder.
+
+## Technologies
+
+* Vue 3
+* TypeScript
+* Tailwind CSS
+* Vue Router
+* Pinia
+* Vite
+
+## Installation
+
+Install the project dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```

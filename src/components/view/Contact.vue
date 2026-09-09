@@ -1,247 +1,302 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { 
-  MapPin, 
-  Mail, 
-  Phone, 
-  Clock,
-  Send
-} from 'lucide-vue-next'
-
-const form = ref({
-  name: '',
-  email: '',
-  subject: '',
-  message: ''
-})
-
-const isSubmitting = ref(false)
-const submitSuccess = ref(false)
-
-const submitForm = () => {
-  isSubmitting.value = true
-  
-  // Simulate API call
-  setTimeout(() => {
-    isSubmitting.value = false
-    submitSuccess.value = true
-    
-    // Reset form after a delay
-    setTimeout(() => {
-      form.value = { name: '', email: '', subject: '', message: '' }
-      submitSuccess.value = false
-    }, 5000)
-  }, 1500)
-}
-</script>
-
 <template>
-  <div class="min-h-screen bg-[#F9FBF7]">
-    
-    <!-- ================= PAGE HEADER ================= -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <!-- Decorative circles -->
-      <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#A8C3A0]/20 blur-3xl"></div>
-      <div class="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#7A9E7E]/15 blur-3xl"></div>
+  <div class="min-h-screen bg-[#F9FBF7] text-[#0F3D2E]">
 
-      <div class="relative mx-auto max-w-3xl text-center">
-        <p class="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-[#7A9E7E]">
-          Get in Touch
-        </p>
-        <h1 class="text-4xl font-bold tracking-tight text-[#0F3D2E] sm:text-5xl md:text-6xl">
-          We'd love to hear <br class="hidden sm:block" />
-          <span class="font-serif italic font-normal text-[#7A9E7E]">from you</span>
-        </h1>
-        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-[#536B59]">
-          Have questions about our products, your routine, or an order? 
-          Our skincare experts are here to help you achieve your best glow.
-        </p>
-      </div>
-    </section>
 
-    <!-- ================= CONTACT SECTION ================= -->
-    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-        
-        <!-- Contact Information -->
-        <div class="lg:col-span-5">
-          <div class="rounded-3xl border border-[#DCE6DC] bg-white p-8 shadow-sm sm:p-10">
-            <h2 class="text-2xl font-bold text-[#0F3D2E]">Contact Information</h2>
-            <p class="mt-2 text-[#536B59]">
-              Fill out the form and our team will get back to you within 24 hours.
+<!-- Hero -->
+<section class="px-6 pt-16 pb-12 text-center">
+  <p
+    class="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#7A9E7E]"
+  >
+    Get In Touch
+  </p>
+
+  <h1 class="text-4xl font-bold md:text-5xl">
+    We’d Love to Hear From You
+  </h1>
+
+  <p class="mx-auto mt-4 max-w-2xl text-[#52705D]">
+    Have a question about our products, your skincare routine, or your
+    order? Our team is here to help.
+  </p>
+</section>
+
+<!-- Contact Content -->
+<section class="mx-auto max-w-6xl px-6 pb-20">
+  <div
+    class="grid overflow-hidden rounded-3xl border border-[#DCE6DC] bg-white shadow-sm md:grid-cols-2"
+  >
+
+    <!-- Left: Contact Information -->
+    <div class="bg-[#F4F8F1] p-8 md:p-12">
+      <h2 class="text-2xl font-bold">
+        Let’s Talk
+      </h2>
+
+      <p class="mt-3 leading-7 text-[#52705D]">
+        We believe skincare should feel simple, gentle, and personal.
+        Reach out to us and we’ll be happy to assist you.
+      </p>
+
+      <div class="mt-10 space-y-7">
+
+        <!-- Email -->
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#A8C3A0]/40"
+          >
+            <svg
+              class="h-5 w-5 text-[#0F3D2E]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 7.5 12 13l9-5.5M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="font-semibold">Email</h3>
+            <p class="mt-1 text-sm text-[#52705D]">
+              hello@lumieskin.com
             </p>
-
-            <div class="mt-10 flex flex-col gap-8">
-              <!-- Location -->
-              <div class="flex gap-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1]">
-                  <MapPin class="h-5 w-5 text-[#7A9E7E]" :stroke-width="2" />
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-[#0F3D2E]">Our Store</h3>
-                  <p class="mt-1 text-sm text-[#536B59] leading-relaxed">
-                    123 Botanical Avenue<br />
-                    Phnom Penh, Cambodia<br />
-                    12000
-                  </p>
-                </div>
-              </div>
-
-              <!-- Email -->
-              <div class="flex gap-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1]">
-                  <Mail class="h-5 w-5 text-[#7A9E7E]" :stroke-width="2" />
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-[#0F3D2E]">Email Us</h3>
-                  <p class="mt-1 text-sm text-[#536B59]">
-                    <a href="mailto:support@lumieskin.com" class="transition hover:text-[#0F3D2E]">
-                      support@lumieskin.com
-                    </a>
-                  </p>
-                  <p class="text-sm text-[#536B59]">
-                    <a href="mailto:hello@lumieskin.com" class="transition hover:text-[#0F3D2E]">
-                      hello@lumieskin.com
-                    </a>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Phone -->
-              <div class="flex gap-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1]">
-                  <Phone class="h-5 w-5 text-[#7A9E7E]" :stroke-width="2" />
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-[#0F3D2E]">Call Us</h3>
-                  <p class="mt-1 text-sm text-[#536B59]">
-                    <a href="tel:+85512345678" class="transition hover:text-[#0F3D2E]">
-                      +855 (0) 12 345 678
-                    </a>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Hours -->
-              <div class="flex gap-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1]">
-                  <Clock class="h-5 w-5 text-[#7A9E7E]" :stroke-width="2" />
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-[#0F3D2E]">Opening Hours</h3>
-                  <p class="mt-1 text-sm text-[#536B59]">
-                    Mon - Fri: 9:00 AM - 6:00 PM<br />
-                    Sat - Sun: 10:00 AM - 4:00 PM
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        <!-- Contact Form -->
-        <div class="lg:col-span-7">
-          <div class="rounded-3xl border border-[#DCE6DC] bg-white p-8 shadow-sm sm:p-10">
-            <h2 class="text-2xl font-bold text-[#0F3D2E]">Send us a message</h2>
-            <p class="mt-2 text-[#536B59]">
-              We usually respond within 1 business day.
+        <!-- Phone -->
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#A8C3A0]/40"
+          >
+            <svg
+              class="h-5 w-5 text-[#0F3D2E]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5 4h3l2 5-2 1.5a15 15 0 0 0 5.5 5.5L15 14l5 2v3c0 1.1-.9 2-2 2C10.3 21 3 13.7 3 5c0-1.1.9-2 2-2Z"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="font-semibold">Phone</h3>
+            <p class="mt-1 text-sm text-[#52705D]">
+              +855 12 345 678
             </p>
+          </div>
+        </div>
 
-            <form @submit.prevent="submitForm" class="mt-8 space-y-6">
-              
-              <!-- Name & Email Row -->
-              <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div>
-                  <label for="name" class="mb-2 block text-sm font-semibold text-[#0F3D2E]">
-                    Full Name
-                  </label>
-                  <input
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    required
-                    placeholder="Jane Doe"
-                    class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#0F3D2E] outline-none transition placeholder:text-[#9AAD9A] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
-                  />
-                </div>
-                <div>
-                  <label for="email" class="mb-2 block text-sm font-semibold text-[#0F3D2E]">
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    required
-                    placeholder="jane@example.com"
-                    class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#0F3D2E] outline-none transition placeholder:text-[#9AAD9A] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
-                  />
-                </div>
-              </div>
+        <!-- Location -->
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#A8C3A0]/40"
+          >
+            <svg
+              class="h-5 w-5 text-[#0F3D2E]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z"
+              />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+          </div>
 
-              <!-- Subject -->
-              <div>
-                <label for="subject" class="mb-2 block text-sm font-semibold text-[#0F3D2E]">
-                  Subject
-                </label>
-                <input
-                  id="subject"
-                  v-model="form.subject"
-                  type="text"
-                  required
-                  placeholder="How can we help you?"
-                  class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#0F3D2E] outline-none transition placeholder:text-[#9AAD9A] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
-                />
-              </div>
+          <div>
+            <h3 class="font-semibold">Location</h3>
+            <p class="mt-1 text-sm text-[#52705D]">
+              Phnom Penh, Cambodia
+            </p>
+          </div>
+        </div>
 
-              <!-- Message -->
-              <div>
-                <label for="message" class="mb-2 block text-sm font-semibold text-[#0F3D2E]">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  v-model="form.message"
-                  required
-                  rows="5"
-                  placeholder="Write your message here..."
-                  class="w-full resize-none rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#0F3D2E] outline-none transition placeholder:text-[#9AAD9A] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
-                ></textarea>
-              </div>
+        <!-- Opening Hours -->
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#A8C3A0]/40"
+          >
+            <svg
+              class="h-5 w-5 text-[#0F3D2E]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path
+                stroke-linecap="round"
+                d="M12 7v5l3 2"
+              />
+            </svg>
+          </div>
 
-              <!-- Submit Button -->
-              <button
-                type="submit"
-                :disabled="isSubmitting || submitSuccess"
-                class="flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300"
-                :class="
-                  submitSuccess 
-                    ? 'bg-[#7A9E7E] cursor-default' 
-                    : isSubmitting
-                      ? 'bg-[#0F3D2E]/70 cursor-not-allowed'
-                      : 'bg-[#0F3D2E] hover:-translate-y-1 hover:bg-[#174A3A] hover:shadow-xl active:scale-[0.98]'
-                "
-              >
-                <template v-if="submitSuccess">
-                  Message Sent Successfully! ✓
-                </template>
-                <template v-else-if="isSubmitting">
-                  <svg class="h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending...
-                </template>
-                <template v-else>
-                  Send Message
-                  <Send class="h-4 w-4" :stroke-width="2.5" />
-                </template>
-              </button>
-            </form>
+          <div>
+            <h3 class="font-semibold">Opening Hours</h3>
+            <p class="mt-1 text-sm text-[#52705D]">
+              Monday – Saturday
+            </p>
+            <p class="text-sm text-[#52705D]">
+              9:00 AM – 6:00 PM
+            </p>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="p-8 md:p-12">
+      <h2 class="text-2xl font-bold">
+        Send Us a Message
+      </h2>
+
+      <p class="mt-2 text-sm text-[#52705D]">
+        Fill in the form and we’ll get back to you soon.
+      </p>
+
+      <form
+        class="mt-8 space-y-5"
+        @submit.prevent="submitForm"
+      >
+
+        <!-- Name -->
+        <div>
+          <label
+            for="name"
+            class="mb-2 block text-sm font-medium"
+          >
+            Full Name
+          </label>
+
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            placeholder="Your name"
+            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/30"
+          />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label
+            for="email"
+            class="mb-2 block text-sm font-medium"
+          >
+            Email Address
+          </label>
+
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            placeholder="you@example.com"
+            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/30"
+          />
+        </div>
+
+        <!-- Subject -->
+        <div>
+          <label
+            for="subject"
+            class="mb-2 block text-sm font-medium"
+          >
+            Subject
+          </label>
+
+          <input
+            id="subject"
+            v-model="form.subject"
+            type="text"
+            placeholder="How can we help?"
+            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/30"
+          />
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label
+            for="message"
+            class="mb-2 block text-sm font-medium"
+          >
+            Message
+          </label>
+
+          <textarea
+            id="message"
+            v-model="form.message"
+            rows="5"
+            placeholder="Write your message..."
+            class="w-full resize-none rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/30"
+          ></textarea>
+        </div>
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full rounded-xl bg-[#0F3D2E] px-6 py-3.5 font-semibold text-white transition hover:bg-[#174A3A]"
+        >
+          Send Message
+        </button>
+
+        <!-- Success message -->
+        <p
+          v-if="submitted"
+          class="text-center text-sm font-medium text-[#52705D]"
+        >
+          Thank you! Your message has been sent.
+        </p>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+```
+
   </div>
 </template>
+
+<script setup lang="ts">
+import { reactive, ref } from "vue";
+
+const submitted = ref(false);
+
+const form = reactive({
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+});
+
+const submitForm = () => {
+  submitted.value = true;
+
+  form.name = "";
+  form.email = "";
+  form.subject = "";
+  form.message = "";
+
+  setTimeout(() => {
+    submitted.value = false;
+  }, 3000);
+};
+</script>
+
+<style scoped >
+/* Tailwind CSS is used for the page styling. */
+</style>

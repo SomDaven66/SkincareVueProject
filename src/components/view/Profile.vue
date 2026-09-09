@@ -28,6 +28,7 @@
           >
 
             <!-- Profile Image -->
+             
             <div
               class="flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-8 border-white bg-[#0F3D2E] text-4xl font-semibold text-white shadow-sm"
             >
@@ -545,7 +546,7 @@ if (storedUser) {
 // ================= EDIT PROFILE =================
 
 const editProfile = () => {
-  alert("Edit profile coming soon!");
+  router.push("/edit-profile");
 };
 
 

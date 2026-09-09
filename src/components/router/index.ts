@@ -5,7 +5,7 @@ import About from "../view/About.vue";
 import Contact from "../view/Contact.vue";
 import Profile from "../view/Profile.vue";
 import Addtocard from "../view/Addtocard.vue";
-import Products from "../view/Products.vue";
+// import Products from "../view/Products.vue";
 import Cart from "../view/Cart.vue";
 import Login from "../view/Login.vue";
 import Register from "../view/Register.vue";
@@ -27,6 +27,10 @@ import AdminAddproduct from "../admin/AdminAddproduct.vue";
 import AdminSettings from "../admin/AdminSettings.vue";
 
 
+
+import Checkout from "../view/Checkout.vue";
+
+import Editprofile from "../view/Editprofile.vue";
 
 const routes = [
   {
@@ -127,6 +131,13 @@ const routes = [
         component: AdminSettings
       }
     ]
+  }
+  ,{
+    path:'/checkout',
+    component:Checkout
+  },{
+    path:'/edit-profile',
+    component:Editprofile
   }
 ];
 
