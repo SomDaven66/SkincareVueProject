@@ -1,4 +1,3 @@
-```vue
 <template>
   <nav
     class="sticky top-0 z-50 border-b border-[#E5ECE5] bg-white/95 backdrop-blur-md"
@@ -350,4 +349,3 @@ import {ShoppingCart } from 'lucide-vue-next';
 
 <style scoped>
 </style>
-```

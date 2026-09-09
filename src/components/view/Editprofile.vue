@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="min-h-screen bg-[#F9FBF7] px-4 py-10 sm:px-6 lg:py-14">
     <div class="mx-auto max-w-4xl">
@@ -348,7 +347,6 @@ const goBack = () => {
 
 <style lang="scss" scoped>
 </style>
-```
 
 ### 6. ភ្ជាប់ជាមួយ `Profile.vue`
 

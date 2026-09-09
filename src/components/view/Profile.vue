@@ -1,4 +1,3 @@
-```vue
 <template>
   <!-- user -->
   
@@ -567,7 +566,6 @@ const goToLogin = () => {
 };
 
 </script>
-```
 
 ### What changed from your old profile
 
