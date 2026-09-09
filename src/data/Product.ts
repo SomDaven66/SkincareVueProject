@@ -911,4 +911,5 @@ export const SerumProducts: Product[] = [
   image: "https://i.pinimg.com/736x/f3/80/b8/f380b869c04528764492aec9548cce8a.jpg",
   description: "A nourishing serum that supports a healthy and radiant-looking complexion.",
 },
+
 ];
