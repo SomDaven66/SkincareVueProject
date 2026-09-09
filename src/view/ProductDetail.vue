@@ -3,6 +3,18 @@ import { computed, ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { Products } from "../data/Products";
 import { useCartStore } from "../stores/cart";
+import {
+  ArrowLeft,
+  Heart,
+  Star,
+  ShoppingCart,
+  Truck,
+  RotateCcw,
+  ShieldCheck,
+  ChevronRight,
+  Minus,
+  Plus,
+} from "lucide-vue-next";
 
 const route = useRoute();
 const router = useRouter();
@@ -24,6 +36,7 @@ const imageList = computed(() => {
 const selectedImage = ref(0);
 const selectedSize = ref("");
 const quantity = ref(1);
+const addedToCart = ref(false);
 
 function increaseQuantity() {
   quantity.value++;
@@ -39,62 +52,57 @@ function addToCart() {
   if (!product.value) return;
 
   if (cartStore?.addToCart) {
-    cartStore.addToCart(product.value, quantity.value);
+    cartStore.addToCart(product.value, quantity.value, selectedSize.value || undefined);
   }
 
-  router.push("/cart");
+  addedToCart.value = true;
+  setTimeout(() => {
+    addedToCart.value = false;
+  }, 2000);
 }
 </script>
 
 <template>
-  <div v-if="product" class="min-h-screen bg-[#FAFBF8]">
-    <!-- Navbar -->
-    <header class="border-b border-black/10 bg-white">
-      <div
-        class="px-6 py-5 mx-auto max-w-7xl justify-between flex items-center"
-      >
-        <RouterLink to="/products" class="text-2xl font-black">
-          ESSENTIALS
-          <span class="px-2 py-1 rounded-md bg-black text-[#DCFFB6]">
-            LAB
-          </span>
-        </RouterLink>
+  <div v-if="product" class="min-h-screen bg-[#F9FBF7]">
 
-        <nav class="gap-8 text-sm font-semibold hidden items-center md:flex">
-          <RouterLink to="/products">Products</RouterLink>
-          <RouterLink to="/cart">Cart 🛒</RouterLink>
-        </nav>
-      </div>
-    </header>
+    <!-- ================= CONTENT ================= -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
-    <!-- Content -->
-    <main class="px-6 py-8 mx-auto max-w-7xl">
       <!-- Breadcrumb -->
-      <div class="mb-8 gap-2 text-sm text-black/50 flex items-center">
-        <RouterLink to="/products" class="hover:text-black">
+      <nav class="mb-8 flex items-center gap-2 text-sm text-[#9AAD9A]">
+        <RouterLink
+          to="/products"
+          class="flex items-center gap-1 transition hover:text-[#0F3D2E]"
+        >
+          <ArrowLeft class="h-4 w-4" :stroke-width="2" />
           Products
         </RouterLink>
-        <span>/</span>
-        <span>{{ product.category }}</span>
-        <span>/</span>
-        <span class="text-black">{{ product.name }}</span>
-      </div>
 
-      <!-- Product Top Section -->
-      <section class="grid gap-12 lg:grid-cols-2">
-        <!-- LEFT IMAGE -->
-        <div class="gap-4 flex">
+        <ChevronRight class="h-3.5 w-3.5" />
+        <span>{{ product.category }}</span>
+        <ChevronRight class="h-3.5 w-3.5" />
+        <span class="font-medium text-[#0F3D2E]">{{ product.name }}</span>
+      </nav>
+
+      <!-- ================= PRODUCT SECTION ================= -->
+      <section class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+
+        <!-- LEFT — IMAGES -->
+        <div class="flex gap-4">
           <!-- Thumbnails -->
-          <div class="flex-col gap-4 w-20 flex" v-if="imageList.length > 1">
+          <div
+            v-if="imageList.length > 1"
+            class="flex w-20 flex-col gap-3"
+          >
             <button
               v-for="(image, index) in imageList"
               :key="index"
               @click="selectedImage = index"
-              class="rounded-2xl border-2 bg-white overflow-hidden aspect-square transition"
+              class="aspect-square overflow-hidden rounded-xl border-2 bg-white transition-all duration-200"
               :class="
                 selectedImage === index
-                  ? 'border-[#246B18]'
-                  : 'border-transparent'
+                  ? 'border-[#0F3D2E] shadow-md'
+                  : 'border-[#DCE6DC] hover:border-[#7A9E7E]'
               "
             >
               <img
@@ -107,12 +115,13 @@ function addToCart() {
 
           <!-- Main Image -->
           <div
-            class="flex-1 overflow-hidden rounded-3xl bg-[#EAF2DF] relative aspect-square"
+            class="relative flex-1 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-[#F4F8F1]"
           >
+            <!-- Wishlist -->
             <button
-              class="top-5 z-10 h-12 w-12 justify-center rounded-full bg-white text-2xl shadow-md absolute right-5 flex items-center"
+              class="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
             >
-              ♡
+              <Heart class="h-5 w-5 text-[#536B59]" :stroke-width="2" />
             </button>
 
             <img
@@ -123,167 +132,262 @@ function addToCart() {
           </div>
         </div>
 
-        <!-- RIGHT INFORMATION -->
-        <div class="flex-col justify-center flex">
+        <!-- RIGHT — INFORMATION -->
+        <div class="flex flex-col justify-center">
+
+          <!-- Brand -->
           <p
             v-if="product.brand"
-            class="mb-2 text-sm font-bold text-[#246B18] uppercase tracking-widest"
+            class="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#7A9E7E]"
           >
             {{ product.brand }}
           </p>
 
+          <!-- Name -->
           <h1
-            class="max-w-xl text-4xl font-black text-gray-900 leading-tight md:text-5xl"
+            class="max-w-xl text-3xl font-bold tracking-tight text-[#0F3D2E] sm:text-4xl"
           >
             {{ product.name }}
           </h1>
 
           <!-- Rating -->
-          <div class="flex-wrap mt-5 gap-3 flex items-center">
-            <span class="text-xl text-yellow-500">★★★★★</span>
-            <span class="font-semibold">{{ product.rating }}</span>
-            <span class="text-black/40">({{ product.reviews }} reviews)</span>
-            <span class="text-black/40">|</span>
-            <span class="text-black/50">2.1K+ sold</span>
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-1">
+              <Star
+                v-for="i in 5"
+                :key="i"
+                class="h-4 w-4"
+                :class="
+                  i <= Math.round(product.rating)
+                    ? 'fill-amber-400 text-amber-400'
+                    : 'fill-gray-200 text-gray-200'
+                "
+              />
+            </div>
+
+            <span class="font-semibold text-[#0F3D2E]">{{ product.rating }}</span>
+            <span class="text-sm text-[#9AAD9A]">({{ product.reviews }} reviews)</span>
           </div>
 
           <!-- Price -->
-          <p class="mt-6 text-4xl font-black text-[#246B18]">
+          <p class="mt-5 text-3xl font-bold text-[#0F3D2E]">
             ${{ product.price.toFixed(2) }}
           </p>
 
           <!-- Badges -->
-          <div class="flex-wrap mt-5 gap-2 flex">
+          <div class="mt-4 flex flex-wrap gap-2">
             <span
-              class="px-4 py-2 rounded-full bg-[#E4F2D7] text-sm font-bold text-[#246B18]"
+              v-if="product.badge"
+              class="inline-flex items-center gap-1.5 rounded-full bg-[#F4F8F1] px-4 py-1.5 text-sm font-semibold text-[#0F3D2E]"
             >
-              🌿 Best Seller
+              🌿 {{ product.badge }}
             </span>
+
             <span
-              class="px-4 py-2 rounded-full bg-white text-sm font-semibold shadow-sm"
-            >
-              ✓ Vegan
-            </span>
-            <span
-              class="px-4 py-2 rounded-full bg-white text-sm font-semibold shadow-sm"
+              class="rounded-full border border-[#DCE6DC] bg-white px-3 py-1.5 text-sm font-medium text-[#536B59]"
             >
               ✓ Dermatologist Tested
             </span>
           </div>
 
           <!-- Description -->
-          <p class="mt-6 max-w-xl text-base text-black/65 leading-7">
+          <p class="mt-6 max-w-xl text-base leading-7 text-[#536B59]">
             {{ product.description }}
           </p>
 
-          <div class="my-7 h-px bg-black/10"></div>
+          <div class="my-6 h-px bg-[#DCE6DC]"></div>
+
+          <!-- Skin Type -->
+          <div v-if="product.skinType && product.skinType.length" class="mb-5">
+            <span class="mb-2 block text-sm font-bold text-[#0F3D2E]">Skin Type</span>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="type in product.skinType"
+                :key="type"
+                class="rounded-full bg-[#F4F8F1] px-3 py-1 text-xs font-medium text-[#536B59]"
+              >
+                {{ type }}
+              </span>
+            </div>
+          </div>
 
           <!-- Size Selection -->
-          <div v-if="product.sizes && product.sizes.length">
-            <div class="mb-3 justify-between flex">
-              <span class="font-bold">Size</span>
-              <span class="text-sm text-black/50">Choose your size</span>
+          <div v-if="product.sizes && product.sizes.length" class="mb-5">
+            <div class="mb-2 flex items-center justify-between">
+              <span class="text-sm font-bold text-[#0F3D2E]">Size</span>
+              <span class="text-xs text-[#9AAD9A]">Choose your size</span>
             </div>
 
-            <div class="gap-3 flex">
+            <div class="flex gap-3">
               <button
                 v-for="size in product.sizes"
                 :key="size"
                 @click="selectedSize = size"
-                class="py-3 px-6 border font-semibold rounded-xl text-[#246B18] border-[#246B18]' border-black/10' transition selectedSize === size ? 'bg-[#EAF4E2] : 'bg-white"
+                class="rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200"
+                :class="
+                  selectedSize === size
+                    ? 'border-[#0F3D2E] bg-[#F4F8F1] text-[#0F3D2E] shadow-sm'
+                    : 'border-[#DCE6DC] bg-white text-[#536B59] hover:border-[#7A9E7E]'
+                "
               >
                 {{ size }}
               </button>
             </div>
           </div>
 
-          <!-- Quantity Selection -->
-          <div class="mt-6 justify-between flex items-center">
-            <span class="font-bold">Quantity</span>
+          <!-- Quantity -->
+          <div class="mb-6 flex items-center justify-between">
+            <span class="text-sm font-bold text-[#0F3D2E]">Quantity</span>
 
             <div
-              class="overflow-hidden rounded-full bg-[#EDF0E8] flex items-center"
+              class="flex items-center overflow-hidden rounded-full border border-[#DCE6DC] bg-white"
             >
               <button
                 @click="decreaseQuantity"
-                class="h-12 w-12 text-xl font-bold hover:bg-black/5"
+                class="flex h-11 w-11 items-center justify-center text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
               >
-                −
+                <Minus class="h-4 w-4" :stroke-width="2.5" />
               </button>
 
               <span
-                class="h-12 w-12 justify-center bg-white font-bold flex items-center"
+                class="flex h-11 w-12 items-center justify-center border-x border-[#DCE6DC] font-bold text-[#0F3D2E]"
               >
                 {{ quantity }}
               </span>
 
               <button
                 @click="increaseQuantity"
-                class="h-12 w-12 text-xl font-bold hover:bg-black/5"
+                class="flex h-11 w-11 items-center justify-center text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
               >
-                +
+                <Plus class="h-4 w-4" :stroke-width="2.5" />
               </button>
             </div>
           </div>
 
           <!-- Add to Cart -->
-          <div class="mt-7 gap-3 flex">
+          <div class="flex gap-3">
             <button
               @click="addToCart"
-              class="flex-1 gap-3 py-4 justify-center rounded-full bg-[#246B18] text-lg font-bold text-white shadow-lg flex items-center transition hover:bg-[#194F12] hover:shadow-xl"
+              class="flex flex-1 items-center justify-center gap-2.5 rounded-full py-4 text-base font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98]"
+              :class="
+                addedToCart
+                  ? 'bg-[#7A9E7E] text-white'
+                  : 'bg-[#0F3D2E] text-white hover:bg-[#174A3A]'
+              "
             >
-              🛒 Add to Cart
+              <ShoppingCart class="h-5 w-5" :stroke-width="2" />
+              {{ addedToCart ? 'Added to Cart ✓' : 'Add to Cart' }}
             </button>
 
             <button
-              class="h-14 w-14 justify-center rounded-full bg-[#E9EEE3] text-2xl flex items-center transition hover:bg-[#DDE7D4]"
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#DCE6DC] bg-white text-[#536B59] transition hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
             >
-              ♡
+              <Heart class="h-5 w-5" :stroke-width="2" />
             </button>
           </div>
 
           <!-- Shipping Highlights -->
           <div
-            class="grid grid-cols-3 mt-6 gap-4 pt-6 border-t border-black/10 text-center text-xs text-black/60"
+            class="mt-6 grid grid-cols-3 gap-4 border-t border-[#DCE6DC] pt-6 text-center"
           >
-            <div>
-              🚚
-              <p class="mt-2">Free shipping over $50</p>
+            <div class="flex flex-col items-center gap-2">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F8F1]">
+                <Truck class="h-4 w-4 text-[#7A9E7E]" :stroke-width="2" />
+              </div>
+              <p class="text-xs text-[#536B59]">Free shipping over $50</p>
             </div>
 
-            <div>
-              ↩️
-              <p class="mt-2">Easy returns</p>
+            <div class="flex flex-col items-center gap-2">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F8F1]">
+                <RotateCcw class="h-4 w-4 text-[#7A9E7E]" :stroke-width="2" />
+              </div>
+              <p class="text-xs text-[#536B59]">Easy returns</p>
             </div>
 
-            <div>
-              ✓
-              <p class="mt-2">100% authentic</p>
+            <div class="flex flex-col items-center gap-2">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F8F1]">
+                <ShieldCheck class="h-4 w-4 text-[#7A9E7E]" :stroke-width="2" />
+              </div>
+              <p class="text-xs text-[#536B59]">100% authentic</p>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Ingredients -->
+      <section
+        v-if="product.ingredients && product.ingredients.length"
+        class="mt-12 rounded-2xl border border-[#DCE6DC] bg-white p-6 sm:p-8"
+      >
+        <h2 class="mb-4 text-lg font-bold text-[#0F3D2E]">Key Ingredients</h2>
+        <div class="flex flex-wrap gap-2">
+          <span
+            v-for="ing in product.ingredients"
+            :key="ing"
+            class="rounded-full bg-[#F4F8F1] px-4 py-2 text-sm font-medium text-[#536B59]"
+          >
+            🌿 {{ ing }}
+          </span>
+        </div>
+      </section>
+
+      <!-- Benefits -->
+      <section
+        v-if="product.benefits && product.benefits.length"
+        class="mt-6 rounded-2xl border border-[#DCE6DC] bg-white p-6 sm:p-8"
+      >
+        <h2 class="mb-4 text-lg font-bold text-[#0F3D2E]">Benefits</h2>
+        <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <li
+            v-for="benefit in product.benefits"
+            :key="benefit"
+            class="flex items-center gap-3 text-sm text-[#536B59]"
+          >
+            <span
+              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1] text-xs text-[#7A9E7E]"
+            >
+              ✓
+            </span>
+            {{ benefit }}
+          </li>
+        </ul>
+      </section>
+
       <!-- Back Link -->
-      <div class="mt-12">
+      <div class="mt-10">
         <RouterLink
           to="/products"
-          class="gap-2 font-bold text-[#246B18] inline-flex items-center hover:underline"
+          class="inline-flex items-center gap-2 font-semibold text-[#7A9E7E] transition hover:text-[#0F3D2E]"
         >
-          ← Continue Shopping
+          <ArrowLeft class="h-4 w-4" :stroke-width="2" />
+          Continue Shopping
         </RouterLink>
       </div>
     </main>
   </div>
 
-  <!-- Product Not Found -->
-  <div v-else class="min-h-screen justify-center flex items-center">
+  <!-- ================= NOT FOUND ================= -->
+  <div
+    v-else
+    class="flex min-h-screen items-center justify-center bg-[#F9FBF7]"
+  >
     <div class="text-center">
-      <h1 class="text-3xl font-black">Product Not Found</h1>
+      <div
+        class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#F4F8F1]"
+      >
+        <ShoppingCart class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
+      </div>
+
+      <h1 class="text-2xl font-bold text-[#0F3D2E]">Product Not Found</h1>
+      <p class="mt-2 text-sm text-[#536B59]">
+        The product you're looking for doesn't exist.
+      </p>
+
       <RouterLink
         to="/products"
-        class="mt-5 px-6 py-3 rounded-full bg-black text-white inline-block"
+        class="mt-6 inline-flex items-center gap-2 rounded-full bg-[#0F3D2E] px-6 py-3 font-semibold text-white transition hover:bg-[#174A3A]"
       >
+        <ArrowLeft class="h-4 w-4" :stroke-width="2" />
         Back to Products
       </RouterLink>
     </div>

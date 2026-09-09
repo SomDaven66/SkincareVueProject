@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
 import { Products } from '../data/Products'
 
 const categories = [
-  'All', 'Sunscreen', 'Foam', 'Serum', 'Moisturizer', 
+  'All', 'Sunscreen', 'Cleanser', 'Foam', 'Serum', 'Moisturizer',
   'Eye Care', 'Toner', 'Essence', 'Face Mist', 'Lotion', 'Mask'
 ] as const
 
@@ -13,16 +14,7 @@ type SortOption = 'default' | 'name-asc' | 'rating-desc' | 'price-asc' | 'price-
 const activeCategory = ref<string>('All')
 const searchQuery = ref<string>('')
 const sortBy = ref<SortOption>('default')
-const cartCount = ref<number>(0)
 const wishlistedIds = ref<number[]>([])
-
-const getCategoryClass = (cat: string): string => {
-  if (activeCategory.value === cat) {
-    return 'bg-black text-[#DCFFB6]'
-  }
-  return 'bg-white text-black/70 hover:bg-[#DCFFB6]/50 hover:text-black'
-}
-
 
 const processedProducts = computed(() => {
   // 1. Filter by category
@@ -33,9 +25,10 @@ const processedProducts = computed(() => {
   // 2. Filter by search query
   if (searchQuery.value.trim() !== '') {
     const query = searchQuery.value.toLowerCase().trim()
-    result = result.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      p.category.toLowerCase().includes(query)
+    result = result.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query) ||
+      p.brand?.toLowerCase().includes(query)
     )
   }
 
@@ -56,6 +49,8 @@ const processedProducts = computed(() => {
   })
 })
 
+const productCount = computed(() => processedProducts.value.length)
+
 const toggleWishlist = (id: number): void => {
   const index = wishlistedIds.value.indexOf(id)
   if (index === -1) {
@@ -73,172 +68,236 @@ const clearFilters = (): void => {
 </script>
 
 <template>
-  <div class="p-4 min-h-screen bg-[#F5F5F5] font-sans text-black sm:p-8 lg:p-12">
-    <!-- Header -->
-    <header class="flex-col mb-8 gap-4 pb-6 max-w-7xl mx-auto justify-between border-b border-black/10 flex sm:flex-row items-center">
-      <div>
-        <h1 class="text-3xl font-black text-black tracking-tight">
-          ESSENTIALS<span class="px-1.5 py-0.5 text-[#DCFFB6] bg-black rounded-md ml-1">LAB</span>
-        </h1>
-        <p class="mt-1 text-xs text-black/60 font-medium">Curated botanical skincare collection</p>
-      </div>
+  <div class="min-h-screen bg-[#F9FBF7]">
 
-      <div class="flex items-center space-x-4">
-        <div class="px-5 py-2 bg-white border border-black/10 rounded-full shadow-sm relative flex items-center">
-          <span class="text-xs font-bold text-black uppercase tracking-wider mr-2">Bag</span>
-          <span class="bg-black text-[#DCFFB6] text-xs font-bold rounded-full w-5 h-5 justify-center flex items-center">
-            {{ cartCount }}
-          </span>
-        </div>
-      </div>
-    </header>
-
-    <!-- Search & Sort Controls -->
-    <section class="flex-col mb-6 gap-4 max-w-7xl mx-auto justify-between flex md:flex-row items-center">
-      <!-- Search Input -->
-      <div class="w-full relative md:w-96">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search products..."
-          class="py-2.5 w-full bg-white border border-black/10 rounded-full text-xs font-medium shadow-sm pl-10 pr-4 focus:outline-none focus:border-black transition-colors"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4 top-1/2 text-black/40 absolute left-3.5 -translate-y-1/2"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>
-
-      <!-- Sort Dropdown -->
-      <div class="gap-2 w-full justify-end flex items-center md:w-auto">
-        <label for="sort" class="text-xs font-bold text-black/60 whitespace-nowrap">Sort by:</label>
-        <select
-          id="sort"
-          v-model="sortBy"
-          class="px-4 py-2.5 bg-white border border-black/10 rounded-full text-xs font-bold shadow-sm focus:outline-none focus:border-black cursor-pointer"
-        >
-          <option value="default">Featured</option>
-          <option value="name-asc">Name (A-Z)</option>
-          <option value="rating-desc">Highest Rated</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-        </select>
-      </div>
-    </section>
-
-    <!-- Category Filter Pills -->
-    <section class="mb-10 max-w-7xl mx-auto">
-      <div class="pb-2 overflow-x-auto flex items-center space-x-2 scrollbar-none">
-       <button
-  v-for="cat in categories"
-  :key="cat"
-  @click="activeCategory = cat"
-  class="px-5 py-2.5 rounded-full text-xs font-bold border border-black/10 shadow-sm transition-all duration-300 whitespace-nowrap"
-  :class="getCategoryClass(cat)"
->
-  {{ cat }}
-</button>
-      </div>
-    </section>
-
-    <!-- Product Grid -->
-    <main 
-      v-if="processedProducts.length > 0"
-      class="grid grid-cols-1 gap-8 max-w-7xl mx-auto sm:grid-cols-2 lg:grid-cols-4"
+    <!-- ================= PAGE HEADER ================= -->
+    <section
+      class="relative overflow-hidden border-b border-[#DCE6DC] bg-gradient-to-br from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
+      <!-- Decorative circles -->
+      <div class="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#A8C3A0]/15"></div>
+      <div class="absolute -bottom-16 -left-16 h-44 w-44 rounded-full bg-[#7A9E7E]/10"></div>
+
+      <div class="relative mx-auto max-w-7xl text-center">
+        <p
+          class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#7A9E7E]"
+        >
+          Curated Skincare Collection
+        </p>
+
+        <h1
+          class="text-4xl font-bold tracking-tight text-[#0F3D2E] sm:text-5xl lg:text-6xl"
+        >
+          Our Products
+        </h1>
+
+        <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#536B59] sm:text-lg">
+          Discover gentle, effective skincare crafted with natural ingredients
+          for every skin type.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= CONTROLS ================= -->
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+
+      <!-- Search & Sort Row -->
       <div
-        v-for="item in processedProducts"
-        :key="item.id"
-        class="flex-col bg-white rounded-3xl overflow-hidden border border-[#DCFFB6]/40 shadow-sm justify-between flex group hover:shadow-xl transition-all duration-300"
+        class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
-        <!-- Card Image Section with Link -->
-        <div class="p-6 w-full h-72 justify-center overflow-hidden bg-gradient-to-b relative from-[#DCFFB6]/40 via-[#F5F5F5] to-white flex items-center">
-          <div class="flex-col gap-2 top-4 z-10 flex absolute left-4">
-            <span v-if="item.tag" class="px-3 py-1 bg-black text-[#DCFFB6] text-[10px] font-bold rounded-full uppercase tracking-widest">
-              {{ item.tag }}
-            </span>
-            <span v-if="item.isNew" class="px-3 py-1 bg-white text-black border border-black/10 text-[10px] font-bold rounded-full uppercase tracking-widest">
-              New
-            </span>
-          </div>
+        <!-- Search -->
+        <div class="relative w-full sm:max-w-sm">
+          <Search
+            class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7A9E7E]"
+            :stroke-width="2"
+          />
 
-          <button
-            @click.stop="toggleWishlist(item.id)"
-            class="p-2.5 top-4 bg-white/80 rounded-full shadow-sm z-10 absolute right-4 backdrop-blur-md hover:scale-110 transition-transform duration-200 focus:outline-none"
-            :aria-label="'Add ' + item.name + ' to wishlist'"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 transition-colors duration-200"
-              :class="wishlistedIds.includes(item.id) ? 'fill-black stroke-black' : 'fill-none stroke-black'"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-
-          <!-- Clickable image navigates to Product Details -->
-          <RouterLink :to="`/products/${item.id}`" class="h-full w-full justify-center flex items-center">
-            <img
-              :src="Array.isArray(item.images) ? item.images[0] : item.images?.img1"
-              :alt="item.name"
-              class="h-full object-cover w-full rounded-2xl drop-shadow-md group-hover:scale-105 transition-transform duration-500 ease-out"
-            />
-          </RouterLink>
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search products, brands..."
+            class="w-full rounded-xl border border-[#DCE6DC] bg-white py-3 pl-11 pr-4 text-sm text-[#0F3D2E] shadow-sm outline-none transition placeholder:text-[#9AAD9A] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
+          />
         </div>
 
-        <!-- Card Body -->
-        <div class="flex-1 flex-col p-6 justify-between flex">
-          <div>
-            <div class="mb-2 justify-between flex items-center">
-              <span class="px-2.5 py-1 text-[11px] font-bold text-black/50 bg-[#F5F5F5] rounded-md uppercase tracking-wider">
-                {{ item.category }}
+        <!-- Sort + Count -->
+        <div class="flex items-center gap-4">
+          <span class="text-sm text-[#536B59]">
+            <strong class="text-[#0F3D2E]">{{ productCount }}</strong> products
+          </span>
+
+          <div class="flex items-center gap-2">
+            <SlidersHorizontal class="h-4 w-4 text-[#7A9E7E]" :stroke-width="2" />
+
+            <select
+              v-model="sortBy"
+              class="rounded-xl border border-[#DCE6DC] bg-white px-4 py-2.5 text-sm font-medium text-[#0F3D2E] shadow-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]/40"
+            >
+              <option value="default">Featured</option>
+              <option value="name-asc">Name (A–Z)</option>
+              <option value="rating-desc">Highest Rated</option>
+              <option value="price-asc">Price: Low → High</option>
+              <option value="price-desc">Price: High → Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Pills -->
+      <div class="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="activeCategory = cat"
+          class="whitespace-nowrap rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-200"
+          :class="
+            activeCategory === cat
+              ? 'border-[#0F3D2E] bg-[#0F3D2E] text-white shadow-md'
+              : 'border-[#DCE6DC] bg-white text-[#536B59] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
+          "
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <!-- ================= PRODUCT GRID ================= -->
+      <main
+        v-if="processedProducts.length > 0"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <div
+          v-for="item in processedProducts"
+          :key="item.id"
+          class="group flex flex-col overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+        >
+          <!-- Card Image -->
+          <div class="relative h-72 overflow-hidden bg-[#F4F8F1]">
+            <!-- Badges -->
+            <div class="absolute left-3 top-3 z-10 flex flex-col gap-2">
+              <span
+                v-if="item.tag"
+                class="rounded-full bg-[#0F3D2E] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white"
+              >
+                {{ item.tag }}
               </span>
-              
-              <div class="flex items-center space-x-1">
-                <span class="text-xs text-yellow-400">★</span>
-                <span class="text-xs font-bold text-yellow-500">{{ item.rating }}</span>
-                <span class="text-[10px] text-black/40">({{ item.reviews }})</span>
-              </div>
+
+              <span
+                v-if="item.isNew"
+                class="rounded-full border border-[#7A9E7E] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#0F3D2E]"
+              >
+                New
+              </span>
             </div>
 
-            <h3 class="mb-1 text-lg font-bold text-black group-hover:text-black/80 transition-colors">
-              {{ item.name }}
-            </h3>
-          </div>
+            <!-- Wishlist Button -->
+            <button
+              @click.stop.prevent="toggleWishlist(item.id)"
+              class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
+              :aria-label="'Add ' + item.name + ' to wishlist'"
+            >
+              <Heart
+                class="h-4 w-4 transition-colors duration-200"
+                :class="
+                  wishlistedIds.includes(item.id)
+                    ? 'fill-red-500 text-red-500'
+                    : 'text-[#536B59]'
+                "
+                :stroke-width="2"
+              />
+            </button>
 
-          <div class="mt-6 pt-4 justify-between border-t border-black/5 flex items-center">
-            <span class="text-xl font-black text-black">
-              ${{ item.price.toFixed(2) }}
-            </span>
-
+            <!-- Clickable Image -->
             <RouterLink
               :to="`/products/${item.id}`"
-              class="px-4 py-2.5 bg-[#F5F5F5] text-black font-bold text-sm rounded-full shadow-sm hover:bg-black hover:text-[#DCFFB6] transition-all duration-300 flex items-center space-x-1.5 active:scale-95"
+              class="flex h-full w-full items-center justify-center"
             >
-              View Detail
+              <img
+                :src="Array.isArray(item.images) ? item.images[0] : item.images?.img1"
+                :alt="item.name"
+                class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
             </RouterLink>
           </div>
-        </div>
-      </div>
-    </main>
 
-    <!-- Empty State -->
-    <div v-else class="py-20 text-center bg-white rounded-3xl border border-black/5 max-w-7xl mx-auto">
-      <p class="text-lg font-bold text-black/60">No products match your search criteria.</p>
-      <button 
-        @click="clearFilters"
-        class="mt-4 px-6 py-2.5 bg-black text-[#DCFFB6] font-bold text-xs rounded-full hover:bg-black/80 transition-colors"
+          <!-- Card Body -->
+          <div class="flex flex-1 flex-col justify-between p-5">
+            <div>
+              <!-- Category + Rating -->
+              <div class="mb-2 flex items-center justify-between">
+                <span
+                  class="rounded-md bg-[#F4F8F1] px-2 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#7A9E7E]"
+                >
+                  {{ item.category }}
+                </span>
+
+                <div class="flex items-center gap-1">
+                  <Star class="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                  <span class="text-xs font-bold text-[#0F3D2E]">{{ item.rating }}</span>
+                  <span class="text-[10px] text-[#9AAD9A]">({{ item.reviews }})</span>
+                </div>
+              </div>
+
+              <!-- Product Name -->
+              <RouterLink :to="`/products/${item.id}`">
+                <h3
+                  class="mb-1 text-[15px] font-bold leading-snug text-[#0F3D2E] transition-colors group-hover:text-[#174A3A]"
+                >
+                  {{ item.name }}
+                </h3>
+              </RouterLink>
+
+              <!-- Brand -->
+              <p
+                v-if="item.brand"
+                class="text-xs text-[#7A9E7E]"
+              >
+                {{ item.brand }}
+              </p>
+            </div>
+
+            <!-- Price + CTA -->
+            <div
+              class="mt-4 flex items-center justify-between border-t border-[#EAF2E9] pt-4"
+            >
+              <span class="text-xl font-bold text-[#0F3D2E]">
+                ${{ item.price.toFixed(2) }}
+              </span>
+
+              <RouterLink
+                :to="`/products/${item.id}`"
+                class="inline-flex items-center gap-1.5 rounded-full bg-[#0F3D2E] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#174A3A] hover:shadow-md active:scale-95"
+              >
+                <ShoppingBag class="h-3.5 w-3.5" :stroke-width="2" />
+                View
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- ================= EMPTY STATE ================= -->
+      <div
+        v-else
+        class="rounded-2xl border border-[#DCE6DC] bg-white px-6 py-20 text-center"
       >
-        Reset Filters
-      </button>
+        <div
+          class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#F4F8F1]"
+        >
+          <Search class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
+        </div>
+
+        <h3 class="text-lg font-bold text-[#0F3D2E]">No products found</h3>
+        <p class="mt-2 text-sm text-[#536B59]">
+          Try adjusting your search or filter to find what you're looking for.
+        </p>
+
+        <button
+          @click="clearFilters"
+          class="mt-6 inline-flex items-center gap-2 rounded-full bg-[#0F3D2E] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+        >
+          Reset Filters
+        </button>
+      </div>
     </div>
   </div>
 </template>

@@ -14,6 +14,8 @@ import Collection from "../view/Collection.vue";
 import Wishlist from "../view/wishlist.vue";
 import Myorders from "../view/Myorders.vue";
 import Setting from "../view/Setting.vue";
+import ProductCart from "../../view/ProductCart.vue";
+import ProductDetail from "../../view/ProductDetail.vue";
 
 import AdminLayout from "../layout/AdminLayout.vue";
 import AdminProfile from "../admin/AdminProfile.vue";
@@ -32,8 +34,12 @@ const routes = [
     component: Home,
   },
   {
-    path: "/product",
-    component: Products,
+    path: "/products",
+    component: ProductCart,
+  },
+  {
+    path: "/products/:id",
+    component: ProductDetail,
   },
   {
     path: "/cart",
@@ -72,16 +78,16 @@ const routes = [
     component: Collection,
   },
   {
-    path:'/wishlist',
-    component:Wishlist
+    path: '/wishlist',
+    component: Wishlist
   },
   {
-    path:'/orders',
-    component:Myorders
+    path: '/orders',
+    component: Myorders
   },
   {
-    path:'/setting',
-    component:Setting
+    path: '/setting',
+    component: Setting
   },
   {
     path: '/admin',
@@ -146,7 +152,7 @@ const router = createRouter({
 // ================= NAVIGATION GUARDS =================
 router.beforeEach((to, from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
-  
+
   if (requiresAdmin) {
     const currentUserRaw = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
     if (!currentUserRaw) {
