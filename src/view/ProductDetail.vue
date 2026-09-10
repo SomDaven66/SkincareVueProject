@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { Products } from "../data/Products";
-import { useCartStore } from "../stores/cart";
+import { useCartStore } from "../store/Card";
 import {
   ArrowLeft,
   Heart,
@@ -51,9 +51,27 @@ function decreaseQuantity() {
 function addToCart() {
   if (!product.value) return;
 
-  if (cartStore?.addToCart) {
-    cartStore.addToCart(product.value, quantity.value, selectedSize.value || undefined);
+  // Normalize image from images object
+  let image = '';
+  if (product.value.images) {
+    if (typeof product.value.images === 'object' && !Array.isArray(product.value.images)) {
+      image = product.value.images.img1 || Object.values(product.value.images)[0] || '';
+    } else if (Array.isArray(product.value.images) && product.value.images.length > 0) {
+      image = product.value.images[0];
+    }
   }
+
+  const normalizedProduct = {
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    category: product.value.category,
+    description: product.value.description,
+    image: image,
+    discount: 20,
+  };
+
+  cartStore.addToCart(normalizedProduct);
 
   addedToCart.value = true;
   setTimeout(() => {

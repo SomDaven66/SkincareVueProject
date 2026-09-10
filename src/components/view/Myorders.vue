@@ -107,7 +107,7 @@
           <div class="divide-y divide-[#DCE6DC]">
 
             <div
-              v-for="product in order.products"
+              v-for="product in order.items"
               :key="product.id"
               class="flex gap-4 px-5 py-4 sm:px-6"
             >
@@ -326,16 +326,16 @@
           </h2>
 
           <p class="mt-2 text-sm text-gray-500">
-            You don't have any {{ activeTab.toLowerCase() }} orders yet.
+            {{ currentUser ? "You don't have any " + activeTab.toLowerCase() + " orders yet." : "Please log in to view your orders." }}
           </p>
 
           <router-link
-            to="/products"
+            :to="currentUser ? '/products' : '/login'"
             class="mt-6 inline-flex rounded-full bg-[#0F3D2E]
                    px-6 py-3 text-sm font-medium text-white
                    transition hover:bg-[#174A3A]"
           >
-            Start Shopping
+            {{ currentUser ? "Start Shopping" : "Login" }}
           </router-link>
         </div>
 
@@ -345,7 +345,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import {
   Check,
   CircleCheck,
@@ -354,25 +354,31 @@ import {
   Truck,
   House,
 } from "lucide-vue-next";
+import { useOrderStore } from "../../store/orders";
 
-interface OrderProduct {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+const orderStore = useOrderStore();
 
-interface Order {
-  id: string;
-  date: string;
-  status: "Processing" | "Shipping" | "Delivered";
-  total: number;
-  products: OrderProduct[];
-}
+// Get current user
+const currentUser = ref(
+  JSON.parse(
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser") ||
+    "null"
+  )
+);
 
-const tabs = ["All", "Processing", "Shipping", "Delivered"];
+// Initialize store on mount
+onMounted(() => {
+  orderStore.init();
+});
+
+// Get user's orders
+const userOrders = computed(() => {
+  if (!currentUser.value) return [];
+  return orderStore.getUserOrders(currentUser.value.id);
+});
+
+const tabs = ["All", "Confirmed", "Processing", "Shipping", "Delivered"];
 
 const activeTab = ref("All");
 
@@ -395,82 +401,17 @@ const steps = [
   },
 ];
 
-const orders = ref<Order[]>([
-  {
-    id: "#ORD-1024",
-    date: "September 6, 2026",
-    status: "Shipping",
-    total: 37,
-    products: [
-      {
-        id: 1,
-        name: "Gentle Acne Cleanser",
-        category: "Cleanser",
-        price: 15,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 2,
-        name: "Hydrating Face Serum",
-        category: "Serum",
-        price: 22,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
-  },
-
-  {
-    id: "#ORD-1019",
-    date: "August 29, 2026",
-    status: "Delivered",
-    total: 38,
-    products: [
-      {
-        id: 3,
-        name: "Daily Face Moisturizer",
-        category: "Moisturizer",
-        price: 18,
-        quantity: 2,
-        image:
-          "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
-  },
-
-  {
-    id: "#ORD-1015",
-    date: "August 22, 2026",
-    status: "Processing",
-    total: 20,
-    products: [
-      {
-        id: 4,
-        name: "Daily Sunscreen SPF 50",
-        category: "Sunscreen",
-        price: 20,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
-  },
-]);
-
 const filteredOrders = computed(() => {
   if (activeTab.value === "All") {
-    return orders.value;
+    return userOrders.value;
   }
 
-  return orders.value.filter(
+  return userOrders.value.filter(
     (order) => order.status === activeTab.value
   );
 });
 
-function getStatusClass(status: Order["status"]): string {
+function getStatusClass(status: string): string {
   if (status === "Delivered") {
     return "bg-green-100 text-green-700";
   }
@@ -479,10 +420,15 @@ function getStatusClass(status: Order["status"]): string {
     return "bg-blue-50 text-blue-600";
   }
 
+  if (status === "Confirmed") {
+    return "bg-purple-50 text-purple-600";
+  }
+
   return "bg-yellow-50 text-yellow-700";
 }
 
-function getProgress(status: Order["status"]): number {
+function getProgress(status: string): number {
+  if (status === "Confirmed") return 16;
   if (status === "Processing") return 33;
   if (status === "Shipping") return 66;
   if (status === "Delivered") return 100;
@@ -491,10 +437,11 @@ function getProgress(status: Order["status"]): number {
 }
 
 function isStepComplete(
-  status: Order["status"],
+  status: string,
   step: string
 ): boolean {
-  const progress = {
+  const progress: Record<string, number> = {
+    Confirmed: 1,
     Processing: 2,
     Shipping: 3,
     Delivered: 4,
@@ -503,7 +450,7 @@ function isStepComplete(
   const stepNumber =
     steps.findIndex((item) => item.name === step) + 1;
 
-  return stepNumber <= progress[status];
+  return stepNumber <= (progress[status] || 0);
 }
 </script>
 

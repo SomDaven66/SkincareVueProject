@@ -82,7 +82,7 @@
 
 
       <!-- ================= NAVIGATION ================= -->
-      
+       
 
        
       <div class="hidden items-center gap-8 lg:flex md:flex-row md:items-center">
@@ -169,7 +169,8 @@
 
         <!-- Search -->
         <div
-          class="hidden items-center rounded-full border border-[#DCE6DC]
+          ref="searchContainerRef"
+          class="relative hidden items-center rounded-full border border-[#DCE6DC]
                  bg-[#F8FAF7] px-4 py-2 transition
                  focus-within:border-[#7A9E7E] sm:flex"
         >
@@ -193,12 +194,66 @@
           </svg>
 
           <input
+            v-model="searchQuery"
             type="text"
-            placeholder="Search..."
+            placeholder="Search products..."
             class="w-28 bg-transparent text-sm text-[#0F3D2E]
                    outline-none placeholder:text-gray-400
-                   focus:w-36 transition-all duration-300"
+                   focus:w-44 transition-all duration-300"
+            @keyup.enter="handleEnterSearch"
+            @input="showDropdown = searchQuery.trim().length > 0"
           />
+
+          <!-- ================= LIVE SEARCH DROPDOWN ================= -->
+          <div
+            v-if="showDropdown"
+            class="absolute left-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-[#DCE6DC] bg-white shadow-xl"
+          >
+            <!-- Results -->
+            <div v-if="searchResults.length > 0" class="max-h-80 overflow-y-auto">
+              <button
+                v-for="product in searchResults"
+                :key="product.id"
+                @click="goToProduct(product.id)"
+                class="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[#F4F8F1]"
+              >
+                <img
+                  :src="product.images?.img1"
+                  :alt="product.name"
+                  class="h-10 w-10 shrink-0 rounded-lg object-cover"
+                />
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium text-[#0F3D2E]">
+                    {{ product.name }}
+                  </p>
+                  <p class="text-xs text-[#7A9E7E]">
+                    {{ product.category }}
+                  </p>
+                </div>
+                <span class="shrink-0 text-sm font-semibold text-[#0F3D2E]">
+                  ${{ product.price.toFixed(2) }}
+                </span>
+              </button>
+            </div>
+
+            <!-- No Results -->
+            <div
+              v-else
+              class="px-4 py-6 text-center"
+            >
+              <p class="text-sm text-gray-500">No products found</p>
+            </div>
+
+            <!-- Footer hint -->
+            <div
+              v-if="searchResults.length > 0"
+              class="border-t border-[#E5ECE5] bg-[#F9FBF7] px-4 py-2"
+            >
+              <p class="text-[11px] text-[#7A9E7E]">
+                Press Enter to see all results on Products page
+              </p>
+            </div>
+          </div>
 
         </div>
 
@@ -216,6 +271,30 @@
         >
           Login
         </router-link>
+
+        <!-- Wishlist -->
+        <router-link
+          to="/wishlist"
+          class="relative flex h-10 w-10 items-center justify-center
+            rounded-full border border-[#DCE6DC]
+            text-[#0F3D2E] transition
+            hover:bg-[#EAF2E9]"
+          title="Wishlist"
+        >
+          <Heart
+            class="h-5 w-5"
+            :stroke-width="1.8"
+          />
+          <span
+            v-if="wishlistStore.totalItems > 0"
+            class="absolute -right-2 -top-2 flex h-5 min-w-5
+                  items-center justify-center rounded-full
+                  bg-[#0F3D2E] px-1 text-[10px] font-semibold text-white"
+          >
+            {{ wishlistStore.totalItems }}
+          </span>
+        </router-link>
+
         <!-- Add to card -->
          <router-link to="/addtocard" 
          class="relative flex h-10 w-10 items-center justify-center
@@ -231,11 +310,12 @@
 
             <!-- Cart Count -->
             <span
-              class="absolute -right-1 -top-1 flex h-4 w-4
+              v-if="cardStore.totalItems > 0"
+              class="absolute -right-2 -top-2 flex h-5 min-w-5
                     items-center justify-center rounded-full
-                    bg-[#0F3D2E] text-[9px] font-semibold text-white"
+                    bg-[#0F3D2E] px-1 text-[10px] font-semibold text-white"
             >
-              0
+              {{ cardStore.totalItems }}
             </span>
 
          </router-link>
@@ -278,7 +358,7 @@
           >
             Home
           </router-link>
-          <router-link to="/product"
+          <router-link to="/products"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
@@ -298,6 +378,13 @@
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         Cart
+        </router-link>
+          <router-link to="/wishlist"
+          @click="closeMenu"
+          class="rounded-lg px-4 py-3 text-sm font-medium
+          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          >
+        Wishlist
         </router-link>
           <router-link to="/contact"
           @click="closeMenu"
@@ -326,25 +413,76 @@
 </template>
 
 
-<script setup >
-import { computed, ref } from 'vue';
-import {ShoppingCart } from 'lucide-vue-next';
-    const isMenuOpen = ref(false);
-    function toggleMenu(){
-      isMenuOpen.value=!isMenuOpen.value;
-    }
-  // close menu
-    function closeMenu() {
-    isMenuOpen.value = false;
-  }
-  const userLogin=ref(false);
-  function userClick(){
-    userLogin.value=!userLogin.value;
-  }
- 
- 
-</script>
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+import { ShoppingCart, Heart } from 'lucide-vue-next';
+import { useCartStore } from '../../store/Card';
+import { useWishlistStore } from '../../store/wishlist';
+import { Products } from '../../data/Products';
+import type { Product } from '../../types/produce';
 
+const router = useRouter();
+const cardStore = useCartStore();
+const wishlistStore = useWishlistStore();
+
+// ================= SEARCH =================
+
+const searchQuery = ref('');
+const showDropdown = ref(false);
+const searchContainerRef = ref<HTMLElement | null>(null);
+
+const searchResults = computed<Product[]>(() => {
+  const q = searchQuery.value.toLowerCase().trim();
+  if (!q) return [];
+  return Products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+  );
+});
+
+function handleEnterSearch(): void {
+  const q = searchQuery.value.trim();
+  if (!q) return;
+  showDropdown.value = false;
+  router.push({ path: '/products', query: { search: q } });
+}
+
+function goToProduct(id: number): void {
+  showDropdown.value = false;
+  searchQuery.value = '';
+  router.push(`/products/${id}`);
+}
+
+function handleClickOutside(e: MouseEvent): void {
+  if (searchContainerRef.value && !searchContainerRef.value.contains(e.target as Node)) {
+    showDropdown.value = false;
+  }
+}
+
+onMounted(() => {
+  wishlistStore.loadWishlist();
+  document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+// ================= MOBILE MENU =================
+
+const isMenuOpen = ref(false);
+
+function toggleMenu(): void {
+  isMenuOpen.value = !isMenuOpen.value;
+}
+
+function closeMenu(): void {
+  isMenuOpen.value = false;
+}
+</script>
 
 
 <style scoped>

@@ -134,7 +134,8 @@ const routes = [
   }
   ,{
     path:'/checkout',
-    component:Checkout
+    component:Checkout,
+    meta: { requiresAuth: true }
   },{
     path:'/edit-profile',
     component:Editprofile
@@ -163,25 +164,32 @@ const router = createRouter({
 // ================= NAVIGATION GUARDS =================
 router.beforeEach((to, from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  const currentUserRaw = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+  let currentUser = null;
+  try {
+    currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null;
+  } catch (e) {
+    currentUser = null;
+  }
 
   if (requiresAdmin) {
-    const currentUserRaw = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-    if (!currentUserRaw) {
+    if (!currentUser) {
+      next('/login');
+    } else if (currentUser.role === 'admin') {
+      next();
+    } else {
+      next('/');
+    }
+  } else if (requiresAuth) {
+    if (!currentUser) {
       next('/login');
     } else {
-      try {
-        const currentUser = JSON.parse(currentUserRaw);
-        if (currentUser.role === 'admin') {
-          next();
-        } else {
-          next('/'); // Not an admin, redirect to home
-        }
-      } catch (e) {
-        next('/login');
-      }
+      next();
     }
   } else {
-    next(); // Always allow normal routes
+    next();
   }
 });
 

@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
 import { Products } from '../data/Products'
+import { useWishlistStore } from '../store/wishlist'
+import { useCartStore } from '../store/Card'
+
+const route = useRoute()
+const router = useRouter()
+const wishlistStore = useWishlistStore()
+const cartStore = useCartStore()
 
 const categories = [
   'All', 'Sunscreen', 'Cleanser', 'Foam', 'Serum', 'Moisturizer',
@@ -14,7 +21,26 @@ type SortOption = 'default' | 'name-asc' | 'rating-desc' | 'price-asc' | 'price-
 const activeCategory = ref<string>('All')
 const searchQuery = ref<string>('')
 const sortBy = ref<SortOption>('default')
-const wishlistedIds = ref<number[]>([])
+
+// Read search query from URL on mount
+onMounted(() => {
+  wishlistStore.loadWishlist()
+  if (route.query.search && typeof route.query.search === 'string') {
+    searchQuery.value = route.query.search
+  }
+})
+
+// Watch for URL query changes (e.g. new search from Navbar)
+watch(
+  () => route.query.search,
+  (newSearch) => {
+    if (typeof newSearch === 'string') {
+      searchQuery.value = newSearch
+    } else if (!newSearch) {
+      searchQuery.value = ''
+    }
+  }
+)
 
 const processedProducts = computed(() => {
   // 1. Filter by category
@@ -51,12 +77,20 @@ const processedProducts = computed(() => {
 
 const productCount = computed(() => processedProducts.value.length)
 
-const toggleWishlist = (id: number): void => {
-  const index = wishlistedIds.value.indexOf(id)
-  if (index === -1) {
-    wishlistedIds.value.push(id)
-  } else {
-    wishlistedIds.value.splice(index, 1)
+// Check if user is logged in
+function isLoggedIn(): boolean {
+  return !!(localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser'))
+}
+
+// Toggle wishlist with auth check for guests
+function toggleWishlist(id: number): void {
+  if (!isLoggedIn()) {
+    router.push('/login')
+    return
+  }
+  const product = Products.find((p) => p.id === id)
+  if (product) {
+    wishlistStore.toggleWishlist(product)
   }
 }
 
@@ -198,7 +232,7 @@ const clearFilters = (): void => {
               <Heart
                 class="h-4 w-4 transition-colors duration-200"
                 :class="
-                  wishlistedIds.includes(item.id)
+                  wishlistStore.isInWishlist(item.id)
                     ? 'fill-red-500 text-red-500'
                     : 'text-[#536B59]'
                 "

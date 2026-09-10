@@ -160,13 +160,23 @@
               Current Password
             </label>
 
+            <div class="relative">
             <input
               id="currentPassword"
               v-model="passwordForm.currentPassword"
-              type="password"
+              :type="showCurrentPassword ? 'text' : 'password'"
               placeholder="Enter current password"
-              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
             />
+            <button
+              type="button"
+              @click="showCurrentPassword = !showCurrentPassword"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            >
+              <Eye v-if="showCurrentPassword" class="h-5 w-5" :stroke-width="1.8" />
+              <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+            </button>
+            </div>
           </div>
 
           <!-- New Password -->
@@ -178,13 +188,23 @@
               New Password
             </label>
 
+            <div class="relative">
             <input
               id="newPassword"
               v-model="passwordForm.newPassword"
-              type="password"
+              :type="showNewPassword ? 'text' : 'password'"
               placeholder="Enter new password"
-              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
             />
+            <button
+              type="button"
+              @click="showNewPassword = !showNewPassword"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            >
+              <Eye v-if="showNewPassword" class="h-5 w-5" :stroke-width="1.8" />
+              <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+            </button>
+            </div>
           </div>
 
           <!-- Confirm Password -->
@@ -196,13 +216,23 @@
               Confirm New Password
             </label>
 
+            <div class="relative">
             <input
               id="confirmPassword"
               v-model="passwordForm.confirmPassword"
-              type="password"
+              :type="showConfirmPassword ? 'text' : 'password'"
               placeholder="Confirm your new password"
-              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
             />
+            <button
+              type="button"
+              @click="showConfirmPassword = !showConfirmPassword"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            >
+              <Eye v-if="showConfirmPassword" class="h-5 w-5" :stroke-width="1.8" />
+              <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+            </button>
+            </div>
           </div>
 
         </div>
@@ -238,6 +268,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { Eye, EyeOff } from "lucide-vue-next";
 
 const router = useRouter();
 
@@ -275,6 +306,10 @@ const passwordForm = ref({
   newPassword: "",
   confirmPassword: "",
 });
+
+const showCurrentPassword = ref(false);
+const showNewPassword = ref(false);
+const showConfirmPassword = ref(false);
 
 // ================= SAVE CHANGES =================
 const saveChanges = () => {
@@ -334,6 +369,19 @@ const saveChanges = () => {
     JSON.stringify(currentUser.value)
   );
 
+  // Also update the user in the users array so login still works
+  try {
+    const storedUsers = localStorage.getItem("users");
+    const users: any[] = storedUsers ? JSON.parse(storedUsers) : [];
+    const idx = users.findIndex((u: any) => u.id === currentUser.value!.id);
+    if (idx !== -1) {
+      users[idx] = { ...users[idx], ...currentUser.value };
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+  } catch (e) {
+    console.error("Failed to update users array:", e);
+  }
+
   alert("Profile updated successfully!");
 
   router.push("/profile");
@@ -347,57 +395,3 @@ const goBack = () => {
 
 <style lang="scss" scoped>
 </style>
-
-### 6. ភ្ជាប់ជាមួយ `Profile.vue`
-
-នៅក្នុង `Profile.vue` របស់អ្នក ប្តូរ function នេះ៖
-
-```ts
-const editProfile = () => {
-  alert("Edit profile coming soon!");
-};
-```
-
-ទៅជា៖
-
-```ts
-const editProfile = () => {
-  router.push("/edit-profile");
-};
-```
-
-ហើយ Router បន្ថែម៖
-
-```ts
-{
-  path: "/edit-profile",
-  name: "EditProfile",
-  component: () =>
-    import("../components/view/EditProfile.vue"),
-},
-```
-
-### Flow របស់វានឹងជា
-
-```text
-Profile.vue
-    │
-    │ Click "Edit Profile"
-    ▼
-EditProfile.vue
-    │
-    ├── Edit Name
-    ├── Edit Email
-    ├── Change Password
-    │
-    ▼
-Save Changes
-    │
-    ▼
-localStorage
-    │
-    ▼
-Profile.vue
-```
-
-**ចំណុចសំខាន់:** ខ្ញុំរក្សា design ឲ្យស្របនឹង Profile ដែលអ្នកផ្ញើមក ដូច្នេះវាមិនមើលទៅដូចជា page មួយមកពី project ផ្សេងទៀតទេ។ `#0F3D2E`, `#7A9E7E`, `#F4F8F1`, `#F9FBF7` និង `#DCE6DC` ត្រូវបានប្រើដដែល។

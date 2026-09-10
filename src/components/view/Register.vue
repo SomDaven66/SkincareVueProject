@@ -115,20 +115,30 @@
             Password
           </label>
 
+          <div class="relative">
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             v-model="password"
             id="password"
             placeholder="Create a password"
             required
             class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3
+                   bg-[#F9FBF7] px-4 py-3 pr-10
                    text-sm text-[#18352B]
                    outline-none transition
                    placeholder:text-[#64756B]
                    focus:border-[#7A9E7E]
                    focus:ring-2 focus:ring-[#A8C3A0]"
           />
+          <button
+            type="button"
+            @click="showPassword = !showPassword"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+          >
+            <Eye v-if="showPassword" class="h-5 w-5" :stroke-width="1.8" />
+            <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+          </button>
+          </div>
         </div>
 
 
@@ -141,20 +151,30 @@
             Confirm Password
           </label>
 
+          <div class="relative">
           <input
-            type="password"
+            :type="showConfirmPassword ? 'text' : 'password'"
             v-model="comfirmpassword"
             id="cpassword"
             placeholder="Confirm your password"
             required
             class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3
+                   bg-[#F9FBF7] px-4 py-3 pr-10
                    text-sm text-[#18352B]
                    outline-none transition
                    placeholder:text-[#64756B]
                    focus:border-[#7A9E7E]
                    focus:ring-2 focus:ring-[#A8C3A0]"
           />
+          <button
+            type="button"
+            @click="showConfirmPassword = !showConfirmPassword"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+          >
+            <Eye v-if="showConfirmPassword" class="h-5 w-5" :stroke-width="1.8" />
+            <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+          </button>
+          </div>
         </div>
 
 
@@ -239,7 +259,9 @@
 import { useRouter } from "vue-router";
 import {
     X,
-    CircleUserRound  } from 'lucide-vue-next';
+    CircleUserRound,
+    Eye,
+    EyeOff  } from 'lucide-vue-next';
 import { ref } from "vue";
 const router = useRouter();
 const name=ref("");
@@ -248,6 +270,8 @@ const password=ref("");
 const comfirmpassword=ref("");
 const message=ref("");
 const agreeTerms=ref(false);
+const showPassword=ref(false);
+const showConfirmPassword=ref(false);
 const register=()=>{
   let users=[];
   
@@ -258,7 +282,7 @@ const register=()=>{
     console.error("failed to parse the user from localStorage",e);
     users=[];
   }
-  const existingUser=users.find(user=>user.email===email.value);
+  const existingUser=users.find(user=>user.email.toLowerCase().trim()===email.value.toLowerCase().trim());
   if(existingUser){
     message.value="Email already exist";
     return
@@ -273,8 +297,8 @@ const register=()=>{
   }
   const newUser={
     id:Date.now(),
-    name:name.value,
-    email:email.value,
+    name:name.value.trim(),
+    email:email.value.toLowerCase().trim(),
     password:password.value,
     role:"user"
 
@@ -290,6 +314,10 @@ const register=()=>{
   password.value="";
   comfirmpassword.value="";
   agreeTerms.value=false;
+
+  setTimeout(() => {
+    router.push("/login");
+  }, 1000);
 }
 
 </script>
