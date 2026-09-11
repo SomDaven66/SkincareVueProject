@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Minus,
   Plus,
+  Sprout,
 } from "lucide-vue-next";
 
 const route = useRoute();
@@ -256,7 +257,7 @@ function addToCart() {
               v-if="product.badge"
               class="gap-1.5 px-4 py-1.5 rounded-full bg-[#F4F8F1] text-sm font-semibold text-[#0F3D2E] inline-flex items-center"
             >
-              🌿 {{ product.badge }}
+              <Sprout /> {{ product.badge }}
             </span>
 
             <span
@@ -397,7 +398,7 @@ function addToCart() {
             v-bind:key="ing"
             class="px-4 py-2 rounded-full bg-[#F4F8F1] text-sm font-medium text-[#536B59]"
           >
-            🌿 {{ ing }}
+            <Sprout /> {{ ing }}
           </span>
         </div>
       </section>

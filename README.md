@@ -101,3 +101,4 @@ Run the development server:
 ```bash
 npm run dev
 ```
+install icon in vue :  npm i lucide-vue-next
