@@ -182,23 +182,34 @@ router.beforeEach((to, from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
+  // Retrieve normal user session
   const currentUserRaw = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+  // Retrieve admin user session (stored separately)
+  const adminUserRaw = localStorage.getItem('adminUser') || sessionStorage.getItem('adminUser');
   let currentUser = null;
+  let adminUser = null;
   try {
     currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null;
   } catch (e) {
     currentUser = null;
   }
+  try {
+    adminUser = adminUserRaw ? JSON.parse(adminUserRaw) : null;
+  } catch (e) {
+    adminUser = null;
+  }
 
   if (requiresAdmin) {
-    if (!currentUser) {
+    // Admin routes require adminUser session
+    if (!adminUser) {
       next('/login');
-    } else if (currentUser.role === 'admin') {
+    } else if (adminUser.role === 'admin') {
       next();
     } else {
       next('/');
     }
   } else if (requiresAuth) {
+    // Regular authenticated routes use currentUser
     if (!currentUser) {
       next('/login');
     } else {
