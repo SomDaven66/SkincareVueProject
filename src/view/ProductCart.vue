@@ -105,17 +105,12 @@ const clearFilters = (): void => {
       <div
         class="flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between"
       >
-        <!-- Card Image Section with Link -->
-        <div class="p-6 w-full h-72 justify-center overflow-hidden relative from-[#DCFFB6]/40 via-[#F5F5F5] to-white flex items-center">
-          <div class="flex-col gap-2 top-4 z-10 flex absolute left-4">
-            <span v-if="item.tag" class="px-3 py-1 bg-black text-[#DCFFB6] text-[10px] font-bold rounded-full uppercase tracking-widest">
-              {{ item.tag }}
-            </span>
-            <span v-if="item.isNew" class="px-3 py-1 bg-white text-black border border-black/10 text-[10px] font-bold rounded-full uppercase tracking-widest">
-              New
-            </span>
-          </div>
-
+        <!-- Search Bar -->
+        <div class="relative w-full sm:max-w-md">
+          <Search
+            class="h-4 w-4 text-[#9AAD9A] absolute left-4 top-1/2 -translate-y-1/2"
+            :stroke-width="2"
+          />
           <input
             v-model="searchQuery"
             type="text"
@@ -153,7 +148,10 @@ const clearFilters = (): void => {
           v-for="cat in categories"
           :key="cat"
           @click="activeCategory = cat"
-          class="px-5 py-2.5 rounded-full border text-sm font-semibold text-white shadow-md' text-[#536B59] whitespace-nowrap transition-all duration-200 activeCategory === cat ? 'bg-[#0F3D2E] : 'bg-white hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
+          class="px-5 py-2.5 rounded-full border text-sm font-semibold whitespace-nowrap transition-all duration-200"
+          :class="activeCategory === cat
+            ? 'bg-[#0F3D2E] border-[#0F3D2E] text-white shadow-md'
+            : 'bg-white border-[#DCE6DC] text-[#536B59] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
           "
         >
           {{ cat }}
@@ -196,8 +194,8 @@ const clearFilters = (): void => {
               :aria-label="'Add ' + item.name + ' to wishlist'"
             >
               <Heart
-                class="h-4 w-4 text-red-500' transition-colors duration-200 wishlistedIds.includes(item.id) ? 'fill-red-500 : 'text-[#536B59]'
-                "
+                class="h-4 w-4 transition-colors duration-200"
+                :class="wishlistedIds.includes(item.id) ? 'fill-red-500 text-red-500' : 'text-[#536B59]'"
                 :stroke-width="2"
               />
             </button>
