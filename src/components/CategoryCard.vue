@@ -52,14 +52,15 @@
         {{ catego.itemCount }} products
       </p>
 
-      <span
+      <router-link
+      to="/products"
         class="text-xs font-medium px-4 py-1.5 rounded-full transition-colors duration-200"
         :class="hoveredId === catego.id ? 'bg-[#174A3A] text-white' : 'bg-[#A8C3A0] text-[#0F3D2E]'"
         @mouseenter="hoveredId = catego.id"
         @mouseleave="hoveredId = null"
       >
         Shop Now
-      </span>
+      </router-link>
     </div>
   </article>
 

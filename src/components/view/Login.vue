@@ -214,7 +214,7 @@ const login = () => {
     );
   }
 
-  message.value = "Login success";
+  alert("Login success");
 
   emit("login-success");
 

@@ -307,7 +307,7 @@ const register=()=>{
   users.push(newUser);
 
   localStorage.setItem("users",JSON.stringify(users));
-  message.value="Register successfully";
+  alert("Register successfully");
 
   name.value="";
   email.value="";

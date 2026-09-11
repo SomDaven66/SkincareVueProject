@@ -3,12 +3,7 @@ import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import {
-  LayoutDashboard,
   Package,
-  ShoppingCart,
-  Users,
-  Settings,
-  UserRound,
   Plus,
   Search,
   Pencil,

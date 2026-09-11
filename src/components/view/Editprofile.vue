@@ -274,6 +274,7 @@ const router = useRouter();
 
 // ================= USER TYPE =================
 interface User {
+  id: number;
   name: string;
   email: string;
   password: string;

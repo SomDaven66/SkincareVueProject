@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
-  ArrowLeft,
-  Package,
   Save,
   Image as ImageIcon,
 } from "lucide-vue-next";

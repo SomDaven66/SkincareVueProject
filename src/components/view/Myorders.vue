@@ -160,10 +160,9 @@
 
           </div>
 
-          <!-- ================= ORDER TRACKING ================= -->
+          <!-- ================= ORDER TRACKING (Read-Only) ================= -->
           <div
-            v-if="order.status !== 'Delivered'"
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6 select-none"
           >
             <div class="mb-6 flex items-center justify-between">
               <div>
@@ -172,7 +171,7 @@
                 </p>
 
                 <p class="mt-1 text-xs text-gray-500">
-                  Track your order from confirmation to delivery
+                  {{ statusMessages[order.status] }}
                 </p>
               </div>
 
@@ -189,31 +188,33 @@
 
               <!-- Active Line -->
               <div
-                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E] transition-all duration-500"
-                :style="{ width: `calc(${getProgress(order.status)}% - 12%)` }"
+                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E]"
+                :style="{ width: `calc(${getProgressWidth(order.status)}% - 12%)` }"
               ></div>
 
               <!-- Steps -->
               <div class="relative z-10 flex justify-between">
 
                 <div
-                  v-for="(step, index) in steps"
+                  v-for="step in steps"
                   :key="step.name"
                   class="flex flex-1 flex-col items-center"
                 >
-
                   <!-- Icon Circle -->
                   <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white transition-all duration-300"
+                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white"
                     :class="
-                      isStepComplete(order.status, step.name)
+                      getStepState(order.status, step.name) === 'completed'
                         ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
-                        : 'border-[#DCE6DC] text-gray-300'
+                        : getStepState(order.status, step.name) === 'current'
+                          ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
+                          : 'border-[#DCE6DC] text-gray-300'
                     "
                   >
                     <component
-                      :is="step.icon"
+                      :is="getStepIcon(step.name, getStepState(order.status, step.name))"
                       class="h-5 w-5"
+                      :class="{ 'animate-spin': getStepState(order.status, step.name) === 'current' && step.name === 'Processing' }"
                       :stroke-width="2"
                     />
                   </div>
@@ -222,20 +223,24 @@
                   <span
                     class="mt-3 text-center text-[10px] font-medium sm:text-xs"
                     :class="
-                      isStepComplete(order.status, step.name)
-                        ? 'text-[#0F3D2E]'
-                        : 'text-gray-400'
+                      getStepState(order.status, step.name) === 'upcoming'
+                        ? 'text-gray-400'
+                        : 'text-[#0F3D2E]'
                     "
                   >
                     {{ step.name }}
                   </span>
 
-                  <!-- Completed -->
+                  <!-- Status Label -->
                   <span
-                    v-if="isStepComplete(order.status, step.name)"
-                    class="mt-1 text-[9px] text-[#7A9E7E]"
+                    class="mt-1 text-[9px]"
+                    :class="
+                      getStepState(order.status, step.name) === 'upcoming'
+                        ? 'text-gray-300'
+                        : 'text-[#7A9E7E]'
+                    "
                   >
-                    Completed
+                    {{ getStepState(order.status, step.name) === 'completed' ? 'Completed' : getStepState(order.status, step.name) === 'current' ? stepLabels[step.name] : '' }}
                   </span>
 
                 </div>
@@ -244,53 +249,25 @@
             </div>
           </div>
 
-          <!-- ================= DELIVERED ================= -->
-          <div
-            v-else
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-5 sm:px-6"
-          >
-            <div class="flex items-center gap-4">
-
-              <div
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
-              >
-                <Check class="h-5 w-5" />
-              </div>
-
-              <div>
-                <p class="text-sm font-semibold text-[#0F3D2E]">
-                  Order delivered
-                </p>
-
-                <p class="mt-1 text-xs text-gray-500">
-                  We hope you enjoy your skincare products.
-                </p>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Order Actions -->
+          <!-- Order Actions (Read-Only) -->
           <div
             class="flex flex-col gap-2 border-t border-[#DCE6DC]
                    px-5 py-4 sm:flex-row sm:justify-end sm:px-6"
           >
-            <button
+            <span
               class="rounded-full border border-[#DCE6DC] px-5 py-2.5
-                     text-sm font-medium text-[#0F3D2E]
-                     transition hover:bg-[#F4F8F1]"
+                     text-sm font-medium text-[#0F3D2E] select-none"
             >
               View Details
-            </button>
+            </span>
 
-            <button
+            <span
               v-if="order.status === 'Delivered'"
               class="rounded-full bg-[#0F3D2E] px-5 py-2.5
-                     text-sm font-medium text-white
-                     transition hover:bg-[#174A3A]"
+                     text-sm font-medium text-white select-none"
             >
               Buy Again
-            </button>
+            </span>
           </div>
 
         </div>
@@ -353,6 +330,7 @@ import {
   Cog,
   Truck,
   House,
+  LoaderCircle,
 } from "lucide-vue-next";
 import { useOrderStore } from "../../store/orders";
 
@@ -382,24 +360,28 @@ const tabs = ["All", "Confirmed", "Processing", "Shipping", "Delivered"];
 
 const activeTab = ref("All");
 
+const statusOrder = ["Confirmed", "Processing", "Shipping", "Delivered"];
+
 const steps = [
-  {
-    name: "Confirmed",
-    icon: CircleCheck,
-  },
-  {
-    name: "Processing",
-    icon: Cog,
-  },
-  {
-    name: "Shipping",
-    icon: Truck,
-  },
-  {
-    name: "Delivered",
-    icon: House,
-  },
+  { name: "Confirmed", icon: CircleCheck },
+  { name: "Processing", icon: Cog },
+  { name: "Shipping", icon: Truck },
+  { name: "Delivered", icon: House },
 ];
+
+const statusMessages: Record<string, string> = {
+  Confirmed: "Your order has been confirmed and is waiting to be prepared.",
+  Processing: "We're preparing and packing your items.",
+  Shipping: "Your order has been shipped and is on the way.",
+  Delivered: "Your order has been delivered. We hope you enjoy your products!",
+};
+
+const stepLabels: Record<string, string> = {
+  Confirmed: "Confirmed",
+  Processing: "In Progress",
+  Shipping: "In Transit",
+  Delivered: "Delivered",
+};
 
 const filteredOrders = computed(() => {
   if (activeTab.value === "All") {
@@ -427,30 +409,29 @@ function getStatusClass(status: string): string {
   return "bg-yellow-50 text-yellow-700";
 }
 
-function getProgress(status: string): number {
-  if (status === "Confirmed") return 16;
-  if (status === "Processing") return 33;
-  if (status === "Shipping") return 66;
-  if (status === "Delivered") return 100;
+function getStepState(
+  orderStatus: string,
+  stepName: string
+): "completed" | "current" | "upcoming" {
+  const currentIndex = statusOrder.indexOf(orderStatus);
+  const stepIndex = statusOrder.indexOf(stepName);
 
-  return 0;
+  if (stepIndex < currentIndex) return "completed";
+  if (stepIndex === currentIndex) return "current";
+  return "upcoming";
 }
 
-function isStepComplete(
-  status: string,
-  step: string
-): boolean {
-  const progress: Record<string, number> = {
-    Confirmed: 1,
-    Processing: 2,
-    Shipping: 3,
-    Delivered: 4,
-  };
+function getProgressWidth(status: string): number {
+  const index = statusOrder.indexOf(status);
+  if (index <= 0) return 0;
+  const total = statusOrder.length - 1;
+  return (index / total) * 100;
+}
 
-  const stepNumber =
-    steps.findIndex((item) => item.name === step) + 1;
-
-  return stepNumber <= (progress[status] || 0);
+function getStepIcon(stepName: string, state: "completed" | "current" | "upcoming") {
+  if (state === "completed") return Check;
+  if (state === "current" && stepName === "Processing") return LoaderCircle;
+  return steps.find((s) => s.name === stepName)?.icon ?? CircleCheck;
 }
 </script>
 

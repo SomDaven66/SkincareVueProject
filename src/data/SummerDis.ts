@@ -19,7 +19,7 @@ export const summerDis: summerDisData[] = [
     id: 2,
     name: 'Rosehip & Jojoba Youth Oil',
     category: 'Face Oil',
-    price: 48,
+    price: 30,
     image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80',
   },
   {
@@ -33,7 +33,7 @@ export const summerDis: summerDisData[] = [
     id: 4,
     name: 'Squalane Renewal Nectar',
     category: 'Face Oil',
-    price: 52,
+    price: 25,
     image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80',
   },
 ]

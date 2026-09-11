@@ -114,7 +114,19 @@
                    group-hover:w-full"
           ></span>
         </router-link>
+         <router-link
+          to="/collection"
+          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          active-class="text-[#0F3D2E]"
+        >
+          Collection
 
+          <span
+            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
+                   bg-[#0F3D2E] transition-all duration-300
+                   group-hover:w-full"
+          ></span>
+        </router-link>
 
         <router-link
           to="/about"
@@ -366,6 +378,14 @@
           >
         Product
         </router-link>
+          <router-link to="/collection"
+          @click="closeMenu"
+          class="rounded-lg px-4 py-3 text-sm font-medium
+          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          >
+        Collection
+        </router-link>
+
           <router-link to="/about"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium

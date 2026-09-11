@@ -25,6 +25,8 @@ import AdminUser from "../admin/AdminUser.vue";
 import AdminProduct from "../admin/AdminProduct.vue";
 import AdminAddproduct from "../admin/AdminAddproduct.vue";
 import AdminSettings from "../admin/AdminSettings.vue";
+import MainCollection from "../MainCollection.vue";
+import AllFeedback from "../AllFeedback.vue";
 
 
 
@@ -40,6 +42,7 @@ const routes = [
   {
     path: "/products",
     component: ProductCart,
+    // alias: '/product',
   },
   {
     path: "/products/:id",
@@ -78,6 +81,10 @@ const routes = [
     component: PasswordReset,
   },
   {
+    path: "/collection",
+    component: MainCollection,
+  },
+  {
     path: "/collection/:category",
     component: Collection,
   },
@@ -90,9 +97,18 @@ const routes = [
     component: Myorders
   },
   {
+    path: '/allfeedback',
+    component: AllFeedback
+  },
+  {
     path: '/setting',
     component: Setting
   },
+  // {
+  //   path: '/summerdiscount',
+  //   component: Setting
+  // },
+
   {
     path: '/admin',
     component: AdminLayout,
@@ -148,7 +164,7 @@ const router = createRouter({
   routes,
 
   // ================= SCROLL BEHAVIOR =================
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to, _from, savedPosition) {
     // When using browser Back/Forward button
     if (savedPosition) {
       return savedPosition;
@@ -162,7 +178,7 @@ const router = createRouter({
 });
 
 // ================= NAVIGATION GUARDS =================
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 

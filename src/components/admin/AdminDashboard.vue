@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import {
-  LayoutDashboard,
   ShoppingBag,
   Package,
   Users,
-  Settings,
-  Bell,
-  Search,
   TrendingUp,
   DollarSign,
   ShoppingCart,
