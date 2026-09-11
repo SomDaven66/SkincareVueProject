@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="min-h-screen bg-[#F9FBF7] text-[#0F3D2E]">
 
@@ -366,4 +365,3 @@
 
 <style scoped lang="scss">
 </style>
-```

@@ -56,12 +56,9 @@ const handlelogout = () => {
     />
 
     <!-- SUMMER DISCOUNT (Rendered under homepage content, before Footer) -->
-    <CategoryCard v-if="isHomePage" />
-    <Feature v-if="isHomePage" />
-    <SummerDis v-if="isHomePage" />
-    <FeedBack v-if="isHomePage" />
+    
 
-    <!-- FOOTER -->
-    <Footer />
-  </div>
+
+  <Footer/>
+</div>
 </template>

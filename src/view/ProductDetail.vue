@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { Products } from "../data/Products";
-import { useCartStore } from "../stores/cart";
+import { useCartStore } from "../store/Card";
 import {
   ArrowLeft,
   Heart,
@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Minus,
   Plus,
+  Sprout,
 } from "lucide-vue-next";
 
 const route = useRoute();
@@ -90,9 +91,27 @@ function decreaseQuantity() {
 function addToCart() {
   if (!product.value) return;
 
-  if (cartStore?.addToCart) {
-    cartStore.addToCart(product.value, quantity.value, selectedSize.value || undefined);
+  // Normalize image from images object
+  let image = '';
+  if (product.value.images) {
+    if (typeof product.value.images === 'object' && !Array.isArray(product.value.images)) {
+      image = product.value.images.img1 || Object.values(product.value.images)[0] || '';
+    } else if (Array.isArray(product.value.images) && product.value.images.length > 0) {
+      image = product.value.images[0];
+    }
   }
+
+  const normalizedProduct = {
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    category: product.value.category,
+    description: product.value.description,
+    image: image,
+    discount: 20,
+  };
+
+  cartStore.addToCart(normalizedProduct);
 
   addedToCart.value = true;
   setTimeout(() => {
@@ -209,7 +228,7 @@ function addToCart() {
               v-if="product.badge"
               class="gap-1.5 px-4 py-1.5 rounded-full bg-[#F4F8F1] text-sm font-semibold text-[#0F3D2E] inline-flex items-center"
             >
-              🌿 {{ product.badge }}
+              <Sprout /> {{ product.badge }}
             </span>
 
             <span
@@ -345,7 +364,7 @@ function addToCart() {
             v-bind:key="ing"
             class="px-4 py-2 rounded-full bg-[#F4F8F1] text-sm font-medium text-[#536B59]"
           >
-            🌿 {{ ing }}
+            <Sprout /> {{ ing }}
           </span>
         </div>
       </section>

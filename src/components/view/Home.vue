@@ -12,9 +12,7 @@
     ></div>
 
     <!-- ================= MOBILE OVERLAY ================= -->
-    <div
-      class="bg-[#F9FBF7]/65 absolute inset-0 lg:hidden"
-    ></div>
+    <div class="bg-[#F9FBF7]/65 absolute inset-0 lg:hidden"></div>
 
     <!-- ================= DESKTOP GRADIENT ================= -->
     <div
@@ -25,9 +23,7 @@
     <div
       class="px-5 py-16 z-10 mx-auto min-h-[680px] max-w-7xl relative flex items-center sm:min-h-[720px] sm:px-8 sm:py-20 lg:min-h-[calc(100vh-88px)] lg:px-8 lg:py-20"
     >
-      <div
-        class="w-full max-w-2xl text-center sm:text-left"
-      >
+      <div class="w-full max-w-2xl text-center sm:text-left">
         <!-- ================= BADGE ================= -->
         <div
           class="mb-5 gap-2 px-3 py-1.5 rounded-full border border-[#DCE6DC] bg-white/75 text-[10px] font-medium text-[#0F3D2E] shadow-sm inline-flex items-center tracking-wide backdrop-blur-md sm:mb-6 sm:px-4 sm:py-2 sm:text-xs"
@@ -124,10 +120,7 @@
       aria-label="Previous slide"
       class="top-1/2 z-20 h-10 w-10 justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg absolute left-3 flex -translate-y-1/2 items-center backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:left-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:left-8"
     >
-      <ArrowLeft
-        class="h-4 w-4 sm:h-5 sm:w-5"
-        :stroke-width="1.8"
-      />
+      <ArrowLeft class="h-4 w-4 sm:h-5 sm:w-5" :stroke-width="1.8" />
     </button>
 
     <!-- ================= NEXT ================= -->
@@ -136,10 +129,7 @@
       aria-label="Next slide"
       class="top-1/2 z-20 h-10 w-10 justify-center rounded-full border border-white/60 bg-white/65 text-[#0F3D2E] shadow-lg absolute right-3 flex -translate-y-1/2 items-center backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white sm:right-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100 lg:right-8"
     >
-      <ArrowRight
-        class="h-4 w-4 sm:h-5 sm:w-5"
-        :stroke-width="1.8"
-      />
+      <ArrowRight class="h-4 w-4 sm:h-5 sm:w-5" :stroke-width="1.8" />
     </button>
 
     <!-- ================= BOTTOM CONTROLS ================= -->
@@ -147,9 +137,7 @@
       class="gap-3 px-4 py-2.5 bottom-5 z-20 rounded-full bg-white/65 absolute left-1/2 flex -translate-x-1/2 items-center backdrop-blur-md sm:bottom-8 sm:gap-5 sm:px-5 sm:py-3"
     >
       <!-- Slide Number -->
-      <span
-        class="text-[10px] font-semibold text-[#0F3D2E] sm:text-xs"
-      >
+      <span class="text-[10px] font-semibold text-[#0F3D2E] sm:text-xs">
         0{{ currentSlide + 1 }}
       </span>
 
@@ -160,15 +148,12 @@
           :key="index"
           @click="currentSlide = index"
           :aria-label="`Go to slide ${index + 1}`"
-          class="
-            bg-[#0F3D2E] bg-[#A8C3A0] h-1.5 rounded-full currentSlide === index ? 'w-6 sm:w-8' : 'w-1.5 sm:w-2' transition-all duration-500"
+          class="bg-[#0F3D2E] bg-[#A8C3A0] h-1.5 rounded-full currentSlide === index ? 'w-6 sm:w-8' : 'w-1.5 sm:w-2' transition-all duration-500"
         ></button>
       </div>
 
       <!-- Total -->
-      <span
-        class="text-[10px] text-gray-400 sm:text-xs"
-      >
+      <span class="text-[10px] text-gray-400 sm:text-xs">
         / 0{{ slides.length }}
       </span>
     </div>
@@ -183,122 +168,362 @@
   </section>
   <!-- feature -->
   <section class="py-20 bg-[#F9FBF7]">
-  <div class="px-6 mx-auto max-w-7xl">
+    <div class="px-6 mx-auto max-w-7xl">
+      <!-- Heading -->
+      <div class="mb-12 text-center">
+        <p
+          class="mb-2 text-sm font-medium text-[#7A9E7E] uppercase tracking-widest"
+        >
+          Why Lumie Skin
+        </p>
 
-    <!-- Heading -->
-    <div class="mb-12 text-center">
-      <p class="mb-2 text-sm font-medium text-[#7A9E7E] uppercase tracking-widest">
-        Why Lumie Skin
-      </p>
+        <h2 class="text-3xl font-bold text-[#0F3D2E] md:text-4xl">
+          Everything Your Skin Deserves
+        </h2>
 
-      <h2 class="text-3xl font-bold text-[#0F3D2E] md:text-4xl">
-        Everything Your Skin Deserves
-      </h2>
+        <p class="mt-4 mx-auto max-w-2xl text-gray-600">
+          Thoughtfully selected skincare products designed to help you build a
+          simple and effective routine.
+        </p>
+      </div>
 
-      <p class="mt-4 mx-auto max-w-2xl text-gray-600">
-        Thoughtfully selected skincare products designed to
-        help you build a simple and effective routine.
-      </p>
+      <!-- Features -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Feature 1 -->
+        <div
+          class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+        >
+          <div
+            class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
+          >
+            <Leaf :size="30" :stroke-width="1.8" class="text-[#0F3D2E]" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#0F3D2E]">
+            Natural Ingredients
+          </h3>
+
+          <p class="mt-3 text-sm text-gray-600 leading-6">
+            Gentle ingredients carefully selected for healthy-looking skin.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div
+          class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+        >
+          <div
+            class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
+          >
+            <Sparkles :size="30" :stroke-width="1.8" class="text-[#0F3D2E]" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#0F3D2E]">
+            Dermatologist Tested
+          </h3>
+
+          <p class="mt-3 text-sm text-gray-600 leading-6">
+            Skincare selected with quality and skin safety in mind.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div
+          class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+        >
+          <div
+            class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
+          >
+            <Truck :size="30" :stroke-width="1.8" class="text-[#0F3D2E]" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#0F3D2E]">
+            Fast & Safe Delivery
+          </h3>
+
+          <p class="mt-3 text-sm text-gray-600 leading-6">
+            Get your favorite skincare products delivered safely to your door.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div
+          class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+        >
+          <div
+            class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
+          >
+            <LockKeyhole
+              :size="30"
+              :stroke-width="1.8"
+              class="text-[#0F3D2E]"
+            />
+          </div>
+
+          <h3 class="text-lg font-semibold text-[#0F3D2E]">Secure Payment</h3>
+
+          <p class="mt-3 text-sm text-gray-600 leading-6">
+            Enjoy a simple and secure checkout experience.
+          </p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Features -->
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-
-      <!-- Feature 1 -->
-      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
-        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
-          <Leaf 
-           :size="30"
-            :stroke-width="1.8"
-            class="text-[#0F3D2E]"
-          />
-        </div>
-
-        <h3 class="text-lg font-semibold text-[#0F3D2E]">
-          Natural Ingredients
-        </h3>
-
-        <p class="mt-3 text-sm text-gray-600 leading-6">
-          Gentle ingredients carefully selected for healthy-looking skin.
-        </p>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
-        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
-          <Sparkles
-          :size="30"
-          :stroke-width="1.8"
-          class="text-[#0F3D2E]"
-        />
-        </div>
-
-        <h3 class="text-lg font-semibold text-[#0F3D2E]">
-          Dermatologist Tested
-        </h3>
-
-        <p class="mt-3 text-sm text-gray-600 leading-6">
-          Skincare selected with quality and skin safety in mind.
-        </p>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
-        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
-          <Truck
-          :size="30"
-          :stroke-width="1.8"
-          class="text-[#0F3D2E]"
-        />
-        </div>
-
-        <h3 class="text-lg font-semibold text-[#0F3D2E]">
-          Fast & Safe Delivery
-        </h3>
-
-        <p class="mt-3 text-sm text-gray-600 leading-6">
-          Get your favorite skincare products delivered safely to your door.
-        </p>
-      </div>
-
-      <!-- Feature 4 -->
-      <div class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center">
-        <div class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center">
-          <LockKeyhole
-          :size="30"
-          :stroke-width="1.8"
-          class="text-[#0F3D2E]"
-        />
-        </div>
-
-        <h3 class="text-lg font-semibold text-[#0F3D2E]">
-          Secure Payment
-        </h3>
-
-        <p class="mt-3 text-sm text-gray-600 leading-6">
-          Enjoy a simple and secure checkout experience.
-        </p>
-      </div>
-
+  <section>
+    <div>
+      <CategoryCard />
+      <Feature />
+      <SummerDis />
+      <FeedBack />
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- Why choose us -->
+  <section class="py-16 bg-[#F4F8F1] sm:py-20 lg:py-24">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <!-- ================= HEADER ================= -->
+      <div class="mb-12 mx-auto max-w-2xl text-center">
+        <p
+          class="mb-3 text-sm font-semibold text-[#7A9E7E] uppercase tracking-[0.2em]"
+        >
+          Why Lumie Skin
+        </p>
 
+        <h2
+          class="text-3xl font-bold text-[#0F3D2E] tracking-tight sm:text-4xl lg:text-5xl"
+        >
+          Why Choose Us?
+        </h2>
+
+        <p class="mt-4 text-sm text-gray-600 leading-7 sm:text-base">
+          We make skincare simple, trustworthy, and enjoyable, helping you find
+          products that fit your everyday routine.
+        </p>
+      </div>
+
+      <!-- ================= BENEFITS ================= -->
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Card 1 -->
+        <div
+          class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+        >
+          <!-- Number -->
+          <span
+            class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
+          >
+            01
+          </span>
+
+          <!-- Icon -->
+          <div
+            class="mb-6 h-14 w-14 justify-center rounded-full bg-[#EAF2E9] text-[#0F3D2E] flex items-center transition-all duration-300 group-hover:bg-[#0F3D2E] group-hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3l7 4v5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V7l7-4z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4"
+              />
+            </svg>
+          </div>
+
+          <h3 class="mb-3 text-lg font-semibold text-[#0F3D2E]">
+            Trusted Products
+          </h3>
+
+          <p class="text-sm text-gray-500 leading-6">
+            Carefully selected skincare products from trusted brands for your
+            daily beauty routine.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+        >
+          <span
+            class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
+          >
+            02
+          </span>
+
+          <div
+            class="mb-6 h-14 w-14 justify-center rounded-full bg-[#EAF2E9] text-[#0F3D2E] flex items-center transition-all duration-300 group-hover:bg-[#0F3D2E] group-hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 12a8 8 0 11-16 0 8 8 0 0116 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 8v4l3 2"
+              />
+            </svg>
+          </div>
+
+          <h3 class="mb-3 text-lg font-semibold text-[#0F3D2E]">
+            Fast Delivery
+          </h3>
+
+          <p class="text-sm text-gray-500 leading-6">
+            Get your favorite skincare delivered quickly and safely right to
+            your doorstep.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+        >
+          <span
+            class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
+          >
+            03
+          </span>
+
+          <div
+            class="mb-6 h-14 w-14 justify-center rounded-full bg-[#EAF2E9] text-[#0F3D2E] flex items-center transition-all duration-300 group-hover:bg-[#0F3D2E] group-hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 21s8-4.5 8-11V5l-8-3-8 3v5c0 6.5 8 11 8 11z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4"
+              />
+            </svg>
+          </div>
+
+          <h3 class="mb-3 text-lg font-semibold text-[#0F3D2E]">
+            Secure Shopping
+          </h3>
+
+          <p class="text-sm text-gray-500 leading-6">
+            Shop with confidence through a simple and secure online shopping
+            experience.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div
+          class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+        >
+          <span
+            class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
+          >
+            04
+          </span>
+
+          <div
+            class="mb-6 h-14 w-14 justify-center rounded-full bg-[#EAF2E9] text-[#0F3D2E] flex items-center transition-all duration-300 group-hover:bg-[#0F3D2E] group-hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20.8 8.6c0 5.5-8.8 10.4-8.8 10.4S3.2 14.1 3.2 8.6A4.6 4.6 0 0112 6.1a4.6 4.6 0 018.8 2.5z"
+              />
+            </svg>
+          </div>
+
+          <h3 class="mb-3 text-lg font-semibold text-[#0F3D2E]">
+            Skincare For You
+          </h3>
+
+          <p class="text-sm text-gray-500 leading-6">
+            Discover skincare collections designed to make your beauty routine
+            easier and more enjoyable.
+          </p>
+        </div>
+      </div>
+
+      <!-- ================= BOTTOM LINE ================= -->
+      <div
+        class="mt-12 gap-4 mx-auto max-w-3xl justify-center flex items-center"
+      >
+        <div class="flex-1 h-px bg-[#DCE6DC]"></div>
+
+        <span
+          class="text-xs font-medium text-[#7A9E7E] uppercase tracking-[0.2em]"
+        >
+          Care • Trust • Beauty
+        </span>
+
+        <div class="flex-1 h-px bg-[#DCE6DC]"></div>
+      </div>
+    </div>
+  </section>
+  <Instargram />
+  <Newletter />
 </template>
 
-
 <script setup lang="ts">
-import { Leaf,Sparkles,Truck,LockKeyhole,ArrowLeft,ArrowRight } from 'lucide-vue-next'
-import {onMounted, onUnmounted,ref} from "vue";
+import {
+  Leaf,
+  Sparkles,
+  Truck,
+  LockKeyhole,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-vue-next";
+import { onMounted, onUnmounted, ref } from "vue";
 
 import hero1 from "../../assets/hero1.jpg";
 import hero2 from "../../assets/hero2.jpg";
 import hero4 from "../../assets/hero4.jpg";
+import { Collections } from "../../data/Collections";
+import CollectionCard from "../CollectionCard.vue";
+import DiscountBanner from "../DiscountBanner.vue";
+import Instargram from "./Instargram.vue";
 
+import Newletter from "./Newletter.vue";
+import FeedBack from "../FeedBack.vue";
+import SummerDis from "../SummerDis.vue";
+import Feature from "../Feature.vue";
+import CategoryCard from "../CategoryCard.vue";
 
 const slides = [
-
   {
     image: hero1,
 
@@ -311,7 +536,6 @@ const slides = [
     description:
       "Discover gentle skincare designed to nourish your skin, enhance your natural glow, and make every day feel beautiful.",
   },
-
 
   {
     image: hero2,
@@ -326,7 +550,6 @@ const slides = [
       "Give your skin the care it deserves with simple and gentle skincare made for your everyday routine.",
   },
 
-
   {
     image: hero4,
 
@@ -339,57 +562,36 @@ const slides = [
     description:
       "Build a skincare routine that makes your skin feel fresh, healthy, and confident every day.",
   },
-
 ];
 
-
 const currentSlide = ref(0);
-
 
 // ================= NEXT =================
 
 function nextSlide() {
-
-  currentSlide.value =
-    (currentSlide.value + 1) % slides.length;
-
+  currentSlide.value = (currentSlide.value + 1) % slides.length;
 }
-
 
 // ================= PREVIOUS =================
 
 function previousSlide() {
-
-  currentSlide.value =
-    (currentSlide.value - 1 + slides.length) % slides.length;
-
+  currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length;
 }
-
 
 // ================= AUTO SLIDE =================
 
 let autoSlide: number;
 
 onMounted(() => {
-
   autoSlide = window.setInterval(() => {
-
     nextSlide();
-
   }, 7000);
-
 });
-
 
 onUnmounted(() => {
-
   clearInterval(autoSlide);
-
 });
-
+// discount
 </script>
 
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

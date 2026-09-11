@@ -76,14 +76,24 @@
                         Password
                     </label>
 
+                    <div class="relative">
                     <input
-                        type="password"
+                        :type="showPassword ? 'text' : 'password'"
                         v-model="password"
                         id="password"
                         placeholder="Enter your password"
                         required
-                        class="w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                        class="w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
                     />
+                    <button
+                        type="button"
+                        @click="showPassword = !showPassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+                    >
+                        <Eye v-if="showPassword" class="h-5 w-5" :stroke-width="1.8" />
+                        <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
+                    </button>
+                    </div>
                 </div>
 
                 <!-- Remember + Forgot Password -->
@@ -139,7 +149,9 @@
 import { useRouter } from "vue-router";
 import {
   X,
-  UserRoundKey
+  UserRoundKey,
+  Eye,
+  EyeOff
 } from "lucide-vue-next";
 import { ref } from "vue";
 
@@ -153,6 +165,7 @@ const email = ref("");
 const password = ref("");
 const message = ref("");
 const remember = ref(false);
+const showPassword = ref(false);
 
 const emit = defineEmits(["login-success"]);
 
@@ -178,7 +191,7 @@ const login = () => {
 
   const user = loginUsers.find(
     (user: any) =>
-      user.email === email.value &&
+      user.email.toLowerCase().trim() === email.value.toLowerCase().trim() &&
       user.password === password.value
   );
 

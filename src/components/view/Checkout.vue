@@ -441,7 +441,7 @@
                   class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#F4F8F1]"
                 >
                   <img
-                    :src="item.image"
+                    :src="getItemImage(item)"
                     :alt="item.name"
                     class="h-full w-full object-cover"
                   />
@@ -461,7 +461,7 @@
                 </div>
 
                 <p class="text-sm font-semibold text-[#0F3D2E]">
-                  ${{ itemTotal(item).toFixed(2) }}
+                  ${{ (getDiscountedPrice(item) * item.quantity).toFixed(2) }}
                 </p>
               </div>
 
@@ -653,8 +653,13 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useOrderStore } from "../../store/orders";
 
 const router = useRouter();
+const orderStore = useOrderStore();
+
+// Initialize order store
+orderStore.init();
 
 
 // ================= CART =================
@@ -664,13 +669,33 @@ interface CartItem {
   name: string;
   price: number;
   category: string;
-  image: string;
+  image?: string;
+  images?: string[] | { [key: string]: string };
   quantity: number;
+  discount?: number;
 }
 
 const cart = ref<CartItem[]>(
   JSON.parse(localStorage.getItem("cart") || "[]")
 );
+
+function getItemImage(item: CartItem): string {
+  if (item.image) return item.image;
+  if (item.images) {
+    if (typeof item.images === 'object' && !Array.isArray(item.images)) {
+      return item.images.img1 || Object.values(item.images)[0] || '';
+    }
+    if (Array.isArray(item.images) && item.images.length > 0) {
+      return item.images[0];
+    }
+  }
+  return '';
+}
+
+function getDiscountedPrice(item: CartItem): number {
+  const discount = item.discount || 0;
+  return discount > 0 ? item.price * (1 - discount / 100) : item.price;
+}
 
 
 // ================= FORM =================
@@ -704,7 +729,7 @@ const totalItems = computed(() => {
 
 const subtotal = computed(() => {
   return cart.value.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + getDiscountedPrice(item) * item.quantity,
     0
   );
 });
@@ -718,13 +743,6 @@ const shipping = computed(() => {
 const grandTotal = computed(() => {
   return subtotal.value + shipping.value;
 });
-
-
-// ================= ITEM TOTAL =================
-
-function itemTotal(item: CartItem): number {
-  return item.price * item.quantity;
-}
 
 
 // ================= PLACE ORDER =================
@@ -753,30 +771,33 @@ function placeOrder(): void {
   // Simulate order processing
   setTimeout(() => {
 
-    const order = {
-      id: "ORD-" + Date.now(),
-      date: new Date().toLocaleDateString(),
-      status: "Processing",
+    // Get current user for userId
+    const currentUser = JSON.parse(
+      localStorage.getItem("currentUser") ||
+      sessionStorage.getItem("currentUser") ||
+      "null"
+    );
+
+    // Create order items from cart
+    const orderItems = cart.value.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      category: item.category,
+      image: item.image,
+      quantity: item.quantity,
+    }));
+
+    // Add order via store
+    orderStore.addOrder({
+      status: "Confirmed",
       total: grandTotal.value,
-      items: [...cart.value],
+      items: orderItems,
       customer: {
         ...form.value,
       },
-    };
-
-    // Get existing orders
-    const orders = JSON.parse(
-      localStorage.getItem("orders") || "[]"
-    );
-
-    // Add new order
-    orders.unshift(order);
-
-    // Save orders
-    localStorage.setItem(
-      "orders",
-      JSON.stringify(orders)
-    );
+      userId: currentUser?.id || undefined,
+    });
 
     // Clear cart
     localStorage.removeItem("cart");

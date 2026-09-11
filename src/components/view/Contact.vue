@@ -266,7 +266,6 @@
 
   </div>
 </section>
-```
 
   </div>
 </template>
