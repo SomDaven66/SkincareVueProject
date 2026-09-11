@@ -142,6 +142,21 @@
                 </router-link>
             </div>
         </div>
+
+        <!-- Success Toast -->
+        <transition name="toast">
+            <div
+                v-if="showSuccess"
+                class="fixed top-6 left-1/2 -translate-x-1/2 z-50
+                       flex items-center gap-3 rounded-xl bg-[#0F3D2E]
+                       px-6 py-4 shadow-2xl"
+            >
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-white font-medium">Login Success!</span>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -166,6 +181,7 @@ const password = ref("");
 const message = ref("");
 const remember = ref(false);
 const showPassword = ref(false);
+const showSuccess = ref(false);
 
 const emit = defineEmits(["login-success"]);
 
@@ -214,7 +230,7 @@ const login = () => {
     );
   }
 
-  alert("Login success");
+  showSuccess.value=true;
 
   emit("login-success");
 
@@ -229,5 +245,16 @@ const login = () => {
 </script>
 
 <style scoped>
-
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+.toast-enter-from {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
 </style>

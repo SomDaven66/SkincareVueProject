@@ -322,7 +322,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import {
   Check,
   CircleCheck,
@@ -346,10 +346,19 @@ const currentUser = ref(
 );
 
 // Initialize store on mount
+const syncOrders = () => {
+  orderStore.init();
+};
+
 onMounted(() => {
   orderStore.init();
+
+  window.addEventListener("storage", syncOrders);
 });
 
+onUnmounted(() => {
+  window.removeEventListener("storage", syncOrders);
+});
 // Get user's orders
 const userOrders = computed(() => {
   if (!currentUser.value) return [];

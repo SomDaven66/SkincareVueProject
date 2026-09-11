@@ -250,6 +250,21 @@
       </form>
 
     </div>
+
+    <!-- Success Toast -->
+    <transition name="toast">
+      <div
+        v-if="showSuccess"
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50
+               flex items-center gap-3 rounded-xl bg-[#0F3D2E]
+               px-6 py-4 shadow-2xl"
+      >
+        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <span class="text-white font-medium">Register Success! Redirecting to login...</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -272,6 +287,7 @@ const message=ref("");
 const agreeTerms=ref(false);
 const showPassword=ref(false);
 const showConfirmPassword=ref(false);
+const showSuccess=ref(false);
 const register=()=>{
   let users=[];
   
@@ -307,7 +323,8 @@ const register=()=>{
   users.push(newUser);
 
   localStorage.setItem("users",JSON.stringify(users));
-  alert("Register successfully");
+
+  showSuccess.value=true;
 
   name.value="";
   email.value="";
@@ -316,12 +333,25 @@ const register=()=>{
   agreeTerms.value=false;
 
   setTimeout(() => {
+    showSuccess.value=false;
     router.push("/login");
-  }, 1000);
+  }, 2000);
 }
 
 </script>
 
 
 <style scoped>
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+.toast-enter-from {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
 </style>

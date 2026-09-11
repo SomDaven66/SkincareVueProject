@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
-import { RouterLink, useRoute, useRouter } from "vue-router";
-import {
-  Search,
-  SlidersHorizontal,
-  Heart,
-  Star,
-  ShoppingBag,
-} from "lucide-vue-next";
-import { Products } from "../data/Products";
-import { useWishlistStore } from "../store/wishlist";
-import { useCartStore } from "../store/Card";
+import { ref, computed, onMounted, watch } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
+import { Products } from '../data/Products'
+import { useWishlistStore } from '../store/wishlist'
 
-const route = useRoute();
-const router = useRouter();
-const wishlistStore = useWishlistStore();
-const cartStore = useCartStore();
+const route = useRoute()
+const router = useRouter()
+const wishlistStore = useWishlistStore()
 
 const categories = [
   "All",
@@ -213,15 +205,20 @@ const clearFilters = (): void => {
 
       <!-- Category Pills -->
       <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
-        <button
-          v-for="cat in categories"
-          :key="cat"
-          @click="activeCategory = cat"
-          class="px-5 py-2.5 rounded-full border text-sm font-semibold border-[#0F3D2E] text-white shadow-md' border-[#DCE6DC] text-[#536B59] whitespace-nowrap transition-all duration-200 activeCategory === cat ? 'bg-[#0F3D2E] : 'bg-white hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'"
-        >
-          {{ cat }}
-        </button>
-      </div>
+  <button
+    v-for="cat in categories"
+    :key="cat"
+    @click="activeCategory = cat"
+    :class="[
+      'px-5 py-2.5 rounded-full border text-sm font-semibold whitespace-nowrap transition-all duration-200',
+      activeCategory === cat
+        ? 'bg-[#0F3D2E] text-white border-[#0F3D2E] shadow-md'
+        : 'bg-white text-[#536B59] border-[#DCE6DC] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
+    ]"
+  >
+    {{ cat }}
+  </button>
+</div>
 
       <!-- ================= PRODUCT GRID ================= -->
       <main
@@ -259,7 +256,8 @@ const clearFilters = (): void => {
               :aria-label="'Add ' + item.name + ' to wishlist'"
             >
               <Heart
-                class="h-4 w-4 text-red-500' transition-colors duration-200 wishlistStore.isInWishlist(item.id) ? 'fill-red-500 : 'text-[#536B59]'"
+                class="h-4 w-4 transition-colors duration-200"
+                :class="wishlistedIds.includes(item.id) ? 'fill-red-500 text-red-500' : 'text-[#536B59]'"
                 :stroke-width="2"
               />
             </button>
