@@ -287,6 +287,7 @@
      <div v-if="isMenuOpen" class="border-t  border-[#E5ECE5] bg-white px-6 py-5 lg:hidden">
         <div class="flex flex-col gap-1">
           <router-link to="/" 
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]
           "
@@ -294,24 +295,28 @@
             Home
           </router-link>
           <router-link to="/product"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         Product
         </router-link>
           <router-link to="/about"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         About 
         </router-link>
           <router-link to="/cart"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
         Cart
         </router-link>
           <router-link to="/contact"
+          @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >
@@ -319,6 +324,7 @@
         </router-link>
         <router-link
           to="/login"
+          @click="closeMenu"
           class="sm:flex items-center text-center
                 rounded-full bg-[#0F3D2E]
                 px-5 py-2.5
@@ -343,6 +349,10 @@ import {ShoppingCart } from 'lucide-vue-next';
     function toggleMenu(){
       isMenuOpen.value=!isMenuOpen.value;
     }
+  // close menu
+    function closeMenu() {
+    isMenuOpen.value = false;
+  }
   const userLogin=ref(false);
   function userClick(){
     userLogin.value=!userLogin.value;

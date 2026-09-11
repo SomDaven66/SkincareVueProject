@@ -163,92 +163,110 @@
           <!-- ================= ORDER TRACKING ================= -->
           <div
             v-if="order.status !== 'Delivered'"
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5
-                   py-5 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6"
           >
-            <p class="mb-4 text-sm font-semibold text-[#0F3D2E]">
-              Order Progress
-            </p>
+            <div class="mb-6 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold text-[#0F3D2E]">
+                  Order Progress
+                </p>
 
-            <div class="relative flex items-start justify-between">
-
-              <!-- Progress Line -->
-              <div
-                class="absolute left-[10%] right-[10%] top-4 h-[2px]
-                       bg-[#DCE6DC]"
-              >
-                <div
-                  class="h-full bg-[#7A9E7E] transition-all"
-                  :style="{ width: getProgress(order.status) + '%' }"
-                ></div>
+                <p class="mt-1 text-xs text-gray-500">
+                  Track your order from confirmation to delivery
+                </p>
               </div>
+
+              <Package class="h-5 w-5 text-[#7A9E7E]" />
+            </div>
+
+            <!-- Progress -->
+            <div class="relative">
+
+              <!-- Background Line -->
+              <div
+                class="absolute left-[12%] right-[12%] top-6 h-[2px] bg-[#DCE6DC]"
+              ></div>
+
+              <!-- Active Line -->
+              <div
+                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E] transition-all duration-500"
+                :style="{ width: `calc(${getProgress(order.status)}% - 12%)` }"
+              ></div>
 
               <!-- Steps -->
-              <div
-                v-for="step in steps"
-                :key="step"
-                class="relative z-10 flex flex-col items-center"
-              >
-                <div
-                  class="flex h-8 w-8 items-center justify-center
-                         rounded-full border-2 bg-white"
-                  :class="
-                    isStepComplete(order.status, step)
-                      ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
-                      : 'border-[#DCE6DC] text-gray-300'
-                  "
-                >
-                  <svg
-                    v-if="isStepComplete(order.status, step)"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="3"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+              <div class="relative z-10 flex justify-between">
 
-                  <span v-else class="h-2 w-2 rounded-full bg-gray-300"></span>
+                <div
+                  v-for="(step, index) in steps"
+                  :key="step.name"
+                  class="flex flex-1 flex-col items-center"
+                >
+
+                  <!-- Icon Circle -->
+                  <div
+                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white transition-all duration-300"
+                    :class="
+                      isStepComplete(order.status, step.name)
+                        ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
+                        : 'border-[#DCE6DC] text-gray-300'
+                    "
+                  >
+                    <component
+                      :is="step.icon"
+                      class="h-5 w-5"
+                      :stroke-width="2"
+                    />
+                  </div>
+
+                  <!-- Step Name -->
+                  <span
+                    class="mt-3 text-center text-[10px] font-medium sm:text-xs"
+                    :class="
+                      isStepComplete(order.status, step.name)
+                        ? 'text-[#0F3D2E]'
+                        : 'text-gray-400'
+                    "
+                  >
+                    {{ step.name }}
+                  </span>
+
+                  <!-- Completed -->
+                  <span
+                    v-if="isStepComplete(order.status, step.name)"
+                    class="mt-1 text-[9px] text-[#7A9E7E]"
+                  >
+                    Completed
+                  </span>
+
                 </div>
 
-                <span
-                  class="mt-2 text-center text-[10px] text-gray-500
-                         sm:text-xs"
-                >
-                  {{ step }}
-                </span>
               </div>
-
             </div>
           </div>
 
-          <!-- Delivered Message -->
+          <!-- ================= DELIVERED ================= -->
           <div
             v-else
-            class="flex items-center gap-3 border-t border-[#DCE6DC]
-                   bg-[#F4F8F1] px-5 py-4 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-5 sm:px-6"
           >
-            <div
-              class="flex h-9 w-9 items-center justify-center
-                     rounded-full bg-[#7A9E7E] text-white"
-            >
-              ✓
-            </div>
+            <div class="flex items-center gap-4">
 
-            <div>
-              <p class="text-sm font-semibold text-[#0F3D2E]">
-                Order delivered
-              </p>
+              <div
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
+              >
+                <Check class="h-5 w-5" />
+              </div>
 
-              <p class="text-xs text-gray-500">
-                We hope you enjoy your skincare products.
-              </p>
+              <div>
+                <p class="text-sm font-semibold text-[#0F3D2E]">
+                  Order delivered
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                  We hope you enjoy your skincare products.
+                </p>
+              </div>
+
             </div>
           </div>
 
@@ -328,6 +346,14 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import {
+  Check,
+  CircleCheck,
+  Package,
+  Cog,
+  Truck,
+  House,
+} from "lucide-vue-next";
 
 interface OrderProduct {
   id: number;
@@ -350,7 +376,24 @@ const tabs = ["All", "Processing", "Shipping", "Delivered"];
 
 const activeTab = ref("All");
 
-const steps = ["Confirmed", "Processing", "Shipping", "Delivered"];
+const steps = [
+  {
+    name: "Confirmed",
+    icon: CircleCheck,
+  },
+  {
+    name: "Processing",
+    icon: Cog,
+  },
+  {
+    name: "Shipping",
+    icon: Truck,
+  },
+  {
+    name: "Delivered",
+    icon: House,
+  },
+];
 
 const orders = ref<Order[]>([
   {
@@ -457,7 +500,8 @@ function isStepComplete(
     Delivered: 4,
   };
 
-  const stepNumber = steps.indexOf(step) + 1;
+  const stepNumber =
+    steps.findIndex((item) => item.name === step) + 1;
 
   return stepNumber <= progress[status];
 }
