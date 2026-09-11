@@ -13,18 +13,9 @@ import {
   ChevronRight,
 } from "lucide-vue-next";
 
-import type { Product } from "../../data/Product";
+import type { Product } from "../../types/produce";
 
-import {
-  AcneProducts,
-  Brighteningproduct,
-  HydrationProduct,
-  Suncareproduct,
-  LipCareProducts,
-  BodyCareProducts,
-  CleanserProducts,
-  SerumProducts,
-} from "../../data/Product";
+import { Products } from "../../data/Products";
 
 const router = useRouter();
 
@@ -32,16 +23,7 @@ const router = useRouter();
    PRODUCTS
 ========================================================= */
 
-const products = ref<Product[]>([
-  ...AcneProducts,
-  ...HydrationProduct,
-  ...Brighteningproduct,
-  ...Suncareproduct,
-  ...LipCareProducts,
-  ...BodyCareProducts,
-  ...CleanserProducts,
-  ...SerumProducts,
-]);
+const products = ref<Product[]>([...Products]);
 
 /* =========================================================
    SEARCH & FILTER
@@ -110,6 +92,42 @@ function prevPage() {
 function goToPage(page: number) {
   currentPage.value = page;
 }
+
+/* =========================================================
+   VISIBLE PAGES (with ellipsis)
+========================================================== */
+
+const visiblePages = computed(() => {
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const pages: (number | string)[] = [];
+
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (current > 3) {
+    pages.push("...");
+  }
+
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (current < total - 2) {
+    pages.push("...");
+  }
+
+  pages.push(total);
+
+  return pages;
+});
 
 /* =========================================================
    STATISTICS
@@ -390,7 +408,7 @@ function deleteProduct(product: Product) {
               <div class="gap-4 min-w-0 flex items-center">
 
                 <img
-                  :src="product.image"
+                  :src="product.images?.img1"
                   :alt="product.name"
                   class="h-14 w-14 rounded-xl border border-[#DCE6DC] bg-[#F4F8F1] object-cover shrink-0"
                 />
@@ -469,7 +487,7 @@ function deleteProduct(product: Product) {
               <div class="gap-4 flex">
 
                 <img
-                  :src="product.image"
+                  :src="product.images?.img1"
                   :alt="product.name"
                   class="h-20 w-20 rounded-xl border border-[#DCE6DC] object-cover shrink-0"
                 />
@@ -573,14 +591,22 @@ function deleteProduct(product: Product) {
               </button>
               
               <div class="gap-1 hidden sm:flex items-center">
-                <button
-                  v-for="page in totalPages"
-                  :key="page"
-                  @click="goToPage(page)"
-                  class="h-9 w-9 justify-center rounded-xl border text-sm font-medium bg-[#0F3D2E] text-white' bg-white text-gray-700 [ 'flex items-center transition', currentPage === page ? 'border-[#0F3D2E] : 'border-[#DCE6DC] hover:bg-[#F9FBF7]' ]"
-                >
-                  {{ page }}
-                </button>
+                <template v-for="(page, index) in visiblePages" :key="index">
+                  <span
+                    v-if="page === '...'"
+                    class="h-9 w-9 justify-center text-sm font-medium text-gray-400 flex items-center"
+                  >
+                    ...
+                  </span>
+                  <button
+                    v-else
+                    @click="goToPage(page as number)"
+                    class="h-9 w-9 justify-center rounded-xl border text-sm font-medium flex items-center transition"
+                    :class="currentPage === page ? 'bg-[#0F3D2E] text-white border-[#0F3D2E]' : 'bg-white text-gray-700 border-[#DCE6DC] hover:bg-[#F9FBF7]'"
+                  >
+                    {{ page }}
+                  </button>
+                </template>
               </div>
 
               <button
