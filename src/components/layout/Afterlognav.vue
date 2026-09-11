@@ -103,7 +103,7 @@
 
 
         <router-link
-          to="/product"
+          to="/products"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
@@ -293,7 +293,7 @@
           >
             Home
           </router-link>
-          <router-link to="/product"
+          <router-link to="/products"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           >

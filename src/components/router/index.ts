@@ -25,6 +25,7 @@ import AdminProduct from "../admin/AdminProduct.vue";
 import AdminAddproduct from "../admin/AdminAddproduct.vue";
 import AdminSettings from "../admin/AdminSettings.vue";
 import MainCollection from "../MainCollection.vue";
+import AllFeedback from "../AllFeedback.vue";
 
 
 
@@ -36,6 +37,7 @@ const routes = [
   {
     path: "/products",
     component: ProductCart,
+    // alias: '/product',
   },
   {
     path: "/products/:id",
@@ -88,6 +90,10 @@ const routes = [
   {
     path: '/orders',
     component: Myorders
+  },
+  {
+    path: '/allfeedback',
+    component: AllFeedback
   },
   {
     path: '/setting',

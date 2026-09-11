@@ -1,11 +1,11 @@
 <template>
-  <section class="min-h-screen bg-[#F9FBF7] py-16">
-    <div class="mx-auto max-w-7xl px-6">
+  <section class="py-16 min-h-screen bg-[#F9FBF7]">
+    <div class="px-6 mx-auto max-w-7xl">
       <!-- ================= BACK BUTTON ================= -->
 <div class="mb-8">
   <button
     @click="router.back()"
-    class="inline-flex items-center gap-2 rounded-full border border-[#DCE6DC] bg-white px-5 py-2.5 text-sm font-medium text-[#0F3D2E] shadow-sm transition duration-300 hover:bg-[#F4F8F1] hover:shadow-md"
+    class="gap-2 px-5 py-2.5 rounded-full border border-[#DCE6DC] bg-white text-sm font-medium text-[#0F3D2E] shadow-sm inline-flex items-center transition duration-300 hover:bg-[#F4F8F1] hover:shadow-md"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -29,18 +29,18 @@
       <!-- ================= HEADER ================= -->
       <div class="mb-12 text-center">
         <p
-          class="text-sm font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]"
+          class="text-sm font-semibold text-[#7A9E7E] uppercase tracking-[0.2em]"
         >
           Lumie Skin Collection
         </p>
 
         <h1
-          class="mt-3 text-4xl font-bold capitalize text-[#0F3D2E] sm:text-5xl"
+          class="mt-3 text-4xl font-bold text-[#0F3D2E] capitalize sm:text-5xl"
         >
           {{ collectionName }}
         </h1>
 
-        <p class="mx-auto mt-4 max-w-2xl text-gray-500">
+        <p class="mt-4 mx-auto max-w-2xl text-gray-500">
           Discover our carefully selected skincare products for your skin.
         </p>
       </div>
@@ -55,7 +55,7 @@
         <div
           v-for="product in collectionProducts"
           :key="product.id"
-          class="group overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+          class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm group transition duration-300 hover:-translate-y-1 hover:shadow-lg"
         >
 
           <!-- Image -->
@@ -70,7 +70,7 @@
           <!-- Product Info -->
           <div class="p-5">
 
-            <p class="text-xs font-medium uppercase tracking-wider text-[#7A9E7E]">
+            <p class="text-xs font-medium text-[#7A9E7E] uppercase tracking-wider">
               {{ product.category }}
             </p>
 
@@ -80,17 +80,17 @@
               {{ product.name }}
             </h2>
 
-            <p class="mt-2 text-sm leading-6 text-gray-500">
+            <p class="mt-2 text-sm text-gray-500 leading-6">
               {{ product.description }}
             </p>
 
-            <div class="mt-5 flex items-center justify-between">
+            <div class="mt-5 justify-between flex items-center">
               <span class="text-lg font-bold text-[#0F3D2E]">
                 ${{ product.price }}
               </span>
 
               <button @click="cartStore.addToCart(product)"
-                class="rounded-full bg-[#0F3D2E] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#174A3A]"
+                class="px-4 py-2 rounded-full bg-[#0F3D2E] text-sm font-medium text-white transition hover:bg-[#174A3A]"
               >
                 Add to Cart
               </button>

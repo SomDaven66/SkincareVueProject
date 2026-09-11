@@ -42,7 +42,7 @@
       <!-- Feedback Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <article
-          v-for="review in reviews"
+          v-for="review in visibleReviews"
           :key="review.id"
           class="flex flex-col bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 border"
           style="border-color: #A8C3A0;"
@@ -101,23 +101,23 @@
 
       <!-- CTA -->
       <div class="text-center mt-12">
-        <router-link
-        to="/allfeedback"
+        <button
+          type="button"
           class="text-sm font-semibold px-8 py-3 rounded-full transition-colors duration-200"
           style="background-color: #0F3D2E; color: #F4F8F1;"
           @mouseenter="(e: MouseEvent) => setHover(e, true)"
           @mouseleave="(e: MouseEvent) => setHover(e, false)"
-          @click="viewAllReviews"
+          @click="toggleShowAll"
         >
-          Read All Reviews
-        </router-link>
+          {{ showAll ? 'Show Less' : 'Read All Reviews' }}
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Review {
   id: number
@@ -153,6 +153,78 @@ const reviews: Review[] = [
     product: 'Hydrating Cream Cleanser',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80',
   },
+  {
+    id: 4,
+    name: 'Jasmine Ortiz',
+    rating: 5,
+    quote: 'The Vitamin C Glow Serum brightened my under-eye area within days. Compliments non-stop.',
+    product: 'Vitamin C Glow Serum',
+    avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 5,
+    name: 'Grace Kim',
+    rating: 5,
+    quote: 'Sensitive skin approved. No breakouts, no irritation, just soft glowing skin every morning.',
+    product: 'Hydrating Cream Cleanser',
+    avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 6,
+    name: 'Emily Novak',
+    rating: 4,
+    quote: 'Lightweight but seriously hydrating. My makeup sits so much better since switching.',
+    product: 'Aloe Whip Day Cream',
+    avatar: 'https://images.unsplash.com/photo-1499887142886-791eca5918cd?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 7,
+    name: 'Fatima Al-Sayed',
+    rating: 5,
+    quote: 'I have combination skin and this is the first serum that balances both my oily and dry patches.',
+    product: 'Botanical Repair Serum',
+    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 8,
+    name: 'Rachel Thompson',
+    rating: 5,
+    quote: 'Three weeks in and my fine lines look noticeably softer. Worth every penny.',
+    product: 'Nourishing Sage Moisturizer',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 9,
+    name: 'Hana Suzuki',
+    rating: 4,
+    quote: 'Smells incredible and absorbs fast. Perfect first step before makeup.',
+    product: 'Vitamin C Glow Serum',
+    avatar: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 10,
+    name: 'Olivia Bennett',
+    rating: 5,
+    quote: 'My dermatologist actually asked what I was using. That says it all.',
+    product: 'Nourishing Sage Moisturizer',
+    avatar: 'https://images.unsplash.com/photo-1544726982-b9cbb44f5f0d?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 11,
+    name: 'Layla Haddad',
+    rating: 5,
+    quote: 'Switched my whole routine to LUMIÉ and my skin has never looked more even-toned.',
+    product: 'Hydrating Cream Cleanser',
+    avatar: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=100&q=80',
+  },
+  {
+    id: 12,
+    name: 'Chloe Bergeron',
+    rating: 4,
+    quote: 'Great for summer. Feels weightless but my skin stays hydrated all day long.',
+    product: 'Aloe Whip Day Cream',
+    avatar: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=100&q=80',
+  },
 ]
 
 const totalReviews = 482
@@ -162,6 +234,17 @@ const averageRating = computed(() => {
   return sum / reviews.length
 })
 
+const showAll = ref(false)
+const INITIAL_COUNT = 3
+
+const visibleReviews = computed(() =>
+  showAll.value ? reviews : reviews.slice(0, INITIAL_COUNT)
+)
+
+function toggleShowAll(): void {
+  showAll.value = !showAll.value
+}
+
 const PRIMARY = '#0F3D2E'
 const HOVER = '#174A3A'
 
@@ -170,7 +253,4 @@ function setHover(e: MouseEvent, isHover: boolean): void {
   target.style.backgroundColor = isHover ? HOVER : PRIMARY
 }
 
-function viewAllReviews(): void {
-  console.log('Navigate to full reviews page')
-}
 </script>
