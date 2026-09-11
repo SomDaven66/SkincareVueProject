@@ -62,6 +62,6 @@ const handlelogout = () => {
     <FeedBack v-if="isHomePage" /> -->
 
     <!-- FOOTER -->
-    <Footer />
+    <Footer v-if="!isAdmin" />
   </div>
 </template>
