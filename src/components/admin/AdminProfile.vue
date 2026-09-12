@@ -337,8 +337,8 @@ interface User {
 // ================= CURRENT USER =================
 const currentUser = ref<User | null>(null);
 
-// Get logged-in user from localStorage
-const storedUser = localStorage.getItem("currentUser");
+// Get logged-in admin user from storage (adminUser)
+const storedUser = localStorage.getItem("adminUser") || sessionStorage.getItem("adminUser");
 
 if (storedUser) {
   try {
@@ -351,7 +351,7 @@ if (storedUser) {
       router.push("/profile");
     }
   } catch (error) {
-    console.error("Error reading user:", error);
+    console.error("Error reading admin user:", error);
     router.push("/login");
   }
 } else {
@@ -360,13 +360,13 @@ if (storedUser) {
 
 // ================= EDIT PROFILE =================
 const editProfile = () => {
-  alert("Edit admin profile coming soon!");
+  router.push("/admin/edit-profile");
 };
 
 // ================= LOGOUT =================
 const logout = () => {
-  localStorage.removeItem("currentUser");
-  sessionStorage.removeItem("currentUser");
+  localStorage.removeItem("adminUser");
+  sessionStorage.removeItem("adminUser");
 
   router.push("/login");
 };

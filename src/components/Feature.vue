@@ -2,7 +2,7 @@
   <section class="py-16 px-6 w-full" style="background-color: #F4F8F1;">
     <div class="max-w-6xl mx-auto">
       <!-- Section Header -->
-      <div class="mb-12 text-center">
+      <div class="mb-12 text-center" data-aos="fade-up">
         <span
           class="mb-3 px-4 py-1 text-xs font-semibold rounded-full inline-block tracking-widest uppercase"
           style="color: #0F3D2E; background-color: #A8C3A0;"
@@ -20,10 +20,12 @@
       <!-- One Row, Three Columns (stays a single row on every screen size; scrolls on small screens) -->
      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
   <article
-    v-for="product in products"
+    v-for="(product, index) in products"
     :key="product.id"
     class="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border w-full"
     style="border-color: #A8C3A0;"
+    data-aos="fade-up"
+    :data-aos-delay="index * 100"
   >
     <!-- Image -->
     <div class="relative w-full aspect-square overflow-hidden" style="background-color: #F4F8F1;">

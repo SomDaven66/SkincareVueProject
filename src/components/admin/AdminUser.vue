@@ -8,11 +8,14 @@
           <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <!-- Search -->
             <div class="relative w-full lg:max-w-md">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+              <Search
+                :size="17"
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              />
               <input
                 v-model="searchQuery"
                 type="text"
-                placeholder="Search customers..."
+                placeholder="Search by name or email..."
                 class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] py-3 pl-11 pr-4 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
               />
             </div>
@@ -20,9 +23,9 @@
         </div>
 
         <!-- TABLE -->
-        <div class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm">
+        <div class="overflow-x-auto rounded-2xl border border-[#DCE6DC] bg-white shadow-sm">
           <!-- Table Header -->
-          <div class="hidden grid-cols-[70px_1fr_150px_120px] items-center gap-4 border-b border-[#DCE6DC] bg-[#F4F8F1] px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-600 md:grid">
+          <div class="hidden min-w-[500px] grid-cols-[70px_1fr_150px_120px] items-center gap-4 border-b border-[#DCE6DC] bg-[#F4F8F1] px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-600 md:grid">
             <div>#</div>
             <div>Name</div>
             <div>Email</div>
@@ -39,7 +42,7 @@
           <div
             v-for="(user, index) in filteredUsers"
             :key="index"
-            class="hidden grid-cols-[70px_1fr_150px_120px] items-center gap-4 border-b border-[#E5ECE5] px-6 py-4 transition last:border-b-0 hover:bg-[#F9FBF7] md:grid"
+            class="hidden min-w-[500px] grid-cols-[70px_1fr_150px_120px] items-center gap-4 border-b border-[#E5ECE5] px-6 py-4 transition last:border-b-0 hover:bg-[#F9FBF7] md:grid"
           >
             <!-- ID -->
             <div class="text-sm text-gray-500">#{{ index + 1 }}</div>
@@ -52,7 +55,7 @@
             </div>
 
             <!-- Email -->
-            <div class="text-sm text-gray-500">{{ user.email }}</div>
+            <div class="truncate text-sm text-gray-500">{{ user.email }}</div>
 
             <!-- Role -->
             <div>
@@ -91,6 +94,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { Search } from "lucide-vue-next";
 
 interface User {
   name?: string;

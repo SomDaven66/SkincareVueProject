@@ -111,7 +111,7 @@ const getStatusClass = (status: string) => {
               {{ stat.title }}
             </p>
 
-            <h3 class="mt-1 text-2xl font-bold text-[#0F3D2E]">
+            <h3 class="mt-1 min-w-0 truncate text-2xl font-bold text-[#0F3D2E]">
               {{ stat.value }}
             </h3>
           </div>
@@ -150,7 +150,8 @@ const getStatusClass = (status: string) => {
             </div>
 
             <!-- Fake chart -->
-            <div class="mt-8 flex h-48 items-end gap-3 sm:gap-5">
+            <div class="mt-8 min-w-[300px]">
+              <div class="flex h-48 items-end gap-2 sm:gap-4">
 
               <div class="flex h-full flex-1 items-end">
                 <div class="w-full rounded-t-lg bg-[#DCE9D9]" style="height: 38%"></div>
@@ -189,6 +190,7 @@ const getStatusClass = (status: string) => {
               <span>Fri</span>
               <span>Sat</span>
               <span>Sun</span>
+            </div>
             </div>
           </div>
 
@@ -278,9 +280,9 @@ const getStatusClass = (status: string) => {
           class="mt-6 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white"
         >
 
-          <div class="flex items-center justify-between border-b border-[#E8EFE8] px-6 py-5">
+          <div class="flex min-w-0 items-center justify-between border-b border-[#E8EFE8] px-6 py-5">
 
-            <div>
+            <div class="min-w-0">
               <h3 class="font-bold text-[#0F3D2E]">
                 Recent Orders
               </h3>
@@ -292,7 +294,7 @@ const getStatusClass = (status: string) => {
 
             <router-link
               to="/admin/orders"
-              class="text-sm font-semibold text-[#0F3D2E] hover:underline"
+              class="shrink-0 text-sm font-semibold text-[#0F3D2E] hover:underline"
             >
               View All
             </router-link>

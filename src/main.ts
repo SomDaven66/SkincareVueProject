@@ -3,6 +3,8 @@ import './style.css'
 import App from './App.vue'
 import router from './components/router/index.ts'
 import { createPinia } from 'pinia'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 // ================= CREATE DEFAULT ADMIN =================
 const storedUsers = localStorage.getItem("users");
@@ -29,5 +31,12 @@ app.use(router)
 
 const pinia = createPinia()
 app.use(pinia)
+
+AOS.init({
+  duration: 800,
+  easing: 'ease-in-out',
+  once: true,
+  offset: 50,
+})
 
 app.mount('#app')

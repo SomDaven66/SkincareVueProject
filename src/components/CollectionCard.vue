@@ -1,6 +1,7 @@
 <template>
   <div
     class="group overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+    data-aos="fade-up"
   >
     <!-- Image -->
     <div class="relative h-90 overflow-hidden bg-[#F4F8F1]">

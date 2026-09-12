@@ -226,9 +226,11 @@ const clearFilters = (): void => {
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
         <div
-          v-for="item in processedProducts"
+          v-for="(item, index) in processedProducts"
           :key="item.id"
           class="flex-col overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm group flex transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+          data-aos="fade-up"
+          :data-aos-delay="(index % 4) * 100"
         >
           <!-- Card Image -->
           <div class="h-72 overflow-hidden bg-[#F4F8F1] relative">

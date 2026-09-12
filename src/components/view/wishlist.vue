@@ -63,11 +63,13 @@
                  lg:grid-cols-3 xl:grid-cols-4"
         >
           <div
-            v-for="product in wishlistStore.getWishlistProducts"
+            v-for="(product, index) in wishlistStore.getWishlistProducts"
             :key="product.id"
             class="group overflow-hidden rounded-2xl border
                    border-[#DCE6DC] bg-white transition
                    hover:-translate-y-1 hover:shadow-lg"
+            data-aos="fade-up"
+            :data-aos-delay="(index % 4) * 100"
           >
 
             <!-- Product Image -->

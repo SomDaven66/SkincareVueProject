@@ -23,7 +23,21 @@ const router = useRouter();
    PRODUCTS
 ========================================================= */
 
-const products = ref<Product[]>([...Products]);
+const STORAGE_KEY = "lumie_admin_products";
+
+function loadProducts(): Product[] {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return [...Products];
+    }
+  }
+  return [...Products];
+}
+
+const products = ref<Product[]>(loadProducts());
 
 /* =========================================================
    SEARCH & FILTER
@@ -155,7 +169,7 @@ function formatCategory(category: string): string {
 ========================================================= */
 
 function editProduct(product: Product) {
-  router.push(`/admin/products/edit/${product.id}`);
+  router.push(`/admin/product/edit/${product.id}`);
 }
 
 /* =========================================================
@@ -338,7 +352,7 @@ function deleteProduct(product: Product) {
           ================================================== -->
 
           <div
-            class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm"
+            class="overflow-x-auto rounded-2xl border border-[#DCE6DC] bg-white shadow-sm"
           >
 
             <!-- Table Header -->

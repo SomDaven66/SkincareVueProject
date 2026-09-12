@@ -1,15 +1,17 @@
 <template>
     <div 
-        class="min-h-screen bg-[#F9FBF7] flex items-center justify-center px-6 py-12"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
     >
         <!-- Login Card -->
         <div
-            class="relative w-full max-w-md bg-white rounded-2xl border border-[#DCE6DC] shadow-lg p-8"
+            class="relative w-full max-w-md bg-white rounded-2xl border border-[#DCE6DC] shadow-lg p-8 max-h-[90vh] overflow-y-auto"
+            data-aos="zoom-in"
+            data-aos-duration="500"
         >
             <!-- Close Button -->
             <button
                 type="button"
-                @click="closeLogin"
+                @click="router.push('/')"
                 class="absolute right-4 top-4 flex h-9 w-9 items-center
                     justify-center rounded-full
                     text-[#64756B]
@@ -23,7 +25,7 @@
                 />
             </button>
             <!-- Header -->
-            <div class="text-center mb-8">
+            <div class="text-center mb-8" data-aos="fade-up" data-aos-delay="100">
                 <!-- Logo / Icon -->
                 <div
                     class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]"
@@ -47,7 +49,7 @@
             </div>
 
             <!-- Form -->
-            <form @submit.prevent="login" class="space-y-5">
+            <form @submit.prevent="login" class="space-y-3" data-aos="fade-up" data-aos-delay="200">
                 <!-- Email -->
                 <div>
                     <label
@@ -128,7 +130,7 @@
             </form>
 
             <!-- Register -->
-            <div class="mt-8 border-t border-[#DCE6DC] pt-6 text-center">
+            <div class="mt-8 border-t border-[#DCE6DC] pt-6 text-center flex items-center gap-2 justify-center">
                 <p class="text-sm text-[#64756B]">
                     Don't have an account?
                 </p>
@@ -136,7 +138,7 @@
                 <router-link
                    
                     to="/register"
-                    class="mt-2 inline-block font-semibold text-[#0F3D2E] transition hover:text-[#174A3A]"
+                    class="inline-block font-semibold text-[#0F3D2E] transition hover:text-[#174A3A]"
                 >
                     Register
                 </router-link>
@@ -171,10 +173,6 @@ import {
 import { ref } from "vue";
 
 const router = useRouter();
-
-function closeLogin() {
-  router.back();
-}
 
 const email = ref("");
 const password = ref("");
@@ -218,16 +216,33 @@ const login = () => {
 
   // ================= REMEMBER ME =================
 
-  if (remember.value) {
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(user)
-    );
+  // Store session based on role
+  if (user.role === "admin") {
+    // Admin session uses separate key
+    if (remember.value) {
+      localStorage.setItem(
+        "adminUser",
+        JSON.stringify(user)
+      );
+    } else {
+      sessionStorage.setItem(
+        "adminUser",
+        JSON.stringify(user)
+      );
+    }
   } else {
-    sessionStorage.setItem(
-      "currentUser",
-      JSON.stringify(user)
-    );
+    // Regular user session
+    if (remember.value) {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+      );
+    } else {
+      sessionStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+      );
+    }
   }
 
   showSuccess.value=true;

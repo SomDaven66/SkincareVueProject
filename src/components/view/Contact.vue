@@ -62,7 +62,7 @@
           <div>
             <h3 class="font-semibold">Email</h3>
             <p class="mt-1 text-sm text-[#52705D]">
-              hello@lumieskin.com
+             support@lumieskin.com
             </p>
           </div>
         </div>
@@ -253,13 +253,7 @@
           Send Message
         </button>
 
-        <!-- Success message -->
-        <p
-          v-if="submitted"
-          class="text-center text-sm font-medium text-[#52705D]"
-        >
-          Thank you! Your message has been sent.
-        </p>
+
 
       </form>
     </div>
@@ -268,12 +262,29 @@
 </section>
 
   </div>
+
+  <!-- Toast notification -->
+  <Transition
+    enter-active-class="transition ease-out duration-300"
+    enter-from-class="-translate-y-4 opacity-0"
+    enter-to-class="translate-y-0 opacity-100"
+    leave-active-class="transition ease-in duration-200"
+    leave-from-class="translate-y-0 opacity-100"
+    leave-to-class="-translate-y-4 opacity-0"
+  >
+    <div
+      v-if="showToast"
+      class="fixed top-6 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-[#0F3D2E] px-6 py-3 text-sm font-medium text-white shadow-lg"
+    >
+      Thank you! Your message has been sent.
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 
-const submitted = ref(false);
+const showToast = ref(false);
 
 const form = reactive({
   name: "",
@@ -283,7 +294,7 @@ const form = reactive({
 });
 
 const submitForm = () => {
-  submitted.value = true;
+  showToast.value = true;
 
   form.name = "";
   form.email = "";
@@ -291,9 +302,10 @@ const submitForm = () => {
   form.message = "";
 
   setTimeout(() => {
-    submitted.value = false;
+    showToast.value = false;
   }, 3000);
 };
+
 </script>
 
 <style scoped >

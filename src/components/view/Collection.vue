@@ -53,9 +53,11 @@
       >
 
         <div
-          v-for="product in collectionProducts"
+          v-for="(product, index) in collectionProducts"
           :key="product.id"
           class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm group transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+          data-aos="fade-up"
+          :data-aos-delay="index * 100"
         >
 
           <!-- Image -->

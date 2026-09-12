@@ -42,10 +42,12 @@
       <!-- Feedback Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <article
-          v-for="review in visibleReviews"
+          v-for="(review, index) in visibleReviews"
           :key="review.id"
           class="flex flex-col bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 border"
           style="border-color: #A8C3A0;"
+          data-aos="fade-up"
+          :data-aos-delay="(index % 3) * 100"
         >
           <!-- Stars -->
           <div class="flex mb-4">

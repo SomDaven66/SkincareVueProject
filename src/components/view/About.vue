@@ -113,6 +113,8 @@
           <!-- Card 1 -->
           <div
             class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="0"
           >
             <div
               class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
@@ -133,6 +135,8 @@
           <!-- Card 2 -->
           <div
             class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="100"
           >
             <div
               class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
@@ -153,6 +157,8 @@
           <!-- Card 3 -->
           <div
             class="rounded-3xl bg-[#F4F8F1] p-8 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="200"
           >
             <div
               class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#A8C3A0]/50 text-xl"
@@ -206,9 +212,9 @@
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
 
-          <div class="rounded-3xl bg-white p-7 shadow-sm">
+          <div class="rounded-3xl bg-white p-7 shadow-sm" data-aos="zoom-in" data-aos-delay="0">
             <p class="text-3xl font-bold text-[#0F3D2E]">
               8+
             </p>
@@ -218,7 +224,7 @@
             </p>
           </div>
 
-          <div class="rounded-3xl bg-white p-7 shadow-sm">
+          <div class="rounded-3xl bg-white p-7 shadow-sm" data-aos="zoom-in" data-aos-delay="100">
             <p class="text-3xl font-bold text-[#0F3D2E]">
               100%
             </p>
@@ -228,7 +234,7 @@
             </p>
           </div>
 
-          <div class="rounded-3xl bg-white p-7 shadow-sm">
+          <div class="rounded-3xl bg-white p-7 shadow-sm" data-aos="zoom-in" data-aos-delay="200">
             <p class="text-3xl font-bold text-[#0F3D2E]">
               Daily
             </p>
@@ -238,7 +244,7 @@
             </p>
           </div>
 
-          <div class="rounded-3xl bg-white p-7 shadow-sm">
+          <div class="rounded-3xl bg-white p-7 shadow-sm" data-aos="zoom-in" data-aos-delay="300">
             <p class="text-3xl font-bold text-[#0F3D2E]">
               You
             </p>
@@ -273,6 +279,8 @@
 
           <div
             class="rounded-3xl border border-[#DCE6DC] p-8"
+            data-aos="fade-up"
+            data-aos-delay="0"
           >
             <span
               class="text-sm font-bold text-[#7A9E7E]"
@@ -291,6 +299,8 @@
 
           <div
             class="rounded-3xl border border-[#DCE6DC] p-8"
+            data-aos="fade-up"
+            data-aos-delay="100"
           >
             <span
               class="text-sm font-bold text-[#7A9E7E]"
@@ -309,6 +319,8 @@
 
           <div
             class="rounded-3xl border border-[#DCE6DC] p-8"
+            data-aos="fade-up"
+            data-aos-delay="200"
           >
             <span
               class="text-sm font-bold text-[#7A9E7E]"
@@ -348,7 +360,7 @@
         </p>
 
         <RouterLink
-          to="/products"
+          to="/collection"
           class="mt-8 inline-block rounded-full bg-[#0F3D2E] px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:bg-[#174A3A]"
         >
           Shop Collection

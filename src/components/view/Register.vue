@@ -1,17 +1,19 @@
 <template>
   <div
-    class="min-h-screen bg-[#F9FBF7] flex items-center justify-center px-6 py-10"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
   >
     <!-- Register Card -->
     <div
       class="relative w-full max-w-md rounded-2xl border border-[#DCE6DC]
-             bg-white p-8 shadow-lg"
+             bg-white p-5 shadow-lg sm:p-8"
+      data-aos="zoom-in"
+      data-aos-duration="500"
     >
 
       <!-- ================= CLOSE BUTTON ================= -->
       <button
         type="button"
-        @click="router.back()"
+        @click="router.push('/')"
         class="absolute right-4 top-4 flex h-9 w-9 items-center
                justify-center rounded-full
                text-[#64756B]
@@ -28,10 +30,10 @@
 
 
       <!-- ================= HEADER ================= -->
-      <div class="mb-7 text-center">
+      <div class="mb-5 text-center" data-aos="fade-up" data-aos-delay="100">
 
         <div
-          class="mx-auto mb-4 flex h-14 w-14 items-center
+          class="mx-auto mb-2 flex h-14 w-14 items-center
                  justify-center rounded-full bg-[#F4F8F1]"
         >
           <CircleUserRound
@@ -52,7 +54,7 @@
 
 
       <!-- ================= FORM ================= -->
-      <form @submit.prevent="register" class="space-y-5">
+      <form @submit.prevent="register" class="space-y-3" data-aos="fade-up" data-aos-delay="200">
 
         <!-- Full Name -->
         <div>
@@ -191,13 +193,13 @@
 
           <label
             for="terms"
-            class="cursor-pointer text-sm leading-5 text-[#64756B]"
+            class="cursor-pointer text-xs leading-5 text-[#64756B] sm:text-sm"
           >
             I agree to the
             <span class="font-medium text-[#0F3D2E]">
               Terms & Conditions
             </span>
-            and
+            &
             <span class="font-medium text-[#0F3D2E]">
               Privacy Policy
             </span>
@@ -229,7 +231,7 @@
 
 
         <!-- Login -->
-        <div class="border-t border-[#DCE6DC] pt-5 text-center">
+        <div class="border-t border-[#DCE6DC] pt-5 text-center flex items-center justify-center gap-1">
 
           <p class="text-sm text-[#64756B]">
             Already have an account?
@@ -238,7 +240,7 @@
           <router-link
           
             to="/login"
-            class="mt-1 inline-block font-semibold
+            class="inline-block font-semibold
                    text-[#0F3D2E]
                    transition hover:text-[#174A3A]"
           >
