@@ -1,4 +1,3 @@
-```vue
 <template>
   <div>
     <div class="mx-auto max-w-4xl">
@@ -377,4 +376,3 @@ const goToLogin = () => {
   router.push("/login");
 };
 </script>
-```

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import {
@@ -14,6 +14,8 @@ import {
   Pencil,
   Trash2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-vue-next";
 
 import type { Product } from "../../data/Product";
@@ -78,6 +80,43 @@ const filteredProducts = computed(() => {
 });
 
 /* =========================================================
+   PAGINATION
+========================================================= */
+
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+watch([searchQuery, selectedCategory], () => {
+  currentPage.value = 1;
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredProducts.value.length / itemsPerPage);
+});
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredProducts.value.slice(start, end);
+});
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+}
+
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+}
+
+function goToPage(page: number) {
+  currentPage.value = page;
+}
+
+/* =========================================================
    STATISTICS
 ========================================================= */
 
@@ -130,21 +169,20 @@ function deleteProduct(product: Product) {
       <div class="px-4 py-6 sm:px-6 lg:px-8">
 
         <div class="mx-auto max-w-7xl">
-
-          <!-- =================================================
+           <!-- =================================================
                TOP CARDS
           ================================================== -->
 
           <div
-            class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2"
+            class="grid grid-cols-1 mb-6 gap-4 sm:grid-cols-2"
           >
 
             <!-- Total Products -->
 
             <div
-              class="rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm"
+              class="p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm"
             >
-              <div class="flex items-center justify-between">
+              <div class="justify-between flex items-center">
 
                 <div>
                   <p class="text-sm text-gray-500">
@@ -159,7 +197,7 @@ function deleteProduct(product: Product) {
                 </div>
 
                 <div
-                  class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F4F8F1]"
+                  class="h-12 w-12 justify-center rounded-xl bg-[#F4F8F1] flex items-center"
                 >
                   <Package
                     :size="24"
@@ -173,9 +211,9 @@ function deleteProduct(product: Product) {
             <!-- Categories -->
 
             <div
-              class="rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm"
+              class="p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm"
             >
-              <div class="flex items-center justify-between">
+              <div class="justify-between flex items-center">
 
                 <div>
                   <p class="text-sm text-gray-500">
@@ -190,7 +228,7 @@ function deleteProduct(product: Product) {
                 </div>
 
                 <div
-                  class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F4F8F1]"
+                  class="h-12 w-12 justify-center rounded-xl bg-[#F4F8F1] flex items-center"
                 >
                   <Package
                     :size="24"
@@ -208,33 +246,33 @@ function deleteProduct(product: Product) {
           ================================================== -->
 
           <div
-            class="mb-6 rounded-2xl border border-[#DCE6DC] bg-white p-4 shadow-sm"
+            class="mb-6 p-4 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm"
           >
 
             <div
-              class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+              class="flex-col gap-4 flex lg:flex-row lg:items-center lg:justify-between"
             >
 
               <!-- Search -->
 
-              <div class="relative w-full lg:max-w-md">
+              <div class="w-full relative lg:max-w-md">
 
                 <Search
                   :size="19"
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  class="top-1/2 text-gray-400 absolute left-4 -translate-y-1/2"
                 />
 
                 <input
                   v-model="searchQuery"
                   type="text"
                   placeholder="Search products..."
-                  class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] py-3 pl-11 pr-4 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                  class="py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm pl-11 pr-4 outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
                 />
 
               </div>
 
               <div
-                class="flex flex-col gap-3 sm:flex-row"
+                class="flex-col gap-3 flex sm:flex-row"
               >
 
                 <!-- Category -->
@@ -243,7 +281,7 @@ function deleteProduct(product: Product) {
 
                   <select
                     v-model="selectedCategory"
-                    class="w-full appearance-none rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] py-3 pl-4 pr-10 text-sm outline-none focus:border-[#7A9E7E] sm:w-52"
+                    class="py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm appearance-none pl-4 pr-10 outline-none focus:border-[#7A9E7E] sm:w-52"
                   >
                     <option value="all">
                       All Categories
@@ -260,16 +298,15 @@ function deleteProduct(product: Product) {
 
                   <ChevronDown
                     :size="17"
-                    class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                    class="top-1/2 text-gray-500 pointer-events-none absolute right-3 -translate-y-1/2"
                   />
 
                 </div>
 
                 <!-- Add Product -->
-
-                <router-link
+                  <router-link
                     to="/admin/product/add"
-                    class="inline-flex items-center gap-2 rounded-xl bg-[#0F3D2E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+                    class="gap-2 px-5 py-3 rounded-xl bg-[#0F3D2E] text-sm font-semibold text-white inline-flex items-center transition hover:bg-[#174A3A]"
                     >
                     <Plus :size="18" />
                     Add Product
@@ -294,7 +331,7 @@ function deleteProduct(product: Product) {
             <!-- Table Header -->
 
             <div
-              class="hidden grid-cols-[70px_1fr_150px_120px_130px] items-center gap-4 border-b border-[#DCE6DC] bg-[#F4F8F1] px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-600 md:grid"
+              class="grid-cols-[70px_1fr_150px_120px_130px] gap-4 px-6 py-4 border-b border-[#DCE6DC] bg-[#F4F8F1] text-xs font-semibold text-gray-600 hidden items-center uppercase tracking-wide md:grid"
             >
               <div>
                 #
@@ -325,7 +362,7 @@ function deleteProduct(product: Product) {
             >
               <Package
                 :size="45"
-                class="mx-auto mb-4 text-[#A8C3A0]"
+                class="mb-4 mx-auto text-[#A8C3A0]"
               />
 
               <h3
@@ -342,9 +379,9 @@ function deleteProduct(product: Product) {
             <!-- Desktop Products -->
 
             <div
-              v-for="product in filteredProducts"
+              v-for="product in paginatedProducts"
               :key="product.id"
-              class="hidden grid-cols-[70px_1fr_150px_120px_130px] items-center gap-4 border-b border-[#E5ECE5] px-6 py-4 transition last:border-b-0 hover:bg-[#F9FBF7] md:grid"
+              class="grid-cols-[70px_1fr_150px_120px_130px] gap-4 px-6 py-4 border-b border-[#E5ECE5] hidden items-center transition last:border-b-0 hover:bg-[#F9FBF7] md:grid"
             >
 
               <!-- ID -->
@@ -355,23 +392,23 @@ function deleteProduct(product: Product) {
 
               <!-- Product -->
 
-              <div class="flex min-w-0 items-center gap-4">
+              <div class="gap-4 min-w-0 flex items-center">
 
                 <img
                   :src="product.image"
                   :alt="product.name"
-                  class="h-14 w-14 shrink-0 rounded-xl border border-[#DCE6DC] bg-[#F4F8F1] object-cover"
+                  class="h-14 w-14 rounded-xl border border-[#DCE6DC] bg-[#F4F8F1] object-cover shrink-0"
                 />
 
                 <div class="min-w-0">
                   <h3
-                    class="truncate text-sm font-semibold text-[#0F3D2E]"
+                    class="text-sm font-semibold text-[#0F3D2E] truncate"
                   >
                     {{ product.name }}
                   </h3>
 
                   <p
-                    class="mt-1 line-clamp-1 text-xs text-gray-500"
+                    class="mt-1 text-xs text-gray-500 line-clamp-1"
                   >
                     {{ product.description }}
                   </p>
@@ -383,7 +420,7 @@ function deleteProduct(product: Product) {
 
               <div>
                 <span
-                  class="inline-flex rounded-full bg-[#F4F8F1] px-3 py-1 text-xs font-medium text-[#0F3D2E]"
+                  class="px-3 py-1 rounded-full bg-[#F4F8F1] text-xs font-medium text-[#0F3D2E] inline-flex"
                 >
                   {{ formatCategory(product.category) }}
                 </span>
@@ -400,13 +437,12 @@ function deleteProduct(product: Product) {
               <!-- Actions -->
 
               <div
-                class="flex justify-end gap-2"
+                class="gap-2 justify-end flex"
               >
-
                 <button
                   type="button"
                   @click="editProduct(product)"
-                  class="flex h-9 w-9 items-center justify-center rounded-lg border border-[#DCE6DC] text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
+                  class="h-9 w-9 justify-center rounded-lg border border-[#DCE6DC] text-[#0F3D2E] flex items-center transition hover:bg-[#F4F8F1]"
                   title="Edit product"
                 >
                   <Pencil :size="16" />
@@ -415,7 +451,7 @@ function deleteProduct(product: Product) {
                 <button
                   type="button"
                   @click="deleteProduct(product)"
-                  class="flex h-9 w-9 items-center justify-center rounded-lg border border-red-100 text-red-500 transition hover:bg-red-50"
+                  class="h-9 w-9 justify-center rounded-lg border border-red-100 text-red-500 flex items-center transition hover:bg-red-50"
                   title="Delete product"
                 >
                   <Trash2 :size="16" />
@@ -430,23 +466,23 @@ function deleteProduct(product: Product) {
             ================================================== -->
 
             <div
-              v-for="product in filteredProducts"
+              v-for="product in paginatedProducts"
               :key="`mobile-${product.id}`"
-              class="border-b border-[#E5ECE5] p-4 last:border-b-0 md:hidden"
+              class="p-4 border-b border-[#E5ECE5] last:border-b-0 md:hidden"
             >
 
-              <div class="flex gap-4">
+              <div class="gap-4 flex">
 
                 <img
                   :src="product.image"
                   :alt="product.name"
-                  class="h-20 w-20 shrink-0 rounded-xl border border-[#DCE6DC] object-cover"
+                  class="h-20 w-20 rounded-xl border border-[#DCE6DC] object-cover shrink-0"
                 />
 
-                <div class="min-w-0 flex-1">
+                <div class="flex-1 min-w-0">
 
                   <div
-                    class="flex items-start justify-between gap-2"
+                    class="gap-2 justify-between flex items-start"
                   >
 
                     <div>
@@ -464,7 +500,7 @@ function deleteProduct(product: Product) {
                     </div>
 
                     <p
-                      class="whitespace-nowrap text-sm font-bold text-[#0F3D2E]"
+                      class="text-sm font-bold text-[#0F3D2E] whitespace-nowrap"
                     >
                       ${{ product.price.toFixed(2) }}
                     </p>
@@ -472,7 +508,7 @@ function deleteProduct(product: Product) {
                   </div>
 
                   <span
-                    class="mt-2 inline-flex rounded-full bg-[#F4F8F1] px-2.5 py-1 text-[11px] font-medium text-[#0F3D2E]"
+                    class="mt-2 px-2.5 py-1 rounded-full bg-[#F4F8F1] text-[11px] font-medium text-[#0F3D2E] inline-flex"
                   >
                     {{ formatCategory(product.category) }}
                   </span>
@@ -481,12 +517,12 @@ function deleteProduct(product: Product) {
 
               </div>
 
-              <div class="mt-4 flex gap-2">
+              <div class="mt-4 gap-2 flex">
 
                 <button
                   type="button"
                   @click="editProduct(product)"
-                  class="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#DCE6DC] py-2 text-sm font-medium text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
+                  class="flex-1 gap-2 py-2 justify-center rounded-lg border border-[#DCE6DC] text-sm font-medium text-[#0F3D2E] flex items-center transition hover:bg-[#F4F8F1]"
                 >
                   <Pencil :size="15" />
                   Edit
@@ -495,7 +531,7 @@ function deleteProduct(product: Product) {
                 <button
                   type="button"
                   @click="deleteProduct(product)"
-                  class="flex flex-1 items-center justify-center gap-2 rounded-lg border border-red-100 py-2 text-sm font-medium text-red-500 transition hover:bg-red-50"
+                  class="flex-1 gap-2 py-2 justify-center rounded-lg border border-red-100 text-sm font-medium text-red-500 flex items-center transition hover:bg-red-50"
                 >
                   <Trash2 :size="15" />
                   Delete
@@ -507,9 +543,65 @@ function deleteProduct(product: Product) {
 
           </div>
 
-          <!-- Results -->
+          <!-- Pagination UI -->
+           
+          <div
+            v-if="totalPages > 1"
+            class="mt-6 pt-4 justify-between border-t border-[#DCE6DC] flex items-center"
+          >
+            <div class="hidden sm:block">
+              <p class="text-sm text-gray-500">
+                Showing
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ (currentPage - 1) * itemsPerPage + 1 }}
+                </span>
+                to
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ Math.min(currentPage * itemsPerPage, filteredProducts.length) }}
+                </span>
+                of
+                <span class="font-semibold text-[#0F3D2E]">
+                  {{ filteredProducts.length }}
+                </span>
+                results
+              </p>
+            </div>
+            
+            <div class="flex-1 gap-2 justify-between flex sm:justify-end">
+              <button
+                @click="prevPage"
+                :disabled="currentPage === 1"
+                class="gap-1 px-4 py-2 rounded-xl border border-[#DCE6DC] bg-white text-sm font-medium text-gray-700 inline-flex items-center hover:bg-[#F9FBF7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft :size="16" />
+                Previous
+              </button>
+              
+              <div class="gap-1 hidden sm:flex items-center">
+                <button
+                  v-for="page in totalPages"
+                  :key="page"
+                  @click="goToPage(page)"
+                  class="h-9 w-9 justify-center rounded-xl border text-sm font-medium bg-[#0F3D2E] text-white' bg-white text-gray-700 [ 'flex items-center transition', currentPage === page ? 'border-[#0F3D2E] : 'border-[#DCE6DC] hover:bg-[#F9FBF7]' ]"
+                >
+                  {{ page }}
+                </button>
+              </div>
 
-          <p class="mt-4 text-sm text-gray-500">
+              <button
+                @click="nextPage"
+                :disabled="currentPage === totalPages"
+                class="gap-1 px-4 py-2 rounded-xl border border-[#DCE6DC] bg-white text-sm font-medium text-gray-700 inline-flex items-center hover:bg-[#F9FBF7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+                <ChevronRight :size="16" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Text (for single page) -->
+
+          <p v-else class="mt-4 text-sm text-gray-500">
             Showing
             <span class="font-semibold text-[#0F3D2E]">
               {{ filteredProducts.length }}

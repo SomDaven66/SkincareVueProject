@@ -113,7 +113,7 @@
                 class="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-[#F4F8F1] sm:h-32 sm:w-32"
               >
                 <img
-                  :src="item.image"
+                  :src="getItemImage(item)"
                   :alt="item.name"
                   class="h-full w-full object-cover"
                 />
@@ -150,9 +150,20 @@
                 </div>
 
                 <!-- PRICE -->
-                <p class="mt-2 text-sm text-gray-500">
-                  ${{ item.price.toFixed(2) }} each
-                </p>
+                <div class="mt-2 flex items-center gap-2">
+                  <span v-if="item.discount" class="text-sm font-semibold text-[#0F3D2E]">
+                    ${{ getDiscountedPrice(item).toFixed(2) }}
+                  </span>
+                  <span
+                    :class="item.discount ? 'text-sm text-gray-400 line-through' : 'text-sm text-gray-500'"
+                  >
+                    ${{ item.price.toFixed(2) }}
+                  </span>
+                  <span v-if="item.discount" class="rounded-full bg-[#0F3D2E] px-2 py-0.5 text-[10px] font-semibold text-white">
+                    -{{ item.discount }}%
+                  </span>
+                  <span class="text-xs text-gray-400">each</span>
+                </div>
 
                 <!-- BOTTOM -->
                 <div
@@ -318,6 +329,24 @@ const cardStore = useCartStore();
 onMounted(() => {
   cardStore.loadCart();
 });
+
+function getItemImage(item: any): string {
+  if (item.image) return item.image;
+  if (item.images) {
+    if (typeof item.images === 'object' && !Array.isArray(item.images)) {
+      return item.images.img1 || Object.values(item.images)[0] || '';
+    }
+    if (Array.isArray(item.images) && item.images.length > 0) {
+      return item.images[0];
+    }
+  }
+  return '';
+}
+
+function getDiscountedPrice(item: any): number {
+  const discount = item.discount || 0;
+  return discount > 0 ? item.price * (1 - discount / 100) : item.price;
+}
 
 function checkout(): void {
   if (cardStore.isEmpty) {

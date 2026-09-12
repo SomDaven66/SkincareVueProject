@@ -1,9 +1,19 @@
-```vue
 <script setup>
 import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router' // 1. Use useRoute instead of useRouter
 
 import Navbar from './components/layout/Navbar.vue'
 import Afterlognav from './components/layout/Afterlognav.vue'
+import Footer from './components/Footer.vue'
+import SummerDis from './components/SummerDis.vue'
+import CategoryCard from './components/CategoryCard.vue'
+import Feature from './components/Feature.vue'
+import FeedBack from './components/FeedBack.vue'
+
+const route = useRoute() // 2. Correct hook for current route properties
+
+// Check if user is currently on the home page
+const isHomePage = computed(() => route.path === '/')
 
 const currentUser = ref(
   JSON.parse(
@@ -13,13 +23,8 @@ const currentUser = ref(
   )
 )
 
-const isLoggedIn = computed(() => {
-  return currentUser.value !== null
-})
-
-const isAdmin = computed(() => {
-  return currentUser.value?.role === 'admin'
-})
+const isLoggedIn = computed(() => currentUser.value !== null)
+const isAdmin = computed(() => currentUser.value?.role === 'admin')
 
 const handleloginSuccess = () => {
   const user =
@@ -38,23 +43,22 @@ const handlelogout = () => {
 </script>
 
 <template>
+  <div class="app-layout">
+    <!-- NAVBAR -->
+    <Navbar v-if="!isLoggedIn" />
 
-  <!-- ================= NORMAL USER ================= -->
+    <Afterlognav v-else-if="!isAdmin" />
 
-  <Navbar
-    v-if="!isLoggedIn"
-  />
+    <!-- PAGE CONTENT -->
+    <router-view
+      @login-success="handleloginSuccess"
+      @logout="handlelogout"
+    />
 
-  <Afterlognav
-    v-else-if="!isAdmin"
-  />
+    <!-- SUMMER DISCOUNT (Rendered under homepage content, before Footer) -->
+    
 
-  <!-- ================= PAGE ================= -->
 
-  <router-view
-    @login-success="handleloginSuccess"
-    @logout="handlelogout"
-  />
-
+  <Footer/>
+</div>
 </template>
-```

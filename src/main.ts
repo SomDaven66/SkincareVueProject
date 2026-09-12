@@ -24,10 +24,10 @@ if (!adminExists) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-const app=createApp(App)
+const app = createApp(App)
 app.use(router)
 
-const pinia=createPinia()
+const pinia = createPinia()
 app.use(pinia)
 
 app.mount('#app')

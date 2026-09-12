@@ -10,6 +10,7 @@ export interface Product {
   category: string;
   description: string;
   image: string;
+  discount?: number;
 }
 
 
@@ -47,8 +48,11 @@ export const useCartStore = defineStore("cart", {
     // Total price before shipping
     subtotal: (state): number => {
       return state.cart.reduce(
-        (total, item) =>
-          total + item.price * item.quantity,
+        (total, item) => {
+          const discount = item.discount || 0;
+          const finalPrice = discount > 0 ? item.price * (1 - discount / 100) : item.price;
+          return total + finalPrice * item.quantity;
+        },
         0
       );
     },
@@ -87,10 +91,30 @@ export const useCartStore = defineStore("cart", {
     // ADD PRODUCT TO CART
     // ============================================
 
-    addToCart(product: Product): void {
+    addToCart(product: any): void {
+
+      // Normalize image: extract img1 from images object if needed
+      let image = product.image;
+      if (!image && product.images) {
+        if (typeof product.images === 'object' && !Array.isArray(product.images)) {
+          image = product.images.img1 || Object.values(product.images)[0] || '';
+        } else if (Array.isArray(product.images) && product.images.length > 0) {
+          image = product.images[0];
+        }
+      }
+
+      const normalizedProduct = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        category: product.category,
+        description: product.description || '',
+        image: image || '',
+        discount: product.discount || 0,
+      };
 
       const existingItem = this.cart.find(
-        item => item.id === product.id
+        item => item.id === normalizedProduct.id
       );
 
 
@@ -105,7 +129,7 @@ export const useCartStore = defineStore("cart", {
       else {
 
         this.cart.push({
-          ...product,
+          ...normalizedProduct,
           quantity: 1,
         });
 
@@ -249,9 +273,9 @@ export const useCartStore = defineStore("cart", {
     // ============================================
 
     itemTotal(item: CartItem): number {
-
-      return item.price * item.quantity;
-
+      const discount = item.discount || 0;
+      const finalPrice = discount > 0 ? item.price * (1 - discount / 100) : item.price;
+      return finalPrice * item.quantity;
     },
 
 

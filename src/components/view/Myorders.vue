@@ -107,7 +107,7 @@
           <div class="divide-y divide-[#DCE6DC]">
 
             <div
-              v-for="product in order.products"
+              v-for="product in order.items"
               :key="product.id"
               class="flex gap-4 px-5 py-4 sm:px-6"
             >
@@ -163,92 +163,110 @@
           <!-- ================= ORDER TRACKING ================= -->
           <div
             v-if="order.status !== 'Delivered'"
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5
-                   py-5 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6"
           >
-            <p class="mb-4 text-sm font-semibold text-[#0F3D2E]">
-              Order Progress
-            </p>
+            <div class="mb-6 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold text-[#0F3D2E]">
+                  Order Progress
+                </p>
 
-            <div class="relative flex items-start justify-between">
-
-              <!-- Progress Line -->
-              <div
-                class="absolute left-[10%] right-[10%] top-4 h-[2px]
-                       bg-[#DCE6DC]"
-              >
-                <div
-                  class="h-full bg-[#7A9E7E] transition-all"
-                  :style="{ width: getProgress(order.status) + '%' }"
-                ></div>
+                <p class="mt-1 text-xs text-gray-500">
+                  Track your order from confirmation to delivery
+                </p>
               </div>
+
+              <Package class="h-5 w-5 text-[#7A9E7E]" />
+            </div>
+
+            <!-- Progress -->
+            <div class="relative">
+
+              <!-- Background Line -->
+              <div
+                class="absolute left-[12%] right-[12%] top-6 h-[2px] bg-[#DCE6DC]"
+              ></div>
+
+              <!-- Active Line -->
+              <div
+                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E] transition-all duration-500"
+                :style="{ width: `calc(${getProgress(order.status)}% - 12%)` }"
+              ></div>
 
               <!-- Steps -->
-              <div
-                v-for="step in steps"
-                :key="step"
-                class="relative z-10 flex flex-col items-center"
-              >
-                <div
-                  class="flex h-8 w-8 items-center justify-center
-                         rounded-full border-2 bg-white"
-                  :class="
-                    isStepComplete(order.status, step)
-                      ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
-                      : 'border-[#DCE6DC] text-gray-300'
-                  "
-                >
-                  <svg
-                    v-if="isStepComplete(order.status, step)"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="3"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+              <div class="relative z-10 flex justify-between">
 
-                  <span v-else class="h-2 w-2 rounded-full bg-gray-300"></span>
+                <div
+                  v-for="(step, index) in steps"
+                  :key="step.name"
+                  class="flex flex-1 flex-col items-center"
+                >
+
+                  <!-- Icon Circle -->
+                  <div
+                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white transition-all duration-300"
+                    :class="
+                      isStepComplete(order.status, step.name)
+                        ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
+                        : 'border-[#DCE6DC] text-gray-300'
+                    "
+                  >
+                    <component
+                      :is="step.icon"
+                      class="h-5 w-5"
+                      :stroke-width="2"
+                    />
+                  </div>
+
+                  <!-- Step Name -->
+                  <span
+                    class="mt-3 text-center text-[10px] font-medium sm:text-xs"
+                    :class="
+                      isStepComplete(order.status, step.name)
+                        ? 'text-[#0F3D2E]'
+                        : 'text-gray-400'
+                    "
+                  >
+                    {{ step.name }}
+                  </span>
+
+                  <!-- Completed -->
+                  <span
+                    v-if="isStepComplete(order.status, step.name)"
+                    class="mt-1 text-[9px] text-[#7A9E7E]"
+                  >
+                    Completed
+                  </span>
+
                 </div>
 
-                <span
-                  class="mt-2 text-center text-[10px] text-gray-500
-                         sm:text-xs"
-                >
-                  {{ step }}
-                </span>
               </div>
-
             </div>
           </div>
 
-          <!-- Delivered Message -->
+          <!-- ================= DELIVERED ================= -->
           <div
             v-else
-            class="flex items-center gap-3 border-t border-[#DCE6DC]
-                   bg-[#F4F8F1] px-5 py-4 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-5 sm:px-6"
           >
-            <div
-              class="flex h-9 w-9 items-center justify-center
-                     rounded-full bg-[#7A9E7E] text-white"
-            >
-              ✓
-            </div>
+            <div class="flex items-center gap-4">
 
-            <div>
-              <p class="text-sm font-semibold text-[#0F3D2E]">
-                Order delivered
-              </p>
+              <div
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
+              >
+                <Check class="h-5 w-5" />
+              </div>
 
-              <p class="text-xs text-gray-500">
-                We hope you enjoy your skincare products.
-              </p>
+              <div>
+                <p class="text-sm font-semibold text-[#0F3D2E]">
+                  Order delivered
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                  We hope you enjoy your skincare products.
+                </p>
+              </div>
+
             </div>
           </div>
 
@@ -308,16 +326,16 @@
           </h2>
 
           <p class="mt-2 text-sm text-gray-500">
-            You don't have any {{ activeTab.toLowerCase() }} orders yet.
+            {{ currentUser ? "You don't have any " + activeTab.toLowerCase() + " orders yet." : "Please log in to view your orders." }}
           </p>
 
           <router-link
-            to="/products"
+            :to="currentUser ? '/products' : '/login'"
             class="mt-6 inline-flex rounded-full bg-[#0F3D2E]
                    px-6 py-3 text-sm font-medium text-white
                    transition hover:bg-[#174A3A]"
           >
-            Start Shopping
+            {{ currentUser ? "Start Shopping" : "Login" }}
           </router-link>
         </div>
 
@@ -327,107 +345,73 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
+import {
+  Check,
+  CircleCheck,
+  Package,
+  Cog,
+  Truck,
+  House,
+} from "lucide-vue-next";
+import { useOrderStore } from "../../store/orders";
 
-interface OrderProduct {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+const orderStore = useOrderStore();
 
-interface Order {
-  id: string;
-  date: string;
-  status: "Processing" | "Shipping" | "Delivered";
-  total: number;
-  products: OrderProduct[];
-}
+// Get current user
+const currentUser = ref(
+  JSON.parse(
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser") ||
+    "null"
+  )
+);
 
-const tabs = ["All", "Processing", "Shipping", "Delivered"];
+// Initialize store on mount
+onMounted(() => {
+  orderStore.init();
+});
+
+// Get user's orders
+const userOrders = computed(() => {
+  if (!currentUser.value) return [];
+  return orderStore.getUserOrders(currentUser.value.id);
+});
+
+const tabs = ["All", "Confirmed", "Processing", "Shipping", "Delivered"];
 
 const activeTab = ref("All");
 
-const steps = ["Confirmed", "Processing", "Shipping", "Delivered"];
-
-const orders = ref<Order[]>([
+const steps = [
   {
-    id: "#ORD-1024",
-    date: "September 6, 2026",
-    status: "Shipping",
-    total: 37,
-    products: [
-      {
-        id: 1,
-        name: "Gentle Acne Cleanser",
-        category: "Cleanser",
-        price: 15,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 2,
-        name: "Hydrating Face Serum",
-        category: "Serum",
-        price: 22,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
+    name: "Confirmed",
+    icon: CircleCheck,
   },
-
   {
-    id: "#ORD-1019",
-    date: "August 29, 2026",
-    status: "Delivered",
-    total: 38,
-    products: [
-      {
-        id: 3,
-        name: "Daily Face Moisturizer",
-        category: "Moisturizer",
-        price: 18,
-        quantity: 2,
-        image:
-          "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
+    name: "Processing",
+    icon: Cog,
   },
-
   {
-    id: "#ORD-1015",
-    date: "August 22, 2026",
-    status: "Processing",
-    total: 20,
-    products: [
-      {
-        id: 4,
-        name: "Daily Sunscreen SPF 50",
-        category: "Sunscreen",
-        price: 20,
-        quantity: 1,
-        image:
-          "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
+    name: "Shipping",
+    icon: Truck,
   },
-]);
+  {
+    name: "Delivered",
+    icon: House,
+  },
+];
 
 const filteredOrders = computed(() => {
   if (activeTab.value === "All") {
-    return orders.value;
+    return userOrders.value;
   }
 
-  return orders.value.filter(
+  return userOrders.value.filter(
     (order) => order.status === activeTab.value
   );
 });
 
-function getStatusClass(status: Order["status"]): string {
+function getStatusClass(status: string): string {
   if (status === "Delivered") {
     return "bg-green-100 text-green-700";
   }
@@ -436,10 +420,15 @@ function getStatusClass(status: Order["status"]): string {
     return "bg-blue-50 text-blue-600";
   }
 
+  if (status === "Confirmed") {
+    return "bg-purple-50 text-purple-600";
+  }
+
   return "bg-yellow-50 text-yellow-700";
 }
 
-function getProgress(status: Order["status"]): number {
+function getProgress(status: string): number {
+  if (status === "Confirmed") return 16;
   if (status === "Processing") return 33;
   if (status === "Shipping") return 66;
   if (status === "Delivered") return 100;
@@ -448,18 +437,20 @@ function getProgress(status: Order["status"]): number {
 }
 
 function isStepComplete(
-  status: Order["status"],
+  status: string,
   step: string
 ): boolean {
-  const progress = {
+  const progress: Record<string, number> = {
+    Confirmed: 1,
     Processing: 2,
     Shipping: 3,
     Delivered: 4,
   };
 
-  const stepNumber = steps.indexOf(step) + 1;
+  const stepNumber =
+    steps.findIndex((item) => item.name === step) + 1;
 
-  return stepNumber <= progress[status];
+  return stepNumber <= (progress[status] || 0);
 }
 </script>
 
