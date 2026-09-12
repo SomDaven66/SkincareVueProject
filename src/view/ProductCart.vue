@@ -1,145 +1,137 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
-import { RouterLink, useRoute, useRouter } from "vue-router";
-import {
-  Search,
-  SlidersHorizontal,
-  Heart,
-  Star,
-  ShoppingBag,
-} from "lucide-vue-next";
-import { Products } from "../data/Products";
-import { useWishlistStore } from "../store/wishlist";
-import { useCartStore } from "../store/Card";
-
-const route = useRoute();
-const router = useRouter();
-const wishlistStore = useWishlistStore();
-const cartStore = useCartStore();
+import { ref, computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
+import { Products } from '../data/Products'
 
 const categories = [
-  "All",
+   "All",
   "Sunscreen",
   "Cleanser",
   "Foam",
   "Serum",
   "Moisturizer",
   "Eye Care",
+  "Mist",
   "Toner",
+  "Mask",
   "Essence",
   "Face Mist",
   "Lotion",
-  "Mask",
-] as const;
+  "Lip Care",
+  "Body Care",
+  "Hair Care",
+  "Makeup",
+  "Fragrance",
+  "Cream",
+  "Gel",
+  "Scrub",
+  "Set",
+  "Body Oil",
+  "Treatment",
+  "Kit",
+  "Exfoliator",
+  "Peel",
+  "Nail Care",
+  "Tools & Accessories",
+  "Gift Sets",
+  "Sets & Bundles",
+  "Kits & Bundles",
+  "Spot Treatment",
+  "Other",
+] as const
 
-type SortOption =
-  | "default"
-  | "name-asc"
-  | "rating-desc"
-  | "price-asc"
-  | "price-desc";
+type SortOption = 'default' | 'name-asc' | 'rating-desc' | 'price-asc' | 'price-desc'
 
-const activeCategory = ref<string>("All");
-const searchQuery = ref<string>("");
-const sortBy = ref<SortOption>("default");
+const activeCategory = ref<string>('All')
+const searchQuery = ref<string>('')
+const sortBy = ref<SortOption>('default')
+// Ensure wishlistedIds is initialized as an array ref
+const wishlistedIds = ref<number[]>([]);
 
-// Read search query from URL on mount
-onMounted(() => {
-  wishlistStore.loadWishlist();
-  if (route.query.search && typeof route.query.search === "string") {
-    searchQuery.value = route.query.search;
+function getHeartClass(id: number) {
+  // Safe null checks
+  if (!wishlistedIds.value || !Array.isArray(wishlistedIds.value)) {
+    return 'text-[#536B59]';
   }
-});
+  return wishlistedIds.value.includes(id) 
+    ? 'fill-red-500 text-red-500' 
+    : 'text-[#536B59]';
+}
 
-// Watch for URL query changes (e.g. new search from Navbar)
-watch(
-  () => route.query.search,
-  (newSearch) => {
-    if (typeof newSearch === "string") {
-      searchQuery.value = newSearch;
-    } else if (!newSearch) {
-      searchQuery.value = "";
-    }
-  },
-);
+function getImageSrc(images: any) {
+  if (!images) return '';
+  if (Array.isArray(images)) return images[0] || '';
+  return images.img1 || Object.values(images)[0] || '';
+}
 
+function getCategoryClass(cat: string) {
+  const isSelected = activeCategory.value === cat;
+  return isSelected
+    ? 'border-[#0F3D2E] bg-[#0F3D2E] text-white shadow-md'
+    : 'border-[#DCE6DC] bg-white text-[#536B59] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]';
+}
 const processedProducts = computed(() => {
   // 1. Filter by category
-  let result = Products.filter((p) => {
-    return (
-      activeCategory.value === "All" || p.category === activeCategory.value
-    );
-  });
+  let result = Products.filter(p => {
+    return activeCategory.value === 'All' || p.category === activeCategory.value
+  })
 
   // 2. Filter by search query
-  if (searchQuery.value.trim() !== "") {
-    const query = searchQuery.value.toLowerCase().trim();
-    result = result.filter(
-      (p) =>
-        p.name.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query) ||
-        p.brand?.toLowerCase().includes(query),
-    );
+  if (searchQuery.value.trim() !== '') {
+    const query = searchQuery.value.toLowerCase().trim()
+    result = result.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query) ||
+      p.brand?.toLowerCase().includes(query)
+    )
   }
 
   // 3. Sort products
   return result.slice().sort((a, b) => {
     switch (sortBy.value) {
-      case "name-asc":
-        return a.name.localeCompare(b.name);
-      case "rating-desc":
-        return b.rating - a.rating;
-      case "price-asc":
-        return a.price - b.price;
-      case "price-desc":
-        return b.price - a.price;
+      case 'name-asc':
+        return a.name.localeCompare(b.name)
+      case 'rating-desc':
+        return b.rating - a.rating
+      case 'price-asc':
+        return a.price - b.price
+      case 'price-desc':
+        return b.price - a.price
       default:
-        return 0;
+        return 0
     }
-  });
-});
+  })
+})
 
-const productCount = computed(() => processedProducts.value.length);
+const productCount = computed(() => processedProducts.value.length)
 
-// Check if user is logged in
-function isLoggedIn(): boolean {
-  return !!(
-    localStorage.getItem("currentUser") || sessionStorage.getItem("currentUser")
-  );
-}
-
-// Toggle wishlist with auth check for guests
-function toggleWishlist(id: number): void {
-  if (!isLoggedIn()) {
-    router.push("/login");
-    return;
-  }
-  const product = Products.find((p) => p.id === id);
-  if (product) {
-    wishlistStore.toggleWishlist(product);
+const toggleWishlist = (id: number): void => {
+  const index = wishlistedIds.value.indexOf(id)
+  if (index === -1) {
+    wishlistedIds.value.push(id)
+  } else {
+    wishlistedIds.value.splice(index, 1)
   }
 }
 
 const clearFilters = (): void => {
-  searchQuery.value = "";
-  sortBy.value = "default";
-  activeCategory.value = "All";
-};
+  searchQuery.value = ''
+  sortBy.value = 'default'
+  activeCategory.value = 'All'
+}
 </script>
 
 <template>
   <div class="min-h-screen bg-[#F9FBF7]">
+
     <!-- ================= PAGE HEADER ================= -->
     <section
       class="px-4 py-12 overflow-hidden border-b border-[#DCE6DC] bg-gradient-to-br relative from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
       <!-- Decorative circles -->
-      <div
-        class="h-56 w-56 rounded-full bg-[#A8C3A0]/15 absolute -right-20 -top-20"
-      ></div>
-      <div
-        class="h-44 w-44 rounded-full bg-[#7A9E7E]/10 absolute -bottom-16 -left-16"
-      ></div>
+      <div class="h-56 w-56 rounded-full bg-[#A8C3A0]/15 absolute -right-20 -top-20"></div>
+      <div class="h-44 w-44 rounded-full bg-[#7A9E7E]/10 absolute -bottom-16 -left-16"></div>
 
       <div class="mx-auto max-w-7xl text-center relative">
         <p
@@ -154,9 +146,7 @@ const clearFilters = (): void => {
           Our Products
         </h1>
 
-        <p
-          class="mt-4 mx-auto max-w-2xl text-base text-[#536B59] leading-7 sm:text-lg"
-        >
+        <p class="mt-4 mx-auto max-w-2xl text-base text-[#536B59] leading-7 sm:text-lg">
           Discover gentle, effective skincare crafted with natural ingredients
           for every skin type.
         </p>
@@ -165,6 +155,7 @@ const clearFilters = (): void => {
 
     <!-- ================= CONTROLS ================= -->
     <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+
       <!-- Search & Sort Row -->
       <div
         class="flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between"
@@ -190,10 +181,7 @@ const clearFilters = (): void => {
           </span>
 
           <div class="gap-2 flex items-center">
-            <SlidersHorizontal
-              class="h-4 w-4 text-[#7A9E7E]"
-              :stroke-width="2"
-            />
+            <SlidersHorizontal class="h-4 w-4 text-[#7A9E7E]" :stroke-width="2" />
 
             <select
               v-model="sortBy"
@@ -210,16 +198,17 @@ const clearFilters = (): void => {
       </div>
 
       <!-- Category Pills -->
-      <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
-        <button
-          v-for="cat in categories"
-          :key="cat"
-          @click="activeCategory = cat"
-          class="px-5 py-2.5 rounded-full border text-sm font-semibold border-[#0F3D2E] text-white shadow-md' border-[#DCE6DC] text-[#536B59] whitespace-nowrap transition-all duration-200 activeCategory === cat ? 'bg-[#0F3D2E] : 'bg-white hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'"
-        >
-          {{ cat }}
-        </button>
-      </div>
+    <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
+  <button
+  v-for="cat in categories"
+  v-bind:key="cat"
+  v-on:click="activeCategory = cat"
+  class="px-5 py-2.5 rounded-full border text-sm font-semibold whitespace-nowrap transition-all duration-200"
+  v-bind:class="getCategoryClass(cat)"
+>
+  {{ cat }}
+</button>
+</div>
 
       <!-- ================= PRODUCT GRID ================= -->
       <main
@@ -251,31 +240,30 @@ const clearFilters = (): void => {
             </div>
 
             <!-- Wishlist Button -->
-            <button
-              @click.stop.prevent="toggleWishlist(item.id)"
-              class="top-3 z-10 h-9 w-9 justify-center rounded-full bg-white/90 shadow-sm absolute right-3 flex items-center backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
-              :aria-label="'Add ' + item.name + ' to wishlist'"
-            >
-              <Heart
-                class="h-4 w-4 text-red-500' transition-colors duration-200 wishlistStore.isInWishlist(item.id) ? 'fill-red-500 : 'text-[#536B59]'"
-                :stroke-width="2"
-              />
-            </button>
-            <!-- Clickable Image -->
-            <RouterLink
-              :to="`/products/${item.id}`"
-              class="h-full w-full justify-center flex items-center"
-            >
-              <img
-                :src="
-                  Array.isArray(item.images)
-                    ? item.images[0]
-                    : item.images?.img1
-                "
-                :alt="item.name"
-                class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-              />
-            </RouterLink>
+           <button
+  v-on:click.stop.prevent="toggleWishlist(item.id)"
+  class="top-3 z-10 h-9 w-9 justify-center rounded-full bg-white/90 shadow-sm absolute right-3 flex items-center backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
+  v-bind:aria-label="'Add ' + item.name + ' to wishlist'"
+>
+  <Heart
+    class="h-4 w-4 transition-colors duration-200"
+    v-bind:class="getHeartClass(item.id)"
+    v-bind:stroke-width="2"
+  />
+</button>
+
+<!-- Clickable Image -->
+<RouterLink
+  v-bind:to="'/products/' + item.id"
+  class="h-full w-full justify-center flex items-center"
+>
+  <img
+    v-bind:src="getImageSrc(item.images)"
+    v-bind:alt="item.name"
+    class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+  />
+</RouterLink>
+
           </div>
 
           <!-- Card Body -->
@@ -291,12 +279,8 @@ const clearFilters = (): void => {
 
                 <div class="gap-1 flex items-center">
                   <Star class="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
-                  <span class="text-xs font-bold text-[#0F3D2E]">{{
-                    item.rating
-                  }}</span>
-                  <span class="text-[10px] text-[#9AAD9A]"
-                    >({{ item.reviews }})</span
-                  >
+                  <span class="text-xs font-bold text-[#0F3D2E]">{{ item.rating }}</span>
+                  <span class="text-[10px] text-[#9AAD9A]">({{ item.reviews }})</span>
                 </div>
               </div>
 
@@ -310,7 +294,10 @@ const clearFilters = (): void => {
               </RouterLink>
 
               <!-- Brand -->
-              <p v-if="item.brand" class="text-xs text-[#7A9E7E]">
+              <p
+                v-if="item.brand"
+                class="text-xs text-[#7A9E7E]"
+              >
                 {{ item.brand }}
               </p>
             </div>
@@ -353,7 +340,7 @@ const clearFilters = (): void => {
 
         <button
           @click="clearFilters"
-          class="mt-6 inline-flex items-center gap-2 rounded-full bg-[#0F3D2E] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+          class="mt-6 gap-2 px-6 py-2.5 rounded-full bg-[#0F3D2E] text-sm font-semibold text-white inline-flex items-center transition hover:bg-[#174A3A]"
         >
           Reset Filters
         </button>
