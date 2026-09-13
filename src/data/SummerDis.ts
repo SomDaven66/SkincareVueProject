@@ -13,7 +13,7 @@ export const summerDis: summerDisData[] = [
     name: 'Gentle Chamomile Cleansing Gel',
     category: 'Cleanser',
     price: 28,
-    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80',
+    image: 'https://i.pinimg.com/736x/59/2f/f2/592ff21ae9534152e762afed2697f6df.jpg',
   },
   {
     id: 2,

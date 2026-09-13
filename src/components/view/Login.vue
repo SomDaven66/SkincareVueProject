@@ -202,16 +202,33 @@ const login = () => {
 
   // ================= REMEMBER ME =================
 
-  if (remember.value) {
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(user)
-    );
+  // Store session based on role
+  if (user.role === "admin") {
+    // Admin session uses separate key
+    if (remember.value) {
+      localStorage.setItem(
+        "adminUser",
+        JSON.stringify(user)
+      );
+    } else {
+      sessionStorage.setItem(
+        "adminUser",
+        JSON.stringify(user)
+      );
+    }
   } else {
-    sessionStorage.setItem(
-      "currentUser",
-      JSON.stringify(user)
-    );
+    // Regular user session
+    if (remember.value) {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+      );
+    } else {
+      sessionStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+      );
+    }
   }
 
   message.value = "Login success";

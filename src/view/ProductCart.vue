@@ -158,7 +158,7 @@ const clearFilters = (): void => {
 
       <!-- Search & Sort Row -->
       <div
-        class="flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between"
+        class=" flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between"
       >
         <!-- Search Bar -->
         <div class="w-full relative sm:max-w-md">
