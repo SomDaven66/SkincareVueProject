@@ -55,16 +55,16 @@
           {{ formatPrice(product.price) }}
         </span>
 
-        <button
-          type="button"
+        <router-link
+          to="/products"
           class="text-sm font-medium text-white px-4 py-2 rounded-full transition-colors duration-200"
           style="background-color: #A8C3A0;;"
           @mouseenter="(e: MouseEvent) => setHover(e, true)"
           @mouseleave="(e: MouseEvent) => setHover(e, false)"
-          @click="addToCart(product)"
+          
         >
-          Add to Cart
-        </button>
+          Go to Shop
+        </router-link>
       </div>
     </div>
   </article>
