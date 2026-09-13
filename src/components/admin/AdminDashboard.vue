@@ -251,7 +251,7 @@ const getStatusClass = (status: string) => {
               </router-link>
 
               <router-link
-                to="/admin/customers"
+                to="/admin/users"
                 class="flex items-center gap-3 rounded-xl border border-[#DCE6DC] p-4 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
               >
                 <div
