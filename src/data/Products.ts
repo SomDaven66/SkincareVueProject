@@ -14,9 +14,9 @@ export const Products: Product[] = [
     tag: "Best Seller",
     images: {
       img1: "https://i.pinimg.com/736x/18/25/72/182572b59c46a3a84e69dadc25a4e7e6.jpg",
-      img2: "https://i.pinimg.com/736x/9f/cf/e5/9fcfe5413284bf252a5d0658c50d9994.jpg",
-      img3: "https://i.pinimg.com/736x/e3/7f/d0/e37fd0d0ecc56696ed5f90fc97359b54.jpg",
-      img4: "https://i.pinimg.com/736x/0e/55/5d/0e555d5a65eb2649fa63875b4d232639.jpg"
+      img2: "https://i.pinimg.com/736x/fd/10/5b/fd105bb503156e258456bb93d61b61f1.jpg",
+      img3: "https://i.pinimg.com/736x/9e/e6/aa/9ee6aae25dd476b91f18193562ad341d.jpg",
+      img4: "https://i.pinimg.com/736x/48/f3/f7/48f3f72704939a3a324f7475a573485f.jpg"
     },
     description: "A lightweight, moisture-rich sunscreen with Centella Asiatica from Madagascar. Provides strong UV protection while soothing and hydrating the skin.",
     skinType: ["Normal", "Dry", "Oily", "Sensitive"],
@@ -38,7 +38,7 @@ export const Products: Product[] = [
       img1: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=600",
       img2: "https://images.unsplash.com/photo-1556229010-aa3f7ff66b24?auto=format&fit=crop&q=80&w=600",
       img3: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=600",
-      img4: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600"
+      img4: "https://i.pinimg.com/1200x/32/8b/ff/328bff65036fe62520e51a832920b694.jpg"
     },
     description: "A soothing daily cleanser designed to wash away dirt and excess oil without stripping moisture from delicate skin.",
     skinType: ["Sensitive", "Dry", "Combination"],
@@ -56,9 +56,9 @@ export const Products: Product[] = [
     reviews: 86,
     images: {
       img1: "https://i.pinimg.com/736x/59/2f/f2/592ff21ae9534152e762afed2697f6df.jpg",
-      img2: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=600",
-      img3: "https://i.pinimg.com/736x/04/12/84/041284ea38ddacb6222ac7189c9089f6.jpg",
-      img4: "https://images.unsplash.com/photo-1556229010-aa3f7ff66b24?auto=format&fit=crop&q=80&w=600"
+      img2: "https://i.pinimg.com/736x/c1/27/36/c1273604ccdd5d0e489a3a934c3ba24b.jpg",
+      img3: "https://i.pinimg.com/736x/c7/8a/9a/c78a9a3766f446bffcc1cb38e597e7e8.jpg",
+      img4: "https://i.pinimg.com/736x/46/de/03/46de0346f2ec61e5cb9a6adb3523c019.jpg"
     },
     description: "Deep-cleansing foam formulated to unclog pores, eliminate impurities, and leave your face refreshed and balanced.",
     skinType: ["Oily", "Combination", "Acne-Prone"],
@@ -78,9 +78,9 @@ export const Products: Product[] = [
     tag: "Award Winner",
     images: {
       img1: "https://i.pinimg.com/736x/0f/92/16/0f9216ac2b9b7f97979e7b8dce363440.jpg",
-      img2: "https://i.pinimg.com/736x/ef/ea/17/efea17b7da6943dfdc5e7ef376f68c3b.jpg",
-      img3: "https://i.pinimg.com/736x/51/89/fe/5189fe20ac5f37875630ad4bd9ac29bb.jpg",
-      img4: "https://i.pinimg.com/736x/d6/27/40/d62740b361113e17156d4da129c7e3cf.jpg"
+      img2: "https://i.pinimg.com/736x/f4/bd/6d/f4bd6dbb7acff8cca05beb8ecf6dba9f.jpg",
+      img3: "https://i.pinimg.com/736x/c2/f1/1b/c2f11b5cb40ac6f1ea944964b57a93f1.jpg",
+      img4: "https://i.pinimg.com/736x/68/1e/d2/681ed2475bdd5fc293a648f9495da5e9.jpg"
     },
     description: "Intense moisture-boosting serum designed to plump dehydrated skin layers and restore radiant bounce.",
     skinType: ["Dry", "Normal", "Dehydrated"],
@@ -90,59 +90,59 @@ export const Products: Product[] = [
   },
   {
     id: 5,
-    name: "Neauthy Barrier Repair Soothing Cream",
+    name: "Aestura Atobarrier 365 Cream",
     brand: "Neauthy",
     category: "Moisturizer",
-    price: 38.0,
+    price: 28.0,
     rating: 4.8,
     reviews: 115,
     isNew: true,
     badge: "New Arrival",
     images: {
-      img1: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
-      img2: "https://i.pinimg.com/1200x/a7/36/c6/a736c656ed180b1537d35460ab0ce020.jpg",
-      img3: "https://i.pinimg.com/736x/a2/f7/e7/a2f7e7e4c59cea3e8f32e313bd694ead.jpg",
-      img4: "https://i.pinimg.com/736x/12/5e/f9/125ef970b8a1b4743f09f94ca5396286.jpg"
+      img1: "https://i.pinimg.com/736x/ed/a5/85/eda58532574e030bc20fa985cb0a3a33.jpg",
+      img2: "https://i.pinimg.com/736x/fd/a3/cf/fda3cfe38a8b720956886d9561ff8a62.jpg",
+      img3: "https://i.pinimg.com/736x/dc/2a/0e/dc2a0e3e7f927912d6c149643c713d41.jpg",
+      img4: "https://i.pinimg.com/736x/0e/e0/a0/0ee0a0a2826c2f0a1ea0b89354bdaf4c.jpg"
     },
-    description: "Rich lipid cream that repairs damaged skin barriers while delivering long-lasting soothing nourishment.",
+    description: " Best Moisturizer for Sensitive Skin Dry, irritated skin can be hard to keep comfortable throughout the day. AESTURA Atobarrier 365 Hydro Soothing Cream is a lightweight moisturizer.",
     skinType: ["Dry", "Sensitive", "Damaged Barrier"],
     ingredients: ["Ceramide NP", "Squalane", "Madecassoside"],
     benefits: ["Barrier repair", "Soothes redness", "Deep nourishment"],
-    sizes: ["50ml", "80ml"]
+    sizes: ["100ml", "250ml"]
   },
   {
     id: 6,
-    name: "Mineral Matte Finish Sunscreen",
+    name: "Beauty of Josoen",
     brand: "Skin Beauty",
     category: "Sunscreen",
-    price: 34.0,
+    price: 30.0,
     rating: 4.6,
     reviews: 64,
     images: {
-      img1: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=600",
-      img2: "https://i.pinimg.com/736x/18/25/72/182572b59c46a3a84e69dadc25a4e7e6.jpg",
-      img3: "https://i.pinimg.com/736x/9f/cf/e5/9fcfe5413284bf252a5d0658c50d9994.jpg",
-      img4: "https://i.pinimg.com/736x/0e/55/5d/0e555d5a65eb2649fa63875b4d232639.jpg"
+      img1: "https://i.pinimg.com/736x/6a/db/48/6adb48539d471c37c8a32d32e5ecedfe.jpg",
+      img2: "https://i.pinimg.com/736x/f2/34/bc/f234bc8cedf675ba3fc289232e9d6e59.jpg",
+      img3: "https://i.pinimg.com/736x/f5/20/76/f52076d95385c4e5b0b5cd0fd6d9714f.jpg",
+      img4: "https://i.pinimg.com/736x/f0/7a/41/f07a41356b77ce00ee7d771e480d3dd9.jpg"
     },
-    description: "100% physical mineral sunscreen offering a soft-matte finish with zero shine or greasy feeling.",
+    description: " Rice + Probiotics SPF 50+ PA++++. A lightweight Korean sunscreen that provides high sun protection while leaving skin feeling comfortable and hydrated. Perfect for everyday wear with a smooth, non-heavy finish. ",
     skinType: ["Oily", "Combination", "Sensitive"],
     ingredients: ["Zinc Oxide", "Titanium Dioxide", "Silica"],
     benefits: ["Matte finish", "Broad Spectrum SPF 50+", "No white cast", "Oil control"],
-    sizes: ["50ml"]
+    sizes: ["50ml", "150ml"]
   },
   {
     id: 7,
-    name: "Peptide Brightening Eye Cream",
-    brand: "Glow Essentials",
+    name: "ISNTREE TW-REAL Eye Cream",
+    brand: "𝐵𝒶𝒹𝒹𝒾𝑒𝓈 𝐵𝑒𝒶𝓊𝓉𝓎",
     category: "Eye Care",
-    price: 15.0,
+    price: 18.0,
     rating: 4.8,
     reviews: 112,
     images: {
       img1: "https://i.pinimg.com/736x/f3/c9/af/f3c9afeb47a285cf9e7f8d2d6c6cd4d5.jpg",
-      img2: "https://i.pinimg.com/736x/30/07/11/30071192957825388f0cb7d794b931f9.jpg",
-      img3: "https://i.pinimg.com/736x/40/06/fb/4006fb5da50cf5fe557cf78e3bd8c200.jpg",
-      img4: "https://i.pinimg.com/736x/0f/92/16/0f9216ac2b9b7f97979e7b8dce363440.jpg"
+      img2: "https://i.pinimg.com/1200x/e8/c4/38/e8c4386645d5c4e8e4b14d22fc87133b.jpg",
+      img3: "https://i.pinimg.com/1200x/50/53/1a/50531ac2ad2e5b620d87cf907969f17a.jpg",
+      img4: "https://i.pinimg.com/736x/30/f2/b8/30f2b81b037aa493009c111879731faa.jpg"
     },
     description: "Targeted under-eye formula designed to diminish dark circles, firm fine lines, and awaken tired eyes.",
     skinType: ["All Skin Types"],
@@ -160,9 +160,9 @@ export const Products: Product[] = [
     reviews: 89,
     images: {
       img1: "https://i.pinimg.com/736x/30/07/11/30071192957825388f0cb7d794b931f9.jpg",
-      img2: "https://i.pinimg.com/736x/f3/c9/af/f3c9afeb47a285cf9e7f8d2d6c6cd4d5.jpg",
-      img3: "https://i.pinimg.com/1200x/a7/36/c6/a736c656ed180b1537d35460ab0ce020.jpg",
-      img4: "https://i.pinimg.com/736x/ef/ea/17/efea17b7da6943dfdc5e7ef376f68c3b.jpg"
+      img2: "https://i.pinimg.com/736x/ae/34/15/ae34156d8db443196d0c3af852b11c2e.jpg",
+      img3: "https://i.pinimg.com/736x/30/07/11/30071192957825388f0cb7d794b931f9.jpg",
+      img4: "https://i.pinimg.com/1200x/4c/19/07/4c1907f40b8454ce91f93a36ff8601d3.jpg"
     },
     description: "Harvested from marine extracts, this rich eye cream repairs elasticity and hydrates dry delicate eye contours.",
     skinType: ["Dry", "Mature"],
@@ -182,11 +182,11 @@ export const Products: Product[] = [
     tag: "Best Seller",
     images: {
       img1: "https://i.pinimg.com/736x/67/dc/82/67dc82003f78f4466e5c15d545948e32.jpg",
-      img2: "https://i.pinimg.com/736x/0e/55/5d/0e555d5a65eb2649fa63875b4d232639.jpg",
-      img3: "https://i.pinimg.com/1200x/78/6e/ba/786eba400aeb686178d9202bdc2b523b.jpg",
-      img4: "https://i.pinimg.com/736x/d6/27/40/d62740b361113e17156d4da129c7e3cf.jpg"
+      img2: "https://i.pinimg.com/736x/c3/8b/c5/c38bc51496a2baec48a31938cb5d2574.jpg",
+      img3: "https://i.pinimg.com/736x/99/e4/f9/99e4f9d262dd7c4cd335bcc7a52aadf7.jpg",
+      img4: "https://i.pinimg.com/736x/fa/97/e2/fa97e28b8363b86f3bb34fa8c24f927d.jpg"
     },
-    description: "Nutrient-packed milky toner combining rice water brightening benefits with skin barrier strengthening ceramides.",
+    description: "Nutrient-packed milky toner combining 70%  rice water brightening benefits with skin barrier strengthening ceramides.",
     skinType: ["All Skin Types", "Dry", "Sensitive"],
     ingredients: ["Rice Water Extract", "Ceramide NP", "Niacinamide"],
     benefits: ["Brightens complexions", "Locks in moisture", "Preps skin for serums"],
@@ -197,22 +197,22 @@ export const Products: Product[] = [
     name: "BELLBA Dewy Rice Brightening Essence",
     brand: "BELLBA",
     category: "Essence",
-    price: 29.0,
-    rating: 4.9,
+    price: 19.0,
+    rating: 4.8,
     reviews: 187,
     isNew: true,
     badge: "New Arrival",
     images: {
       img1: "https://i.pinimg.com/736x/63/2d/04/632d04830315aec185a0bdea098347ce.jpg",
-      img2: "https://i.pinimg.com/1200x/44/e1/80/44e18067f9a2e561570b2dcac4bdd371.jpg",
-      img3: "https://i.pinimg.com/736x/67/dc/82/67dc82003f78f4466e5c15d545948e32.jpg",
-      img4: "https://i.pinimg.com/736x/e2/79/6a/e2796a0087b6a9f69cca2cd17590caaf.jpg"
+      img2: "https://i.pinimg.com/736x/79/7f/df/797fdf4d795aaeb95f677c013b6eee54.jpg",
+      img3: "https://i.pinimg.com/736x/da/42/4f/da424fac0c16fb7808f9a8e5f9b6a0ee.jpg",
+      img4: "https://i.pinimg.com/1200x/88/3a/df/883adf2526f13d0cc02a2e782faa903e.jpg"
     },
     description: "Fast-absorbing fermented essence that hydrates deeply and restores a glowing, dewy skin tone.",
     skinType: ["Dull", "Dry", "Normal"],
     ingredients: ["Fermented Rice Filtrate", "Arbutin", "Glycerin"],
     benefits: ["Dewy finish", "Evens out skin tone", "Lightweight hydration"],
-    sizes: ["100ml"]
+    sizes: ["30ml", "150ml"]
   },
   {
     id: 11,
@@ -223,10 +223,10 @@ export const Products: Product[] = [
     rating: 4.7,
     reviews: 124,
     images: {
-      img1: "https://i.pinimg.com/1200x/a7/36/c6/a736c656ed180b1537d35460ab0ce020.jpg",
-      img2: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=600",
-      img3: "https://i.pinimg.com/736x/ef/ea/17/efea17b7da6943dfdc5e7ef376f68c3b.jpg",
-      img4: "https://i.pinimg.com/1200x/f8/0f/f6/f80ff66cb23bb124ce24987f09c22ac6.jpg"
+      img4: "https://i.pinimg.com/1200x/6c/9d/b1/6c9db1550404a32de614ee7d38ff5854.jpg",
+      img1: "https://i.pinimg.com/736x/96/30/17/963017a4c4037410ff3f42b3d179d426.jpg",
+      img3: "https://i.pinimg.com/1200x/7a/c2/dd/7ac2ddd86bd675a57cd39342d0671459.jpg",
+      img2: "https://i.pinimg.com/1200x/a7/36/c6/a736c656ed180b1537d35460ab0ce020.jpg",
     },
     description: "Velvety everyday face cream that delivers long-lasting moisture without clogging delicate pores.",
     skinType: ["Normal", "Dry", "Sensitive"],
