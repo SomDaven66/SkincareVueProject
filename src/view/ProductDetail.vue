@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { Products } from "../data/Products";
 import { useCartStore } from "../store/Card";
+import { useWishlistStore } from "../store/wishlist";
 import {
   ArrowLeft,
   Heart,
@@ -20,6 +21,7 @@ import {
 const route = useRoute();
 const router = useRouter();
 const cartStore = useCartStore();
+const wishlistStore = useWishlistStore();
 
 const productId = Number(route.params.id);
 
@@ -60,6 +62,28 @@ const addToCartButtonClass = computed(() => {
 const addToCartButtonText = computed(() => {
   return addedToCart.value ? "Added to Cart ✓" : "Add to Cart";
 });
+
+const wishlisted = computed(() => {
+  if (!product.value) return false;
+  return wishlistStore.items.some((item) => item.id === product.value!.id);
+});
+
+onMounted(() => {
+  wishlistStore.loadWishlist();
+});
+
+function isLoggedIn(): boolean {
+  return !!(localStorage.getItem("currentUser") || sessionStorage.getItem("currentUser"));
+}
+
+function toggleWishlist() {
+  if (!isLoggedIn()) {
+    router.push("/login");
+    return;
+  }
+  if (!product.value) return;
+  wishlistStore.toggleWishlist(product.value);
+}
 
 function getThumbnailClass(index: number) {
   const base = "overflow-hidden rounded-xl border-2 bg-white shadow-md aspect-square transition-all duration-200 ";
@@ -172,9 +196,14 @@ function addToCart() {
           >
             <!-- Wishlist -->
             <button
+              @click="toggleWishlist"
               class="top-4 z-10 h-11 w-11 justify-center rounded-full bg-white/90 shadow-sm absolute right-4 flex items-center backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
             >
-              <Heart class="h-5 w-5 text-[#536B59]" stroke-width="2" />
+              <Heart
+                class="h-5 w-5"
+                :class="wishlisted ? 'fill-red-500 text-red-500' : 'text-[#536B59]'"
+                stroke-width="2"
+              />
             </button>
 
             <img
@@ -318,9 +347,14 @@ function addToCart() {
             </button>
 
             <button
-              class="h-14 w-14 justify-center rounded-full border border-[#DCE6DC] bg-white text-[#536B59] flex shrink-0 items-center transition hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+              @click="toggleWishlist"
+              class="h-14 w-14 justify-center rounded-full border border-[#DCE6DC] bg-white flex shrink-0 items-center transition hover:border-[#7A9E7E] hover:bg-[#F4F8F1]"
             >
-              <Heart class="h-5 w-5" stroke-width="2" />
+              <Heart
+                class="h-5 w-5"
+                :class="wishlisted ? 'fill-red-500 text-red-500' : 'text-[#536B59]'"
+                stroke-width="2"
+              />
             </button>
           </div>
 

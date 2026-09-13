@@ -88,6 +88,7 @@
       <div class="hidden items-center gap-8 lg:flex md:flex-row md:items-center">
 
         <router-link
+          v-if="navVisibility.home"
           to="/"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
@@ -98,11 +99,13 @@
             class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
                    bg-[#0F3D2E] transition-all duration-300
                    group-hover:w-full"
+            :class="{ 'w-full': route.path === '/' }"
           ></span>
         </router-link>
 
 
         <router-link
+          v-if="navVisibility.shop"
           to="/products"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
@@ -113,11 +116,13 @@
             class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
                    bg-[#0F3D2E] transition-all duration-300
                    group-hover:w-full"
+            :class="{ 'w-full': route.path.startsWith('/products') }"
           ></span>
         </router-link>
 
 
         <router-link
+          v-if="navVisibility.collection"
           to="/collection"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
@@ -128,11 +133,13 @@
             class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
                    bg-[#0F3D2E] transition-all duration-300
                    group-hover:w-full"
+            :class="{ 'w-full': route.path === '/collection' }"
           ></span>
         </router-link>
 
 
         <router-link
+          v-if="navVisibility.about"
           to="/about"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
@@ -143,6 +150,7 @@
             class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
                    bg-[#0F3D2E] transition-all duration-300
                    group-hover:w-full"
+            :class="{ 'w-full': route.path === '/about' }"
           ></span>
         </router-link>
 
@@ -151,6 +159,7 @@
 
 
         <router-link
+          v-if="navVisibility.contact"
           to="/contact"
           class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
@@ -161,6 +170,7 @@
             class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
                    bg-[#0F3D2E] transition-all duration-300
                    group-hover:w-full"
+            :class="{ 'w-full': route.path === '/contact' }"
           ></span>
         </router-link>
 
@@ -351,42 +361,48 @@
 
     </div>
     <!-- Mobile menu -->
-     <div v-if="isMenuOpen" class="border-t  border-[#E5ECE5] bg-white px-6 py-5 lg:hidden">
+     <div v-if="isMenuOpen" class="border-t  border-[#E5ECE5] bg-white px-6 py-4 lg:hidden">
         <div class="flex flex-col gap-1">
-          <router-link to="/" 
+          <router-link v-if="navVisibility.home" to="/"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]
           "
+          active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
             Home
           </router-link>
-          <router-link to="/products"
+          <router-link v-if="navVisibility.shop" to="/products"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Product
         </router-link>
-          <router-link to="/about"
+          <router-link v-if="navVisibility.collection" to="/collection"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
+          >
+        Collection
+        </router-link>
+          <router-link v-if="navVisibility.about" to="/about"
+          @click="closeMenu"
+          class="rounded-lg px-4 py-3 text-sm font-medium
+          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         About 
         </router-link>
-         
-          <router-link to="/wishlist"
+
+
+          <router-link v-if="navVisibility.contact" to="/contact"
           @click="closeMenu"
           class="rounded-lg px-4 py-3 text-sm font-medium
           text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
-          >
-        Wishlist
-        </router-link>
-          <router-link to="/contact"
-          @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Contact
         </router-link>
@@ -395,7 +411,7 @@
           @click="closeMenu"
           class="sm:flex items-center text-center
                 rounded-full bg-[#0F3D2E]
-                px-5 py-2.5
+                px-2 py-3 mt-3
                 text-sm font-medium text-white
                 transition duration-300
                 hover:bg-[#174A3A]
@@ -406,13 +422,14 @@
 
         </div>
      </div>
+     
   </nav>
 </template>
 
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ShoppingCart, Heart } from 'lucide-vue-next';
 import { useCartStore } from '../../store/Card';
 import { useWishlistStore } from '../../store/wishlist';
@@ -420,8 +437,28 @@ import { Products } from '../../data/Products';
 import type { Product } from '../../types/produce';
 
 const router = useRouter();
+const route = useRoute();
 const cardStore = useCartStore();
 const wishlistStore = useWishlistStore();
+
+// ================= NAV VISIBILITY =================
+
+const NAV_STORAGE_KEY = 'lumie_nav_visibility'
+
+const defaultNav = { home: true, shop: true, collection: true, about: true, contact: true }
+
+const navVisibility = ref({ ...defaultNav })
+
+function loadNavVisibility() {
+  const saved = localStorage.getItem(NAV_STORAGE_KEY)
+  if (saved) {
+    try {
+      navVisibility.value = { ...defaultNav, ...JSON.parse(saved) }
+    } catch (e) {
+      console.error('Failed to parse nav visibility', e)
+    }
+  }
+}
 
 // ================= SEARCH =================
 
@@ -461,6 +498,7 @@ function handleClickOutside(e: MouseEvent): void {
 
 onMounted(() => {
   wishlistStore.loadWishlist();
+  loadNavVisibility();
   document.addEventListener('click', handleClickOutside);
 });
 

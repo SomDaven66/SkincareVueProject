@@ -24,7 +24,9 @@ import Adminorder from "../admin/Adminorder.vue";
 import AdminUser from "../admin/AdminUser.vue";
 import AdminProduct from "../admin/AdminProduct.vue";
 import AdminAddproduct from "../admin/AdminAddproduct.vue";
+import AdminEditproduct from "../admin/AdminEditproduct.vue";
 import AdminSettings from "../admin/AdminSettings.vue";
+import AdminEditprofile from "../admin/AdminEditprofile.vue";
 import MainCollection from "../MainCollection.vue";
 import AllFeedback from "../AllFeedback.vue";
 
@@ -143,8 +145,16 @@ const routes = [
         component: AdminAddproduct
       },
       {
+        path: 'product/edit/:id',
+        component: AdminEditproduct
+      },
+      {
         path: 'settings',
         component: AdminSettings
+      },
+      {
+        path: 'edit-profile',
+        component: AdminEditprofile
       }
     ]
   }
@@ -164,7 +174,7 @@ const router = createRouter({
   routes,
 
   // ================= SCROLL BEHAVIOR =================
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to, _from, savedPosition) {
     // When using browser Back/Forward button
     if (savedPosition) {
       return savedPosition;
@@ -178,7 +188,7 @@ const router = createRouter({
 });
 
 // ================= NAVIGATION GUARDS =================
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 

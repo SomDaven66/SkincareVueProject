@@ -192,6 +192,8 @@
         <!-- Feature 1 -->
         <div
           class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+          data-aos="fade-up"
+          data-aos-delay="0"
         >
           <div
             class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
@@ -211,6 +213,8 @@
         <!-- Feature 2 -->
         <div
           class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
         >
           <div
             class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
@@ -230,6 +234,8 @@
         <!-- Feature 3 -->
         <div
           class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
           <div
             class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
@@ -249,6 +255,8 @@
         <!-- Feature 4 -->
         <div
           class="p-6 rounded-2xl border border-[#DCE6DC] bg-white text-center"
+          data-aos="fade-up"
+          data-aos-delay="300"
         >
           <div
             class="mb-5 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
@@ -268,22 +276,19 @@
         </div>
       </div>
     </div>
+  
   </section>
 
-  <section>
-    <div>
-      <CategoryCard />
-      <Feature />
-      <SummerDis />
-      <FeedBack />
-    </div>
-  </section>
+ <CategoryCard  />
+    <Feature  />
+    <SummerDis  />
+    <FeedBack  />
 
   <!-- Why choose us -->
-  <section class="py-16 bg-[#F4F8F1] sm:py-20 lg:py-24">
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <!-- ================= HEADER ================= -->
-      <div class="mb-12 mx-auto max-w-2xl text-center">
+  <section class="bg-[#F4F8F1] py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="mx-auto mb-12 max-w-2xl text-center" data-aos="fade-up">
         <p
           class="mb-3 text-sm font-semibold text-[#7A9E7E] uppercase tracking-[0.2em]"
         >
@@ -302,20 +307,18 @@
         </p>
       </div>
 
-      <!-- ================= BENEFITS ================= -->
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <!-- Card 1 -->
         <div
           class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+          data-aos="fade-up"
+          data-aos-delay="0"
         >
-          <!-- Number -->
           <span
             class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
           >
             01
           </span>
 
-          <!-- Icon -->
           <div
             class="mb-6 h-14 w-14 justify-center rounded-full bg-[#EAF2E9] text-[#0F3D2E] flex items-center transition-all duration-300 group-hover:bg-[#0F3D2E] group-hover:text-white"
           >
@@ -350,9 +353,10 @@
           </p>
         </div>
 
-        <!-- Card 2 -->
         <div
           class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+          data-aos="fade-up"
+          data-aos-delay="100"
         >
           <span
             class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
@@ -394,9 +398,10 @@
           </p>
         </div>
 
-        <!-- Card 3 -->
         <div
           class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
           <span
             class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
@@ -438,9 +443,10 @@
           </p>
         </div>
 
-        <!-- Card 4 -->
         <div
           class="p-7 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white group relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#0F3D2E]/10"
+          data-aos="fade-up"
+          data-aos-delay="300"
         >
           <span
             class="top-5 text-xs font-bold text-[#DCE6DC] absolute right-5 tracking-widest transition-colors duration-300 group-hover:text-[#A8C3A0]"
@@ -478,7 +484,6 @@
         </div>
       </div>
 
-      <!-- ================= BOTTOM LINE ================= -->
       <div
         class="mt-12 gap-4 mx-auto max-w-3xl justify-center flex items-center"
       >
@@ -495,7 +500,8 @@
     </div>
   </section>
   <Instargram />
-  <Newletter />
+
+
 </template>
 
 <script setup lang="ts">
@@ -512,16 +518,13 @@ import { onMounted, onUnmounted, ref } from "vue";
 import hero1 from "../../assets/hero1.jpg";
 import hero2 from "../../assets/hero2.jpg";
 import hero4 from "../../assets/hero4.jpg";
-import { Collections } from "../../data/Collections";
-import CollectionCard from "../CollectionCard.vue";
-import DiscountBanner from "../DiscountBanner.vue";
-import Instargram from "./Instargram.vue";
 
-import Newletter from "./Newletter.vue";
+
 import FeedBack from "../FeedBack.vue";
 import SummerDis from "../SummerDis.vue";
 import Feature from "../Feature.vue";
 import CategoryCard from "../CategoryCard.vue";
+import Instargram from "./Instargram.vue";
 
 const slides = [
   {

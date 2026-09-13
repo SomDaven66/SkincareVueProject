@@ -73,6 +73,8 @@
           href="#"
           class="group relative aspect-square overflow-hidden rounded-2xl
           bg-[#EAF2E9]"
+          data-aos="fade-up"
+          data-aos-delay="0"
         >
           <img
             :src="geminiImg"
@@ -114,6 +116,8 @@
           href="#"
           class="group relative aspect-square overflow-hidden rounded-2xl
           bg-[#EAF2E9]"
+          data-aos="fade-up"
+          data-aos-delay="100"
         >
           <img
             :src="chatgptImg"
@@ -155,6 +159,8 @@
           href="#"
           class="group relative aspect-square overflow-hidden rounded-2xl
           bg-[#EAF2E9]"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
           <img
             src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=700&q=85"
@@ -196,6 +202,8 @@
           href="#"
           class="group relative aspect-square overflow-hidden rounded-2xl
           bg-[#EAF2E9]"
+          data-aos="fade-up"
+          data-aos-delay="300"
         >
           <img
             src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=700&q=85"

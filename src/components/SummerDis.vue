@@ -16,7 +16,7 @@
 
       <div class="grid grid-cols-1 gap-10 p-8 relative lg:grid-cols-2 items-center md:p-14">
         <!-- Left: Copy -->
-        <div class="text-center lg:text-left">
+        <div class="text-center lg:text-left" data-aos="fade-right">
           <span
             class="mb-4 px-4 py-1.5 text-xs font-semibold rounded-full inline-block tracking-widest uppercase"
             style="color: #0F3D2E; background-color: #A8C3A0;"
@@ -60,11 +60,13 @@
         </div>
 
         <!-- Right: Product cards -->
-        <div class="grid grid-cols-2 gap-5">
+        <div class="grid grid-cols-2 gap-5" data-aos="fade-left">
           <article
-            v-for="summer in summerDis"
+            v-for="(summer, index) in summerDis"
             :key="summer.id"
             class="flex-col bg-white rounded-2xl overflow-hidden shadow-lg group flex"
+            data-aos="zoom-in"
+            :data-aos-delay="index * 100"
           >
             <div class="w-full overflow-hidden relative aspect-square" style="background-color: #F4F8F1;">
               <img :src="summer.image" :alt="summer.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

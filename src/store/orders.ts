@@ -29,7 +29,7 @@ export interface Customer {
 export interface Order {
   id: string;
   date: string;
-  status: "Confirmed" | "Processing" | "Shipping" | "Delivered";
+  status: "Confirmed" | "Processing" | "Shipping" | "Delivered" | "Completed";
   total: number;
   items: OrderItem[];
   customer: Customer;
@@ -110,6 +110,21 @@ export const useOrderStore = defineStore("orders", {
         this.saveToLocalStorage();
         return true;
       }
+      return false;
+    },
+
+    // User confirms receipt - Delivered → Completed
+    confirmReceived(orderId: string): boolean {
+      const orderIndex = this.orders.findIndex(
+        order => order.id === orderId
+      );
+
+      if (orderIndex !== -1 && this.orders[orderIndex].status === "Delivered") {
+        this.orders[orderIndex].status = "Completed";
+        this.saveToLocalStorage();
+        return true;
+      }
+
       return false;
     },
 

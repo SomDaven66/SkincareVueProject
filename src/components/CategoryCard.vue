@@ -2,7 +2,7 @@
   <section class="py-16 px-6 w-full" style="background-color: #f4f8f1">
     <div class="max-w-6xl mx-auto">
       <!-- Section Header -->
-      <div class="mb-12 text-center">
+      <div class="mb-12 text-center" data-aos="fade-up">
         <span
           class="mb-3 px-4 py-1 text-xs font-semibold rounded-full inline-block tracking-widest uppercase"
           style="color: #0f3d2e; background-color: #a8c3a0"
@@ -28,9 +28,11 @@
 <div class="flex items-stretch gap-6 overflow-x-auto pb-4">
   <!-- Category Cards Loop -->
   <article
-    v-for="catego in Category"
+    v-for="(catego, index) in Category"
     :key="catego.id"
     class="group flex flex-col items-center text-center bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-[#a8c3a0] cursor-pointer min-w-[180px] w-48 shrink-0"
+    data-aos="fade-up"
+    :data-aos-delay="index * 100"
     @click="selectCategory(catego)"
   >
     <!-- Image -->

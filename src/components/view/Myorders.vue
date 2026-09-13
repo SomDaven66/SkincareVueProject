@@ -60,11 +60,11 @@
         </button>
       </div>
 
-      <!-- ================= ORDERS ================= -->
-      <div class="space-y-5">
+      <!-- ================= ACTIVE ORDERS ================= -->
+      <div v-if="activeTab !== 'Completed'" class="space-y-5">
 
         <div
-          v-for="order in filteredOrders"
+          v-for="order in activeOrders"
           :key="order.id"
           class="overflow-hidden rounded-2xl border
                  border-[#DCE6DC] bg-white"
@@ -160,10 +160,9 @@
 
           </div>
 
-          <!-- ================= ORDER TRACKING ================= -->
+          <!-- ================= ORDER TRACKING (Read-Only) ================= -->
           <div
-            v-if="order.status !== 'Delivered'"
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6"
+            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6 select-none"
           >
             <div class="mb-6 flex items-center justify-between">
               <div>
@@ -172,7 +171,7 @@
                 </p>
 
                 <p class="mt-1 text-xs text-gray-500">
-                  Track your order from confirmation to delivery
+                  {{ statusMessages[order.status] }}
                 </p>
               </div>
 
@@ -189,53 +188,73 @@
 
               <!-- Active Line -->
               <div
-                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E] transition-all duration-500"
-                :style="{ width: `calc(${getProgress(order.status)}% - 12%)` }"
+                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E]"
+                :style="{ width: `calc(${getProgressWidth(order.status)}% - 12%)` }"
               ></div>
 
               <!-- Steps -->
               <div class="relative z-10 flex justify-between">
 
                 <div
-                  v-for="(step, index) in steps"
+                  v-for="step in steps"
                   :key="step.name"
                   class="flex flex-1 flex-col items-center"
                 >
-
+                 
                   <!-- Icon Circle -->
-                  <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white transition-all duration-300"
-                    :class="
-                      isStepComplete(order.status, step.name)
-                        ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
-                        : 'border-[#DCE6DC] text-gray-300'
-                    "
-                  >
-                    <component
-                      :is="step.icon"
-                      class="h-5 w-5"
-                      :stroke-width="2"
-                    />
-                  </div>
+                    <div
+                      class="flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300"
+                      :class="
+                        getStepState(order.status, step.name) === 'completed'
+                          ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
+                          : getStepState(order.status, step.name) === 'current'
+                            ? 'border-[#7A9E7E] bg-white text-[#7A9E7E]'
+                            : 'border-[#DCE6DC] bg-white text-gray-300'
+                      "
+                    >
+                      <!-- Completed: Check -->
+                      <Check
+                        v-if="getStepState(order.status, step.name) === 'completed'"
+                        class="h-5 w-5"
+                        :stroke-width="3"
+                      />
+
+                      <!-- Current / Upcoming -->
+                      <component
+                        v-else
+                        :is="step.icon"
+                        class="h-5 w-5"
+                        :class="{
+                          'animate-spin':
+                            getStepState(order.status, step.name) === 'current' &&
+                            step.name === 'Processing'
+                        }"
+                        :stroke-width="2"
+                      />
+                    </div>
 
                   <!-- Step Name -->
                   <span
                     class="mt-3 text-center text-[10px] font-medium sm:text-xs"
                     :class="
-                      isStepComplete(order.status, step.name)
-                        ? 'text-[#0F3D2E]'
-                        : 'text-gray-400'
+                      getStepState(order.status, step.name) === 'upcoming'
+                        ? 'text-gray-400'
+                        : 'text-[#0F3D2E]'
                     "
                   >
                     {{ step.name }}
                   </span>
 
-                  <!-- Completed -->
+                  <!-- Status Label -->
                   <span
-                    v-if="isStepComplete(order.status, step.name)"
-                    class="mt-1 text-[9px] text-[#7A9E7E]"
+                    class="mt-1 text-[9px]"
+                    :class="
+                      getStepState(order.status, step.name) === 'upcoming'
+                        ? 'text-gray-300'
+                        : 'text-[#7A9E7E]'
+                    "
                   >
-                    Completed
+                    {{ getStepState(order.status, step.name) === 'completed' ? 'Completed' : getStepState(order.status, step.name) === 'current' ? stepLabels[step.name] : '' }}
                   </span>
 
                 </div>
@@ -244,60 +263,32 @@
             </div>
           </div>
 
-          <!-- ================= DELIVERED ================= -->
-          <div
-            v-else
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-5 sm:px-6"
-          >
-            <div class="flex items-center gap-4">
-
-              <div
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
-              >
-                <Check class="h-5 w-5" />
-              </div>
-
-              <div>
-                <p class="text-sm font-semibold text-[#0F3D2E]">
-                  Order delivered
-                </p>
-
-                <p class="mt-1 text-xs text-gray-500">
-                  We hope you enjoy your skincare products.
-                </p>
-              </div>
-
-            </div>
-          </div>
-
           <!-- Order Actions -->
           <div
             class="flex flex-col gap-2 border-t border-[#DCE6DC]
                    px-5 py-4 sm:flex-row sm:justify-end sm:px-6"
           >
-            <button
+            <span
               class="rounded-full border border-[#DCE6DC] px-5 py-2.5
-                     text-sm font-medium text-[#0F3D2E]
-                     transition hover:bg-[#F4F8F1]"
+                     text-sm font-medium text-[#0F3D2E] select-none"
             >
               View Details
-            </button>
+            </span>
 
-            <button
+            <span
               v-if="order.status === 'Delivered'"
               class="rounded-full bg-[#0F3D2E] px-5 py-2.5
-                     text-sm font-medium text-white
-                     transition hover:bg-[#174A3A]"
+                     text-sm font-medium text-white select-none"
             >
               Buy Again
-            </button>
+            </span>
           </div>
 
         </div>
 
-        <!-- ================= EMPTY ================= -->
+        <!-- ================= EMPTY ACTIVE ================= -->
         <div
-          v-if="filteredOrders.length === 0"
+          v-if="activeOrders.length === 0"
           class="rounded-2xl border border-[#DCE6DC] bg-white
                  px-6 py-16 text-center"
         >
@@ -322,11 +313,11 @@
           </div>
 
           <h2 class="text-xl font-semibold text-[#0F3D2E]">
-            No orders found
+            No active orders
           </h2>
 
           <p class="mt-2 text-sm text-gray-500">
-            {{ currentUser ? "You don't have any " + activeTab.toLowerCase() + " orders yet." : "Please log in to view your orders." }}
+            {{ currentUser ? "You don't have any active orders right now." : "Please log in to view your orders." }}
           </p>
 
           <router-link
@@ -340,19 +331,182 @@
         </div>
 
       </div>
+
+      <!-- ================= ORDER HISTORY ================= -->
+      <div v-if="activeTab === 'All' && orderHistory.length > 0" class="mt-8">
+
+        <div class="mb-4 flex items-center gap-2">
+          <h2 class="text-lg font-semibold text-[#0F3D2E]">
+            Order History
+          </h2>
+          <span
+            v-if="orderHistory.length > 0"
+            class="rounded-full bg-[#E8F4EA] px-3 py-1 text-xs font-medium text-[#2F6B3C]"
+          >
+            {{ orderHistory.length }}
+          </span>
+        </div>
+
+        <div class="space-y-5">
+
+          <div
+            v-for="order in orderHistory"
+            :key="order.id"
+            class="overflow-hidden rounded-2xl border
+                   border-[#DCE6DC] bg-white"
+          >
+
+            <!-- Order Header -->
+            <div
+              class="flex flex-col gap-3 border-b border-[#DCE6DC]
+                     px-5 py-4 sm:flex-row sm:items-center
+                     sm:justify-between sm:px-6"
+            >
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-[#0F3D2E]">
+                    Order {{ order.id }}
+                  </span>
+
+                  <span
+                    class="rounded-full px-3 py-1 text-xs font-medium bg-[#E8F4EA] text-[#2F6B3C]"
+                  >
+                    Completed
+                  </span>
+                </div>
+
+                <p class="mt-1 text-xs text-gray-400">
+                  Placed on {{ order.date }}
+                </p>
+              </div>
+
+              <div class="text-left sm:text-right">
+                <p class="text-xs text-gray-400">Total</p>
+                <p class="text-lg font-bold text-[#0F3D2E]">
+                  ${{ order.total.toFixed(2) }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Products -->
+            <div class="divide-y divide-[#DCE6DC]">
+
+              <div
+                v-for="product in order.items"
+                :key="product.id"
+                class="flex gap-4 px-5 py-4 sm:px-6"
+              >
+
+                <!-- Product Image -->
+                <div
+                  class="h-20 w-20 shrink-0 overflow-hidden
+                         rounded-xl bg-[#F4F8F1] sm:h-24 sm:w-24"
+                >
+                  <img
+                    :src="product.image"
+                    :alt="product.name"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+
+                <!-- Product Info -->
+                <div class="min-w-0 flex-1">
+                  <h2
+                    class="truncate text-sm font-semibold
+                           text-[#0F3D2E] sm:text-base"
+                  >
+                    {{ product.name }}
+                  </h2>
+
+                  <p class="mt-1 text-xs text-gray-400">
+                    {{ product.category }}
+                  </p>
+
+                  <div class="mt-2 flex items-center gap-3">
+                    <span class="text-sm font-semibold text-[#0F3D2E]">
+                      ${{ product.price.toFixed(2) }}
+                    </span>
+
+                    <span class="text-xs text-gray-400">
+                      × {{ product.quantity }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Product Total -->
+                <div class="hidden text-right sm:block">
+                  <p class="text-xs text-gray-400">Subtotal</p>
+                  <p class="mt-1 text-sm font-semibold text-[#0F3D2E]">
+                    ${{ (product.price * product.quantity).toFixed(2) }}
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Completed Message -->
+            <div
+              class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-4 sm:px-6"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
+                >
+                  <CheckCircle class="h-5 w-5" />
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-[#0F3D2E]">
+                    Order Completed
+                  </p>
+                  <p class="text-xs text-gray-500">
+                    {{ statusMessages["Completed"] }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- History Actions -->
+            <div
+              class="flex flex-col gap-2 border-t border-[#DCE6DC]
+                     px-5 py-4 sm:flex-row sm:justify-end sm:px-6"
+            >
+              <span
+                class="rounded-full border border-[#DCE6DC] px-5 py-2.5
+                       text-sm font-medium text-[#0F3D2E] select-none"
+              >
+                View Details
+              </span>
+
+              <span
+                class="rounded-full bg-[#0F3D2E] px-5 py-2.5
+                       text-sm font-medium text-white select-none"
+              >
+                Buy Again
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import {
   Check,
+  CheckCircle,
   CircleCheck,
   Package,
   Cog,
   Truck,
   House,
+  LoaderCircle,
 } from "lucide-vue-next";
 import { useOrderStore } from "../../store/orders";
 
@@ -368,10 +522,19 @@ const currentUser = ref(
 );
 
 // Initialize store on mount
+const syncOrders = () => {
+  orderStore.init();
+};
+
 onMounted(() => {
   orderStore.init();
+
+  window.addEventListener("storage", syncOrders);
 });
 
+onUnmounted(() => {
+  window.removeEventListener("storage", syncOrders);
+});
 // Get user's orders
 const userOrders = computed(() => {
   if (!currentUser.value) return [];
@@ -382,24 +545,30 @@ const tabs = ["All", "Confirmed", "Processing", "Shipping", "Delivered"];
 
 const activeTab = ref("All");
 
+const statusOrder = ["Confirmed", "Processing", "Shipping", "Delivered", "Completed"];
+
 const steps = [
-  {
-    name: "Confirmed",
-    icon: CircleCheck,
-  },
-  {
-    name: "Processing",
-    icon: Cog,
-  },
-  {
-    name: "Shipping",
-    icon: Truck,
-  },
-  {
-    name: "Delivered",
-    icon: House,
-  },
+  { name: "Confirmed", icon: CircleCheck },
+  { name: "Processing", icon: Cog },
+  { name: "Shipping", icon: Truck },
+  { name: "Delivered", icon: House },
 ];
+
+const statusMessages: Record<string, string> = {
+  Confirmed: "Your order has been confirmed and is waiting to be prepared.",
+  Processing: "We're preparing and packing your items.",
+  Shipping: "Your order has been shipped and is on the way.",
+  Delivered: "Your order has been delivered. We hope you enjoy your products!",
+  Completed: "You've confirmed receipt. Thank you for shopping with Lumie Skin!",
+};
+
+const stepLabels: Record<string, string> = {
+  Confirmed: "Confirmed",
+  Processing: "In Progress",
+  Shipping: "In Transit",
+  Delivered: "Delivered",
+  Completed: "Completed",
+};
 
 const filteredOrders = computed(() => {
   if (activeTab.value === "All") {
@@ -411,7 +580,21 @@ const filteredOrders = computed(() => {
   );
 });
 
+/* ================= ACTIVE / HISTORY SEPARATION ================= */
+
+const activeOrders = computed(() =>
+  filteredOrders.value.filter(order => order.status !== "Completed")
+);
+
+const orderHistory = computed(() =>
+  filteredOrders.value.filter(order => order.status === "Completed")
+);
+
 function getStatusClass(status: string): string {
+  if (status === "Completed") {
+    return "bg-[#E8F4EA] text-[#2F6B3C]";
+  }
+
   if (status === "Delivered") {
     return "bg-green-100 text-green-700";
   }
@@ -427,30 +610,29 @@ function getStatusClass(status: string): string {
   return "bg-yellow-50 text-yellow-700";
 }
 
-function getProgress(status: string): number {
-  if (status === "Confirmed") return 16;
-  if (status === "Processing") return 33;
-  if (status === "Shipping") return 66;
-  if (status === "Delivered") return 100;
+function getStepState(
+  orderStatus: string,
+  stepName: string
+): "completed" | "current" | "upcoming" {
+  const currentIndex = statusOrder.indexOf(orderStatus);
+  const stepIndex = statusOrder.indexOf(stepName);
 
-  return 0;
+  if (stepIndex < currentIndex) return "completed";
+  if (stepIndex === currentIndex) return "current";
+  return "upcoming";
 }
 
-function isStepComplete(
-  status: string,
-  step: string
-): boolean {
-  const progress: Record<string, number> = {
-    Confirmed: 1,
-    Processing: 2,
-    Shipping: 3,
-    Delivered: 4,
-  };
+function getProgressWidth(status: string): number {
+  const index = statusOrder.indexOf(status);
+  if (index <= 0) return 0;
+  const total = statusOrder.length - 1;
+  return (index / total) * 100;
+}
 
-  const stepNumber =
-    steps.findIndex((item) => item.name === step) + 1;
-
-  return stepNumber <= (progress[status] || 0);
+function getStepIcon(stepName: string, state: "completed" | "current" | "upcoming") {
+  if (state === "completed") return Check;
+  if (state === "current" && stepName === "Processing") return LoaderCircle;
+  return steps.find((s) => s.name === stepName)?.icon ?? CircleCheck;
 }
 </script>
 

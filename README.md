@@ -102,3 +102,7 @@ Run the development server:
 npm run dev
 ```
 install icon in vue :  npm i lucide-vue-next
+install animation in vue :  npm install aos 
+install animation in vue :  npm install -D @types/aos
+admineditproduct
+adminededitprofile

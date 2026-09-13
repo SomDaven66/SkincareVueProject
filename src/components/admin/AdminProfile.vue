@@ -360,7 +360,7 @@ if (storedUser) {
 
 // ================= EDIT PROFILE =================
 const editProfile = () => {
-  alert("Edit admin profile coming soon!");
+  router.push("/admin/edit-profile");
 };
 
 // ================= LOGOUT =================
