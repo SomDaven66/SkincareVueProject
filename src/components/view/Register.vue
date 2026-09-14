@@ -4,8 +4,8 @@
   >
     <!-- Register Card -->
     <div
-      class="relative w-full max-w-md rounded-2xl border border-[#DCE6DC]
-             bg-white p-5 shadow-lg sm:p-8"
+      class="relative w-full max-w-md sm:max-w-lg rounded-2xl border border-[#DCE6DC]
+             bg-white p-5 shadow-lg sm:p-6"
       data-aos="zoom-in"
       data-aos-duration="500"
     >
@@ -19,7 +19,11 @@
                text-[#64756B]
                transition
                hover:bg-[#F4F8F1]
-               hover:text-[#0F3D2E]"
+               hover:text-[#0F3D2E]
+               focus:outline-none
+               focus-visible:ring-2
+               focus-visible:ring-[#A8C3A0]
+               focus-visible:ring-offset-2"
         aria-label="Close register"
       >
         <X

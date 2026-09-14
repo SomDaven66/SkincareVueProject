@@ -135,15 +135,18 @@ function shopNow(): void {
 }
 
 // Countdown configuration: set to 5 days from runtime
+// Sale ends at a fixed date/time
+// Example: September 17, 2026 at 11:59:59 PM
+const endDate = new Date('2026-09-17T23:59:59')
+
 const countdownUnits = ref<CountdownUnit[]>([
   { label: 'Days', value: '00' },
   { label: 'Hours', value: '00' },
   { label: 'Mins', value: '00' },
+  { label: 'Secs', value: '00' },
 ])
 
 let timer: ReturnType<typeof setInterval> | undefined
-const endDate = new Date()
-endDate.setDate(endDate.getDate() + 5) // Updated active time to 5 days
 
 function updateCountdown(): void {
   const now = new Date().getTime()
@@ -154,28 +157,65 @@ function updateCountdown(): void {
       { label: 'Days', value: '00' },
       { label: 'Hours', value: '00' },
       { label: 'Mins', value: '00' },
+      { label: 'Secs', value: '00' },
     ]
-    if (timer) clearInterval(timer)
+
+    if (timer) {
+      clearInterval(timer)
+    }
+
     return
   }
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+  const days = Math.floor(
+    distance / (1000 * 60 * 60 * 24)
+  )
+
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) /
+      (1000 * 60 * 60)
+  )
+
+  const minutes = Math.floor(
+    (distance % (1000 * 60 * 60)) /
+      (1000 * 60)
+  )
+
+  const seconds = Math.floor(
+    (distance % (1000 * 60)) /
+      1000
+  )
 
   countdownUnits.value = [
-    { label: 'Days', value: String(days).padStart(2, '0') },
-    { label: 'Hours', value: String(hours).padStart(2, '0') },
-    { label: 'Mins', value: String(minutes).padStart(2, '0') },
+    {
+      label: 'Days',
+      value: String(days).padStart(2, '0'),
+    },
+    {
+      label: 'Hours',
+      value: String(hours).padStart(2, '0'),
+    },
+    {
+      label: 'Mins',
+      value: String(minutes).padStart(2, '0'),
+    },
+    {
+      label: 'Secs',
+      value: String(seconds).padStart(2, '0'),
+    },
   ]
 }
 
 onMounted(() => {
   updateCountdown()
-  timer = setInterval(updateCountdown, 60000)
+
+  // Update every second
+  timer = setInterval(updateCountdown, 1000)
 })
 
 onUnmounted(() => {
-  if (timer) clearInterval(timer)
+  if (timer) {
+    clearInterval(timer)
+  }
 })
 </script>

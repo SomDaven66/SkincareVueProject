@@ -27,14 +27,26 @@ const STORAGE_KEY = "lumie_admin_products";
 
 function loadProducts(): Product[] {
   const saved = localStorage.getItem(STORAGE_KEY);
+  let savedProducts: Product[] = [];
   if (saved) {
     try {
-      return JSON.parse(saved);
+      savedProducts = JSON.parse(saved);
     } catch {
-      return [...Products];
+      savedProducts = [];
     }
   }
-  return [...Products];
+
+  const staticIds = new Set(Products.map((p) => p.id));
+  const newProducts = Products.filter((p) => !staticIds.has(p.id) || !savedProducts.some((s) => s.id === p.id));
+
+  const merged = [...savedProducts];
+  for (const p of Products) {
+    if (!merged.some((s) => s.id === p.id)) {
+      merged.push(p);
+    }
+  }
+
+  return merged.length > 0 ? merged : [...Products];
 }
 
 const products = ref<Product[]>(loadProducts());

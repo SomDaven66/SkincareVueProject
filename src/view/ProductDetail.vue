@@ -135,7 +135,7 @@ function addToCart() {
     discount: 20,
   };
 
-  cartStore.addToCart(normalizedProduct);
+  cartStore.addToCart(normalizedProduct, quantity.value);
 
   addedToCart.value = true;
   setTimeout(() => {

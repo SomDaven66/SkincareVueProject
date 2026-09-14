@@ -91,7 +91,7 @@ export const useCartStore = defineStore("cart", {
     // ADD PRODUCT TO CART
     // ============================================
 
-    addToCart(product: any): void {
+    addToCart(product: any, quantity: number = 1): void {
 
       // Normalize image: extract img1 from images object if needed
       let image = product.image;
@@ -121,7 +121,7 @@ export const useCartStore = defineStore("cart", {
       // Product already exists
       if (existingItem) {
 
-        existingItem.quantity++;
+        existingItem.quantity += quantity;
 
       }
 
@@ -130,7 +130,7 @@ export const useCartStore = defineStore("cart", {
 
         this.cart.push({
           ...normalizedProduct,
-          quantity: 1,
+          quantity: quantity,
         });
 
       }
