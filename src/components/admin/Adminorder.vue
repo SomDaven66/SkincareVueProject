@@ -245,7 +245,7 @@ import {
   House,
   CheckCircle,
   Search,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 
 import { useOrderStore } from "../../store/orders";
 import type { Order } from "../../store/orders";

@@ -465,7 +465,7 @@ import {
   Truck,
   House,
   LoaderCircle,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { useOrderStore } from "../../store/orders";
 
 const orderStore = useOrderStore();

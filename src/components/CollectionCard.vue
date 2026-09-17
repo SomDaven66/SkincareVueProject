@@ -1,10 +1,10 @@
 <template>
   <div
-    class="group overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+    class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     data-aos="fade-up"
   >
     <!-- Image -->
-    <div class="relative h-90 overflow-hidden bg-[#F4F8F1]">
+    <div class="h-90 overflow-hidden bg-[#F4F8F1] relative">
       <img
         :src="image"
         :alt="title"
@@ -13,7 +13,7 @@
 
       <!-- Category Badge -->
       <span
-        class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-[#0F3D2E] backdrop-blur-sm"
+        class="px-3 py-1 top-4 rounded-full bg-white/90 text-xs font-medium text-[#0F3D2E] absolute left-4 backdrop-blur-sm"
       >
         {{ category }}
       </span>
@@ -27,13 +27,13 @@
         {{ title }}
       </h2>
 
-      <p class="mt-2 text-sm leading-6 text-gray-500">
+      <p class="mt-2 text-sm text-gray-500 leading-6">
         {{ description }}
       </p>
 
       <!-- Button -->
       <div class="mt-5">
-        <router-link :to="`/collection/${category}`" class=" rounded-full inline-flex items-center gap-2 text-sm bg-[#0F3D2E] px-6 py-2.5 font-semibold text-[#0F3D2E] transition-all duration-300 group-hover:gap-3 text-white">
+        <router-link :to="`/collection/${category}`" class=" gap-2 px-6 py-2.5 rounded-full text-sm bg-[#0F3D2E] font-semibold text-[#0F3D2E] text-white inline-flex items-center transition-all duration-300 group-hover:gap-3">
             Shop Collection
           <ArrowRight
               class="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import {ArrowRight} from "lucide-vue-next";
+import {ArrowRight} from "@lucide/vue";
 defineProps<{
   title: string;
   category: string;

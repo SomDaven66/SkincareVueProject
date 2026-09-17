@@ -1,26 +1,17 @@
 <template>
     <div
-        class="min-h-screen flex items-center justify-center
-        bg-[#F9FBF7] px-6 py-12"
+        class="px-6 py-12 min-h-screen justify-center bg-[#F9FBF7] flex items-center"
     >
         <!-- Reset Password Card -->
         <div
-            class="relative w-full max-w-md
-            rounded-2xl border border-[#DCE6DC]
-            bg-white p-8 shadow-lg"
+            class="p-8 w-full max-w-md rounded-2xl border border-[#DCE6DC] bg-white shadow-lg relative"
         >
 
             <!-- Close Button -->
             <button
                 type="button"
                 @click="closeReset"
-                class="absolute right-4 top-4
-                flex h-9 w-9 items-center justify-center
-                rounded-full
-                text-[#64756B]
-                transition duration-300
-                hover:bg-[#F4F8F1]
-                hover:text-[#0F3D2E]"
+                class="top-4 h-9 w-9 justify-center rounded-full text-[#64756B] absolute right-4 flex items-center transition duration-300 hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
                 aria-label="Close reset password"
             >
                 <X
@@ -31,10 +22,9 @@
 
 
             <!-- Icon -->
-            <div class="mb-6 flex justify-center">
+            <div class="mb-6 justify-center flex">
                 <div
-                    class="flex h-16 w-16 items-center justify-center
-                    rounded-full bg-[#F4F8F1]"
+                    class="h-16 w-16 justify-center rounded-full bg-[#F4F8F1] flex items-center"
                 >
                     <KeyRound
                         class="h-8 w-8 text-[#0F3D2E]"
@@ -47,15 +37,13 @@
             <!-- Header -->
             <div class="mb-8 text-center">
                 <h2
-                    class="text-2xl font-bold
-                    text-[#18352B]"
+                    class="text-2xl font-bold text-[#18352B]"
                 >
                     Forgot Password?
                 </h2>
 
                 <p
-                    class="mt-3 text-sm leading-6
-                    text-[#64756B]"
+                    class="mt-3 text-sm text-[#64756B] leading-6"
                 >
                     Enter your email address and we'll send you
                     a link to reset your password.
@@ -149,7 +137,7 @@ import {
     X,
     KeyRound,
     ArrowLeft
-} from 'lucide-vue-next';
+} from '@lucide/vue';
 
 
 const router = useRouter();

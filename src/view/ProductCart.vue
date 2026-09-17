@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
+import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from '@lucide/vue'
 import { Products } from '../data/Products'
 import { useWishlistStore } from '../store/wishlist'
 

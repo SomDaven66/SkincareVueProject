@@ -11,7 +11,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 
 import type { Product } from "../../types/produce";
 
@@ -615,8 +615,7 @@ function deleteProduct(product: Product) {
                   <button
                     v-else
                     @click="goToPage(page as number)"
-                    class="h-9 w-9 justify-center rounded-xl border text-sm font-medium flex items-center transition"
-                    :class="currentPage === page ? 'bg-[#0F3D2E] text-white border-[#0F3D2E]' : 'bg-white text-gray-700 border-[#DCE6DC] hover:bg-[#F9FBF7]'"
+                    class="h-9 w-9 justify-center rounded-xl border text-sm font-medium text-white border-[#0F3D2E]' text-gray-700 border-[#DCE6DC] flex items-center transition currentPage === page ? 'bg-[#0F3D2E] : 'bg-white hover:bg-[#F9FBF7]'"
                   >
                     {{ page }}
                   </button>

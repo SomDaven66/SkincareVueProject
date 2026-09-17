@@ -10,7 +10,7 @@ import {
   ArrowRight,
   ShieldCheck,
   Truck
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const cartStore = useCartStore()
 
@@ -44,13 +44,13 @@ const getImage = (images: any) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#F9FBF7] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+  <div class="px-4 py-10 min-h-screen bg-[#F9FBF7] sm:px-6 lg:px-8 lg:py-14">
     <div class="mx-auto max-w-7xl">
       
       <!-- ================= HEADER ================= -->
-      <div class="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between">
+      <div class="flex-col mb-10 flex sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 class="text-3xl font-bold tracking-tight text-[#0F3D2E] sm:text-4xl">
+          <h1 class="text-3xl font-bold text-[#0F3D2E] tracking-tight sm:text-4xl">
             Shopping Cart
           </h1>
           <p class="mt-2 text-[#536B59]">
@@ -60,7 +60,7 @@ const getImage = (images: any) => {
         
         <RouterLink 
           to="/products"
-          class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#7A9E7E] transition hover:text-[#0F3D2E] sm:mt-0"
+          class="mt-4 gap-2 text-sm font-semibold text-[#7A9E7E] inline-flex items-center transition hover:text-[#0F3D2E] sm:mt-0"
         >
           Continue Shopping <ArrowRight class="h-4 w-4" />
         </RouterLink>
@@ -70,12 +70,12 @@ const getImage = (images: any) => {
         <!-- ================= CART ITEMS ================= -->
         <div class="lg:col-span-8">
           
-          <div v-if="cartStore.items.length > 0" class="flex flex-col gap-6">
+          <div v-if="cartStore.items.length > 0" class="flex-col gap-6 flex">
             
             <!-- Free Shipping Progress -->
-            <div class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm">
-              <div class="mb-3 flex items-center gap-3">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F8F1]">
+            <div class="p-5 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm">
+              <div class="mb-3 gap-3 flex items-center">
+                <div class="h-10 w-10 justify-center rounded-full bg-[#F4F8F1] flex shrink-0 items-center">
                   <Truck class="h-5 w-5 text-[#7A9E7E]" />
                 </div>
                 <div>
@@ -98,16 +98,16 @@ const getImage = (images: any) => {
             </div>
 
             <!-- Items List -->
-            <ul class="flex flex-col gap-4">
+            <ul class="flex-col gap-4 flex">
               <li 
                 v-for="item in cartStore.items" 
                 :key="item.id + (item.selectedSize || '')"
-                class="flex flex-col sm:flex-row gap-5 rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm transition-all hover:shadow-md"
+                class="flex-col gap-5 p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm flex sm:flex-row transition-all hover:shadow-md"
               >
                 <!-- Image -->
                 <RouterLink 
                   :to="`/products/${item.id}`"
-                  class="h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-[#F4F8F1]"
+                  class="h-28 w-28 overflow-hidden rounded-xl bg-[#F4F8F1] shrink-0"
                 >
                   <img 
                     :src="getImage(item.images)" 
@@ -117,10 +117,10 @@ const getImage = (images: any) => {
                 </RouterLink>
 
                 <!-- Details -->
-                <div class="flex flex-1 flex-col justify-between">
-                  <div class="flex justify-between gap-4">
+                <div class="flex-1 flex-col justify-between flex">
+                  <div class="gap-4 justify-between flex">
                     <div>
-                      <span class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[#7A9E7E]">
+                      <span class="mb-1 text-[10px] font-bold text-[#7A9E7E] block uppercase tracking-wider">
                         {{ item.category }}
                       </span>
                       <RouterLink :to="`/products/${item.id}`">
@@ -139,21 +139,21 @@ const getImage = (images: any) => {
                     </p>
                   </div>
 
-                  <div class="mt-4 flex items-center justify-between">
+                  <div class="mt-4 justify-between flex items-center">
                     <!-- Quantity Control -->
-                    <div class="flex items-center overflow-hidden rounded-full border border-[#DCE6DC] bg-[#F9FBF7]">
+                    <div class="overflow-hidden rounded-full border border-[#DCE6DC] bg-[#F9FBF7] flex items-center">
                       <button 
                         @click="cartStore.updateQuantity(item.id, item.quantity - 1, item.selectedSize)"
-                        class="flex h-9 w-9 items-center justify-center text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+                        class="h-9 w-9 justify-center text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
                       >
                         <Minus class="h-3 w-3" :stroke-width="2.5" />
                       </button>
-                      <span class="flex h-9 w-10 items-center justify-center text-sm font-bold text-[#0F3D2E]">
+                      <span class="h-9 w-10 justify-center text-sm font-bold text-[#0F3D2E] flex items-center">
                         {{ item.quantity }}
                       </span>
                       <button 
                         @click="cartStore.updateQuantity(item.id, item.quantity + 1, item.selectedSize)"
-                        class="flex h-9 w-9 items-center justify-center text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+                        class="h-9 w-9 justify-center text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
                       >
                         <Plus class="h-3 w-3" :stroke-width="2.5" />
                       </button>
@@ -162,7 +162,7 @@ const getImage = (images: any) => {
                     <!-- Remove -->
                     <button 
                       @click="cartStore.removeFromCart(item.id, item.selectedSize)"
-                      class="flex items-center gap-1.5 text-sm font-medium text-red-500 transition hover:text-red-700"
+                      class="gap-1.5 text-sm font-medium text-red-500 flex items-center transition hover:text-red-700"
                     >
                       <Trash2 class="h-4 w-4" />
                       <span class="hidden sm:inline">Remove</span>
@@ -172,7 +172,7 @@ const getImage = (images: any) => {
               </li>
             </ul>
 
-            <div class="flex justify-end">
+            <div class="justify-end flex">
               <button 
                 @click="cartStore.clearCart()"
                 class="text-sm font-medium text-[#7A9E7E] transition hover:text-[#0F3D2E] underline underline-offset-4"
@@ -184,8 +184,8 @@ const getImage = (images: any) => {
           </div>
 
           <!-- Empty State -->
-          <div v-else class="flex flex-col items-center justify-center rounded-2xl border border-[#DCE6DC] bg-white py-24 text-center shadow-sm">
-            <div class="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#F4F8F1]">
+          <div v-else class="flex-col py-24 justify-center rounded-2xl border border-[#DCE6DC] bg-white text-center shadow-sm flex items-center">
+            <div class="mb-5 h-20 w-20 justify-center rounded-full bg-[#F4F8F1] flex items-center">
               <ShoppingBag class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
             </div>
             <h2 class="text-xl font-bold text-[#0F3D2E]">Your cart is empty</h2>

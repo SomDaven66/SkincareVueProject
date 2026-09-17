@@ -1,11 +1,10 @@
 <template>
   <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+    class="px-4 z-50 justify-center bg-black/50 fixed inset-0 flex items-center"
   >
     <!-- Register Card -->
     <div
-      class="relative w-full max-w-md rounded-2xl border border-[#DCE6DC]
-             bg-white p-5 shadow-lg sm:p-8"
+      class="p-5 w-full max-w-md rounded-2xl border border-[#DCE6DC] bg-white shadow-lg relative sm:p-8"
       data-aos="zoom-in"
       data-aos-duration="500"
     >
@@ -14,12 +13,7 @@
       <button
         type="button"
         @click="router.push('/')"
-        class="absolute right-4 top-4 flex h-9 w-9 items-center
-               justify-center rounded-full
-               text-[#64756B]
-               transition
-               hover:bg-[#F4F8F1]
-               hover:text-[#0F3D2E]"
+        class="top-4 h-9 w-9 justify-center rounded-full text-[#64756B] absolute right-4 flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         aria-label="Close register"
       >
         <X
@@ -33,8 +27,7 @@
       <div class="mb-5 text-center" data-aos="fade-up" data-aos-delay="100">
 
         <div
-          class="mx-auto mb-2 flex h-14 w-14 items-center
-                 justify-center rounded-full bg-[#F4F8F1]"
+          class="mb-2 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
         >
           <CircleUserRound
           class="h-8 w-8 text-[#0F3D2E]"
@@ -60,7 +53,7 @@
         <div>
           <label
             for="fname"
-            class="mb-2 block text-sm font-medium text-[#18352B]"
+            class="mb-2 text-sm font-medium text-[#18352B] block"
           >
             Full Name
           </label>
@@ -71,13 +64,7 @@
             id="fname"
             placeholder="Enter your full name"
             required
-            class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3
-                   text-sm text-[#18352B]
-                   outline-none transition
-                   placeholder:text-[#64756B]
-                   focus:border-[#7A9E7E]
-                   focus:ring-2 focus:ring-[#A8C3A0]"
+            class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
           />
         </div>
 
@@ -86,7 +73,7 @@
         <div>
           <label
             for="email"
-            class="mb-2 block text-sm font-medium text-[#18352B]"
+            class="mb-2 text-sm font-medium text-[#18352B] block"
           >
             Email Address
           </label>
@@ -97,13 +84,7 @@
             id="email"
             placeholder="Enter your email"
             required
-            class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3
-                   text-sm text-[#18352B]
-                   outline-none transition
-                   placeholder:text-[#64756B]
-                   focus:border-[#7A9E7E]
-                   focus:ring-2 focus:ring-[#A8C3A0]"
+            class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
           />
         </div>
 
@@ -112,7 +93,7 @@
         <div>
           <label
             for="password"
-            class="mb-2 block text-sm font-medium text-[#18352B]"
+            class="mb-2 text-sm font-medium text-[#18352B] block"
           >
             Password
           </label>
@@ -124,18 +105,12 @@
             id="password"
             placeholder="Create a password"
             required
-            class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3 pr-10
-                   text-sm text-[#18352B]
-                   outline-none transition
-                   placeholder:text-[#64756B]
-                   focus:border-[#7A9E7E]
-                   focus:ring-2 focus:ring-[#A8C3A0]"
+            class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#18352B] pr-10 outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
           />
           <button
             type="button"
             @click="showPassword = !showPassword"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
           >
             <Eye v-if="showPassword" class="h-5 w-5" :stroke-width="1.8" />
             <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -148,7 +123,7 @@
         <div>
           <label
             for="cpassword"
-            class="mb-2 block text-sm font-medium text-[#18352B]"
+            class="mb-2 text-sm font-medium text-[#18352B] block"
           >
             Confirm Password
           </label>
@@ -160,18 +135,12 @@
             id="cpassword"
             placeholder="Confirm your password"
             required
-            class="w-full rounded-lg border border-[#DCE6DC]
-                   bg-[#F9FBF7] px-4 py-3 pr-10
-                   text-sm text-[#18352B]
-                   outline-none transition
-                   placeholder:text-[#64756B]
-                   focus:border-[#7A9E7E]
-                   focus:ring-2 focus:ring-[#A8C3A0]"
+            class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#18352B] pr-10 outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
           />
           <button
             type="button"
             @click="showConfirmPassword = !showConfirmPassword"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
           >
             <Eye v-if="showConfirmPassword" class="h-5 w-5" :stroke-width="1.8" />
             <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -181,7 +150,7 @@
 
 
         <!-- Terms -->
-        <div class="flex items-start gap-3">
+        <div class="gap-3 flex items-start">
 
           <input
             type="checkbox"
@@ -193,7 +162,7 @@
 
           <label
             for="terms"
-            class="cursor-pointer text-xs leading-5 text-[#64756B] sm:text-sm"
+            class="text-xs text-[#64756B] cursor-pointer leading-5 sm:text-sm"
           >
             I agree to the
             <span class="font-medium text-[#0F3D2E]">
@@ -217,21 +186,14 @@
         <!-- Create Account Button -->
         <button
           type="submit"
-          class="w-full rounded-lg bg-[#0F3D2E]
-                 px-5 py-3 font-semibold text-white
-                 transition duration-200
-                 hover:bg-[#174A3A]
-                 hover:shadow-md
-                 focus:outline-none
-                 focus:ring-2 focus:ring-[#A8C3A0]
-                 focus:ring-offset-2"
+          class="px-5 py-3 w-full rounded-lg bg-[#0F3D2E] font-semibold text-white transition duration-200 hover:bg-[#174A3A] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#A8C3A0] focus:ring-offset-2"
         >
           Create Account
         </button>
 
 
         <!-- Login -->
-        <div class="border-t border-[#DCE6DC] pt-5 text-center flex items-center justify-center gap-1">
+        <div class="pt-5 gap-1 border-t border-[#DCE6DC] text-center justify-center flex items-center">
 
           <p class="text-sm text-[#64756B]">
             Already have an account?
@@ -240,9 +202,7 @@
           <router-link
           
             to="/login"
-            class="inline-block font-semibold
-                   text-[#0F3D2E]
-                   transition hover:text-[#174A3A]"
+            class="font-semibold text-[#0F3D2E] inline-block transition hover:text-[#174A3A]"
           >
             Login
           </router-link>
@@ -257,9 +217,7 @@
     <transition name="toast">
       <div
         v-if="showSuccess"
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50
-               flex items-center gap-3 rounded-xl bg-[#0F3D2E]
-               px-6 py-4 shadow-2xl"
+        class="gap-3 px-6 py-4 top-6 z-50 rounded-xl bg-[#0F3D2E] shadow-2xl fixed left-1/2 -translate-x-1/2 flex items-center"
       >
         <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -278,7 +236,7 @@ import {
     X,
     CircleUserRound,
     Eye,
-    EyeOff  } from 'lucide-vue-next';
+    EyeOff  } from '@lucide/vue';
 import { ref } from "vue";
 const router = useRouter();
 const name=ref("");

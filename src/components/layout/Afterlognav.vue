@@ -361,8 +361,7 @@
         </router-link>
           <router-link v-if="navVisibility.collection" to="/collection"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Collection
@@ -420,7 +419,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { User, ShoppingCart, Heart } from "lucide-vue-next";
+import { User, ShoppingCart, Heart } from "@lucide/vue";
 import { useCartStore } from "../../store/Card";
 import { useWishlistStore } from "../../store/wishlist";
 import { Products } from "../../data/Products";

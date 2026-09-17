@@ -10,7 +10,7 @@ import {
   UserRound,
   Menu,
   X,
-} from 'lucide-vue-next'
+} from '@lucide/vue'
 
 const isSidebarOpen = ref(false);
 
@@ -26,21 +26,18 @@ function closeSidebar(): void {
     <div
       v-if="isSidebarOpen"
       @click="closeSidebar"
-      class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+      class="z-40 bg-black/40 fixed inset-0 backdrop-blur-sm lg:hidden"
     ></div>
 
     <!-- ================= SIDEBAR ================= -->
     <aside
-      :class="[
-        'fixed left-0 top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white transition-transform duration-300 lg:translate-x-0 lg:z-40',
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      ]"
+      class="top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white [ 'fixed left-0 transition-transform duration-300 lg:translate-x-0 lg:z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full' ]"
     >
       <!-- Logo -->
-      <div class="flex h-20 items-center justify-between border-b border-[#E8EFE8] px-7">
-        <router-link to="/admin/dashboard" class="flex items-center gap-2.5">
+      <div class="px-7 h-20 justify-between border-b border-[#E8EFE8] flex items-center">
+        <router-link to="/admin/dashboard" class="gap-2.5 flex items-center">
           <div
-            class="flex h-11 w-11 items-center justify-center rounded-full bg-[#EAF2E9]"
+            class="h-11 w-11 justify-center rounded-full bg-[#EAF2E9] flex items-center"
           >
             <svg
               viewBox="0 0 48 48"
@@ -79,10 +76,10 @@ function closeSidebar(): void {
           </div>
 
           <div>
-            <h1 class="text-xl font-bold tracking-tight text-[#0F3D2E]">
+            <h1 class="text-xl font-bold text-[#0F3D2E] tracking-tight">
               LUMIE
             </h1>
-            <p class="text-[10px] font-medium tracking-[0.25em] text-[#7A9E7E]">
+            <p class="text-[10px] font-medium text-[#7A9E7E] tracking-[0.25em]">
               SKIN ADMIN
             </p>
           </div>
@@ -91,7 +88,7 @@ function closeSidebar(): void {
         <!-- Close button (mobile only) -->
         <button
           @click="closeSidebar"
-          class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 hover:bg-[#F4F8F1] lg:hidden"
+          class="h-8 w-8 justify-center rounded-lg text-gray-500 flex items-center hover:bg-[#F4F8F1] lg:hidden"
         >
           <X :size="20" />
         </button>
@@ -100,7 +97,7 @@ function closeSidebar(): void {
       <!-- Navigation -->
       <nav class="px-4 py-7">
         <p
-          class="mb-3 px-3 text-[11px] font-semibold uppercase tracking-widest text-[#9AAD9A]"
+          class="mb-3 px-3 text-[11px] font-semibold text-[#9AAD9A] uppercase tracking-widest"
         >
           Main Menu
         </p>
@@ -109,7 +106,7 @@ function closeSidebar(): void {
           to="/admin/dashboard"
           @click="closeSidebar"
           active-class="bg-[#0F3D2E] text-white shadow-sm"
-          class="mb-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+          class="mb-2 gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         >
           <LayoutDashboard :size="19" />
           Overview
@@ -119,7 +116,7 @@ function closeSidebar(): void {
           to="/admin/product"
           @click="closeSidebar"
           active-class="bg-[#0F3D2E] text-white shadow-sm"
-          class="mb-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+          class="mb-2 gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         >
           <ShoppingBag :size="19" />
           Products
@@ -129,7 +126,7 @@ function closeSidebar(): void {
           to="/admin/orders"
           @click="closeSidebar"
           active-class="bg-[#0F3D2E] text-white shadow-sm"
-          class="mb-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+          class="mb-2 gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         >
           <Package :size="19" />
           Orders
@@ -139,7 +136,7 @@ function closeSidebar(): void {
           to="/admin/users"
           @click="closeSidebar"
           active-class="bg-[#0F3D2E] text-white shadow-sm"
-          class="mb-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+          class="mb-2 gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         >
           <Users :size="19" />
           Customers
@@ -148,7 +145,7 @@ function closeSidebar(): void {
         <div class="my-6 border-t border-[#E8EFE8]"></div>
 
         <p
-          class="mb-3 px-3 text-[11px] font-semibold uppercase tracking-widest text-[#9AAD9A]"
+          class="mb-3 px-3 text-[11px] font-semibold text-[#9AAD9A] uppercase tracking-widest"
         >
           System
         </p>
@@ -157,7 +154,7 @@ function closeSidebar(): void {
           to="/admin/settings"
           @click="closeSidebar"
           active-class="bg-[#0F3D2E] text-white shadow-sm"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-[#536B59] transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+          class="gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
         >
           <Settings :size="19" />
           Settings
@@ -166,24 +163,24 @@ function closeSidebar(): void {
 
       <!-- Admin Profile -->
       <div
-        class="absolute bottom-0 left-0 right-0 border-t border-[#E8EFE8] bg-[#F9FBF7] p-4"
+        class="p-4 bottom-0 border-t border-[#E8EFE8] bg-[#F9FBF7] absolute left-0 right-0"
       >
         <router-link
           to="/admin/profile"
           @click="closeSidebar"
-          class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-white"
+          class="gap-3 p-2 rounded-xl flex items-center transition hover:bg-white"
         >
           <div
-            class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#A8C3A0] bg-[#E8F0E5]"
+            class="h-10 w-10 justify-center rounded-full border-2 border-[#A8C3A0] bg-[#E8F0E5] flex items-center"
           >
             <UserRound :size="20" class="text-[#0F3D2E]" />
           </div>
 
-          <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-[#0F3D2E]">
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#0F3D2E] truncate">
               Admin
             </p>
-            <p class="truncate text-xs text-[#7A9E7E]">
+            <p class="text-xs text-[#7A9E7E] truncate">
               Administrator
             </p>
           </div>
@@ -195,13 +192,13 @@ function closeSidebar(): void {
     <main class="lg:ml-64">
       <!-- ================= HEADER ================= -->
       <header
-        class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#DCE6DC] bg-white/95 px-4 backdrop-blur-md sm:h-20 sm:px-8"
+        class="px-4 top-0 z-30 h-16 justify-between border-b border-[#DCE6DC] bg-white/95 sticky flex items-center backdrop-blur-md sm:h-20 sm:px-8"
       >
-        <div class="flex items-center gap-3">
+        <div class="gap-3 flex items-center">
           <!-- Mobile Menu Button -->
           <button
             @click="isSidebarOpen = true"
-            class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#DCE6DC] bg-white text-[#536B59] transition hover:bg-[#F4F8F1] lg:hidden"
+            class="h-10 w-10 justify-center rounded-xl border border-[#DCE6DC] bg-white text-[#536B59] flex items-center transition hover:bg-[#F4F8F1] lg:hidden"
           >
             <Menu :size="20" />
           </button>
@@ -216,28 +213,28 @@ function closeSidebar(): void {
           </div>
         </div>
 
-        <div class="flex items-center gap-2 sm:gap-3">
+        <div class="gap-2 flex items-center sm:gap-3">
           <!-- Notification -->
           <button
-            class="relative flex h-9 w-9 items-center justify-center rounded-xl border border-[#DCE6DC] bg-white text-[#536B59] transition hover:bg-[#F4F8F1] sm:h-10 sm:w-10"
+            class="h-9 w-9 justify-center rounded-xl border border-[#DCE6DC] bg-white text-[#536B59] relative flex items-center transition hover:bg-[#F4F8F1] sm:h-10 sm:w-10"
           >
             <Bell :size="18" />
             <span
-              class="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#7A9E7E]"
+              class="top-2 h-2 w-2 rounded-full bg-[#7A9E7E] absolute right-2"
             ></span>
           </button>
 
           <!-- Profile -->
           <router-link
             to="/admin/profile"
-            class="flex items-center gap-2 rounded-xl border border-[#DCE6DC] bg-white px-3 py-2"
+            class="gap-2 px-3 py-2 rounded-xl border border-[#DCE6DC] bg-white flex items-center"
           >
             <div
-              class="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F0E5]"
+              class="h-8 w-8 justify-center rounded-full bg-[#E8F0E5] flex items-center"
             >
               <UserRound :size="16" class="text-[#0F3D2E]" />
             </div>
-            <span class="hidden text-sm font-semibold text-[#0F3D2E] sm:inline">
+            <span class="text-sm font-semibold text-[#0F3D2E] hidden sm:inline">
               Admin
             </span>
           </router-link>

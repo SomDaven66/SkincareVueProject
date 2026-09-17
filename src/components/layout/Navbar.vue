@@ -1,21 +1,19 @@
 <template>
   <nav
-    class="sticky top-0 z-50 border-b border-[#E5ECE5] bg-white/95 backdrop-blur-md"
+    class="top-0 z-50 border-b border-[#E5ECE5] bg-white/95 sticky backdrop-blur-md"
   >
-    <div class="mx-auto flex min-h-[88px] max-w-7xl
-            items-center justify-between
-            px-4 sm:px-6 lg:px-8"
+    <div class="px-4 mx-auto min-h-[88px] max-w-7xl justify-between flex items-center sm:px-6 lg:px-8"
             >
 
       <!-- ================= LOGO ================= -->
       <router-link
         to="/"
-        class="flex shrink-0 items-center gap-2.5"
+        class="gap-2.5 flex shrink-0 items-center"
       >
 
         <!-- Logo Icon -->
         <div
-          class="flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF2E9]"
+          class="h-14 w-14 justify-center rounded-full bg-[#EAF2E9] flex items-center"
         >
           <svg
             viewBox="0 0 48 48"
@@ -66,13 +64,13 @@
         <div class="leading-none">
 
           <h1
-            class="text-2xl font-semibold tracking-[0.16em] text-[#0F3D2E]"
+            class="text-2xl font-semibold text-[#0F3D2E] tracking-[0.16em]"
           >
             LUMIÉ
           </h1>
 
           <p
-            class="mt-1 text-[10px] font-medium uppercase tracking-[0.35em] text-[#6F8F78]"
+            class="mt-1 text-[10px] font-medium text-[#6F8F78] uppercase tracking-[0.35em]"
           >
             Skin Care
           </p>
@@ -85,20 +83,18 @@
        
 
        
-      <div class="hidden items-center gap-8 lg:flex md:flex-row md:items-center">
+      <div class="gap-8 hidden items-center lg:flex md:flex-row md:items-center">
 
         <router-link
           v-if="navVisibility.home"
           to="/"
-          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          class="py-2 text-sm font-medium text-gray-600 group relative transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
           Home
 
           <span
-            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
-                   bg-[#0F3D2E] transition-all duration-300
-                   group-hover:w-full"
+            class="bottom-0 h-[2px] w-0 rounded-full bg-[#0F3D2E] absolute left-0 transition-all duration-300 group-hover:w-full"
             :class="{ 'w-full': route.path === '/' }"
           ></span>
         </router-link>
@@ -107,15 +103,13 @@
         <router-link
           v-if="navVisibility.shop"
           to="/products"
-          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          class="py-2 text-sm font-medium text-gray-600 group relative transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
           Product
 
           <span
-            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
-                   bg-[#0F3D2E] transition-all duration-300
-                   group-hover:w-full"
+            class="bottom-0 h-[2px] w-0 rounded-full bg-[#0F3D2E] absolute left-0 transition-all duration-300 group-hover:w-full"
             :class="{ 'w-full': route.path.startsWith('/products') }"
           ></span>
         </router-link>
@@ -124,15 +118,13 @@
         <router-link
           v-if="navVisibility.collection"
           to="/collection"
-          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          class="py-2 text-sm font-medium text-gray-600 group relative transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
           Collection
 
           <span
-            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
-                   bg-[#0F3D2E] transition-all duration-300
-                   group-hover:w-full"
+            class="bottom-0 h-[2px] w-0 rounded-full bg-[#0F3D2E] absolute left-0 transition-all duration-300 group-hover:w-full"
             :class="{ 'w-full': route.path === '/collection' }"
           ></span>
         </router-link>
@@ -141,15 +133,13 @@
         <router-link
           v-if="navVisibility.about"
           to="/about"
-          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          class="py-2 text-sm font-medium text-gray-600 group relative transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
           About
 
           <span
-            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
-                   bg-[#0F3D2E] transition-all duration-300
-                   group-hover:w-full"
+            class="bottom-0 h-[2px] w-0 rounded-full bg-[#0F3D2E] absolute left-0 transition-all duration-300 group-hover:w-full"
             :class="{ 'w-full': route.path === '/about' }"
           ></span>
         </router-link>
@@ -161,15 +151,13 @@
         <router-link
           v-if="navVisibility.contact"
           to="/contact"
-          class="group relative py-2 text-sm font-medium text-gray-600 transition hover:text-[#0F3D2E]"
+          class="py-2 text-sm font-medium text-gray-600 group relative transition hover:text-[#0F3D2E]"
           active-class="text-[#0F3D2E]"
         >
           Contact
 
           <span
-            class="absolute bottom-0 left-0 h-[2px] w-0 rounded-full
-                   bg-[#0F3D2E] transition-all duration-300
-                   group-hover:w-full"
+            class="bottom-0 h-[2px] w-0 rounded-full bg-[#0F3D2E] absolute left-0 transition-all duration-300 group-hover:w-full"
             :class="{ 'w-full': route.path === '/contact' }"
           ></span>
         </router-link>
@@ -178,20 +166,18 @@
     
 
       <!-- ================= RIGHT SIDE ================= -->
-      <div class="flex items-center gap-2 sm:gap-3 lg:gap-5">
+      <div class="gap-2 flex items-center sm:gap-3 lg:gap-5">
 
         <!-- Search -->
         <div
           ref="searchContainerRef"
-          class="relative hidden items-center rounded-full border border-[#DCE6DC]
-                 bg-[#F8FAF7] px-4 py-2 transition
-                 focus-within:border-[#7A9E7E] sm:flex"
+          class="px-4 py-2 rounded-full border border-[#DCE6DC] bg-[#F8FAF7] relative hidden items-center transition focus-within:border-[#7A9E7E] sm:flex"
         >
 
           <!-- Search Icon -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="mr-2 h-4 w-4 text-[#6F8F78]"
+            class="h-4 w-4 text-[#6F8F78] mr-2"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -210,9 +196,7 @@
             v-model="searchQuery"
             type="text"
             placeholder="Search products..."
-            class="w-28 bg-transparent text-sm text-[#0F3D2E]
-                   outline-none placeholder:text-gray-400
-                   focus:w-44 transition-all duration-300"
+            class="w-28 bg-transparent text-sm text-[#0F3D2E] outline-none placeholder:text-gray-400 focus:w-44 transition-all duration-300"
             @keyup.enter="handleEnterSearch"
             @input="showDropdown = searchQuery.trim().length > 0"
           />
@@ -220,7 +204,7 @@
           <!-- ================= LIVE SEARCH DROPDOWN ================= -->
           <div
             v-if="showDropdown"
-            class="absolute left-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-[#DCE6DC] bg-white shadow-xl"
+            class="mt-2 top-full z-50 w-80 overflow-hidden rounded-xl border border-[#DCE6DC] bg-white shadow-xl absolute left-0"
           >
             <!-- Results -->
             <div v-if="searchResults.length > 0" class="max-h-80 overflow-y-auto">
@@ -228,22 +212,22 @@
                 v-for="product in searchResults"
                 :key="product.id"
                 @click="goToProduct(product.id)"
-                class="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[#F4F8F1]"
+                class="gap-3 px-4 py-3 w-full text-left flex items-center transition hover:bg-[#F4F8F1]"
               >
                 <img
                   :src="product.images?.img1"
                   :alt="product.name"
-                  class="h-10 w-10 shrink-0 rounded-lg object-cover"
+                  class="h-10 w-10 rounded-lg object-cover shrink-0"
                 />
-                <div class="min-w-0 flex-1">
-                  <p class="truncate text-sm font-medium text-[#0F3D2E]">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-[#0F3D2E] truncate">
                     {{ product.name }}
                   </p>
                   <p class="text-xs text-[#7A9E7E]">
                     {{ product.category }}
                   </p>
                 </div>
-                <span class="shrink-0 text-sm font-semibold text-[#0F3D2E]">
+                <span class="text-sm font-semibold text-[#0F3D2E] shrink-0">
                   ${{ product.price.toFixed(2) }}
                 </span>
               </button>
@@ -260,7 +244,7 @@
             <!-- Footer hint -->
             <div
               v-if="searchResults.length > 0"
-              class="border-t border-[#E5ECE5] bg-[#F9FBF7] px-4 py-2"
+              class="px-4 py-2 border-t border-[#E5ECE5] bg-[#F9FBF7]"
             >
               <p class="text-[11px] text-[#7A9E7E]">
                 Press Enter to see all results on Products page
@@ -274,13 +258,7 @@
         <!-- Profile -->
        <router-link
           to="/login"
-          class="hidden sm:flex items-center
-                rounded-full bg-[#0F3D2E]
-                px-5 py-2.5
-                text-sm font-medium text-white
-                transition duration-300
-                hover:bg-[#174A3A]
-                hover:shadow-md"
+          class="px-5 py-2.5 rounded-full bg-[#0F3D2E] text-sm font-medium text-white hidden sm:flex items-center transition duration-300 hover:bg-[#174A3A] hover:shadow-md"
         >
           Login
         </router-link>
@@ -288,10 +266,7 @@
         <!-- Wishlist -->
         <router-link
           to="/wishlist"
-          class="relative flex h-10 w-10 items-center justify-center
-            rounded-full border border-[#DCE6DC]
-            text-[#0F3D2E] transition
-            hover:bg-[#EAF2E9]"
+          class="h-10 w-10 justify-center rounded-full border border-[#DCE6DC] text-[#0F3D2E] relative flex items-center transition hover:bg-[#EAF2E9]"
           title="Wishlist"
         >
           <Heart
@@ -300,9 +275,7 @@
           />
           <span
             v-if="wishlistStore.totalItems > 0"
-            class="absolute -right-2 -top-2 flex h-5 min-w-5
-                  items-center justify-center rounded-full
-                  bg-[#0F3D2E] px-1 text-[10px] font-semibold text-white"
+            class="px-1 h-5 min-w-5 justify-center rounded-full bg-[#0F3D2E] text-[10px] font-semibold text-white absolute -right-2 -top-2 flex items-center"
           >
             {{ wishlistStore.totalItems }}
           </span>
@@ -310,10 +283,7 @@
 
         <!-- Add to card -->
          <router-link to="/addtocard" 
-         class="relative flex h-10 w-10 items-center justify-center
-           rounded-full border border-[#DCE6DC]
-           text-[#0F3D2E] transition
-           hover:bg-[#EAF2E9]"
+         class="h-10 w-10 justify-center rounded-full border border-[#DCE6DC] text-[#0F3D2E] relative flex items-center transition hover:bg-[#EAF2E9]"
           title="Shopping Cart"
          >
           <ShoppingCart 
@@ -324,9 +294,7 @@
             <!-- Cart Count -->
             <span
               v-if="cardStore.totalItems > 0"
-              class="absolute -right-2 -top-2 flex h-5 min-w-5
-                    items-center justify-center rounded-full
-                    bg-[#0F3D2E] px-1 text-[10px] font-semibold text-white"
+              class="px-1 h-5 min-w-5 justify-center rounded-full bg-[#0F3D2E] text-[10px] font-semibold text-white absolute -right-2 -top-2 flex items-center"
             >
               {{ cardStore.totalItems }}
             </span>
@@ -335,9 +303,7 @@
 
         <!-- Mobile Menu Button -->
         <button @click="toggleMenu"
-          class="flex h-10 w-10 items-center justify-center
-                 rounded-full border border-[#DCE6DC]
-                 text-[#0F3D2E] lg:hidden"
+          class="h-10 w-10 justify-center rounded-full border border-[#DCE6DC] text-[#0F3D2E] flex items-center lg:hidden"
         >
 
           <svg
@@ -361,12 +327,11 @@
 
     </div>
     <!-- Mobile menu -->
-     <div v-if="isMenuOpen" class="border-t  border-[#E5ECE5] bg-white px-6 py-4 lg:hidden">
-        <div class="flex flex-col gap-1">
+     <div v-if="isMenuOpen" class="px-6 py-4 border-t border-[#E5ECE5] bg-white lg:hidden">
+        <div class="flex-col gap-1 flex">
           <router-link v-if="navVisibility.home" to="/"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]
           "
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
@@ -374,24 +339,21 @@
           </router-link>
           <router-link v-if="navVisibility.shop" to="/products"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Product
         </router-link>
           <router-link v-if="navVisibility.collection" to="/collection"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Collection
         </router-link>
           <router-link v-if="navVisibility.about" to="/about"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         About 
@@ -400,8 +362,7 @@
 
           <router-link v-if="navVisibility.contact" to="/contact"
           @click="closeMenu"
-          class="rounded-lg px-4 py-3 text-sm font-medium
-          text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
+          class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-[#F3F7F2] hover:text-[#0F3D2E]"
           active-class="!bg-[#EAF2E9] !text-[#0F3D2E]"
           >
         Contact
@@ -409,13 +370,7 @@
         <router-link
           to="/login"
           @click="closeMenu"
-          class="sm:flex items-center text-center
-                rounded-full bg-[#0F3D2E]
-                px-2 py-3 mt-3
-                text-sm font-medium text-white
-                transition duration-300
-                hover:bg-[#174A3A]
-                hover:shadow-md"
+          class="px-2 py-3 mt-3 text-center rounded-full bg-[#0F3D2E] text-sm font-medium text-white sm:flex items-center transition duration-300 hover:bg-[#174A3A] hover:shadow-md"
         >
           Login
         </router-link>
@@ -430,7 +385,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { ShoppingCart, Heart } from 'lucide-vue-next';
+import { ShoppingCart, Heart } from '@lucide/vue';
 import { useCartStore } from '../../store/Card';
 import { useWishlistStore } from '../../store/wishlist';
 import { Products } from '../../data/Products';

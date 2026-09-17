@@ -1,10 +1,10 @@
 <template>
     <div 
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+        class="px-4 z-50 justify-center bg-black/50 fixed inset-0 flex items-center"
     >
         <!-- Login Card -->
         <div
-            class="relative w-full max-w-md bg-white rounded-2xl border border-[#DCE6DC] shadow-lg p-8 max-h-[90vh] overflow-y-auto"
+            class="p-8 w-full max-w-md bg-white rounded-2xl border border-[#DCE6DC] shadow-lg max-h-[90vh] overflow-y-auto relative"
             data-aos="zoom-in"
             data-aos-duration="500"
         >
@@ -12,12 +12,7 @@
             <button
                 type="button"
                 @click="router.push('/')"
-                class="absolute right-4 top-4 flex h-9 w-9 items-center
-                    justify-center rounded-full
-                    text-[#64756B]
-                    transition
-                    hover:bg-[#F4F8F1]
-                    hover:text-[#0F3D2E]"
+                class="top-4 h-9 w-9 justify-center rounded-full text-[#64756B] absolute right-4 flex items-center transition hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
                 aria-label="Close login"
             ><X
                     class="h-5 w-5"
@@ -25,10 +20,10 @@
                 />
             </button>
             <!-- Header -->
-            <div class="text-center mb-8" data-aos="fade-up" data-aos-delay="100">
+            <div class="mb-8 text-center" data-aos="fade-up" data-aos-delay="100">
                 <!-- Logo / Icon -->
                 <div
-                    class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#F4F8F1]"
+                    class="mb-4 mx-auto h-14 w-14 justify-center rounded-full bg-[#F4F8F1] flex items-center"
                 >
                     <UserRoundKey
                     class="h-7 w-7 text-[#0F3D2E]"
@@ -54,7 +49,7 @@
                 <div>
                     <label
                         for="email"
-                        class="mb-2 block text-sm font-medium text-[#18352B]"
+                        class="mb-2 text-sm font-medium text-[#18352B] block"
                     >
                         Email Address
                     </label>
@@ -65,7 +60,7 @@
                         id="email"
                         placeholder="Enter your email"
                         required
-                        class="w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                        class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
                     />
                 </div>
 
@@ -73,7 +68,7 @@
                 <div>
                     <label
                         for="password"
-                        class="mb-2 block text-sm font-medium text-[#18352B]"
+                        class="mb-2 text-sm font-medium text-[#18352B] block"
                     >
                         Password
                     </label>
@@ -85,12 +80,12 @@
                         id="password"
                         placeholder="Enter your password"
                         required
-                        class="w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-[#18352B] outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                        class="px-4 py-3 w-full rounded-lg border border-[#DCE6DC] bg-[#F9FBF7] text-[#18352B] pr-10 outline-none transition placeholder:text-[#64756B] focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
                     />
                     <button
                         type="button"
                         @click="showPassword = !showPassword"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+                        class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
                     >
                         <Eye v-if="showPassword" class="h-5 w-5" :stroke-width="1.8" />
                         <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -99,9 +94,9 @@
                 </div>
 
                 <!-- Remember + Forgot Password -->
-                <div class="flex items-center justify-between">
+                <div class="justify-between flex items-center">
                     <label
-                        class="flex items-center gap-2 text-sm text-[#64756B]"
+                        class="gap-2 text-sm text-[#64756B] flex items-center"
                     >
                         <input
                             type="checkbox"
@@ -123,14 +118,14 @@
                 <!-- Login Button -->
                 <button
                     type="submit"
-                    class="w-full rounded-lg bg-[#0F3D2E] px-5 py-3 font-semibold text-white transition duration-200 hover:bg-[#174A3A] focus:outline-none focus:ring-2 focus:ring-[#A8C3A0] focus:ring-offset-2"
+                    class="px-5 py-3 w-full rounded-lg bg-[#0F3D2E] font-semibold text-white transition duration-200 hover:bg-[#174A3A] focus:outline-none focus:ring-2 focus:ring-[#A8C3A0] focus:ring-offset-2"
                 >
                     Login
                 </button>
             </form>
 
             <!-- Register -->
-            <div class="mt-8 border-t border-[#DCE6DC] pt-6 text-center flex items-center gap-2 justify-center">
+            <div class="mt-8 pt-6 gap-2 border-t border-[#DCE6DC] text-center justify-center flex items-center">
                 <p class="text-sm text-[#64756B]">
                     Don't have an account?
                 </p>
@@ -169,7 +164,7 @@ import {
   UserRoundKey,
   Eye,
   EyeOff
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { ref } from "vue";
 
 const router = useRouter();

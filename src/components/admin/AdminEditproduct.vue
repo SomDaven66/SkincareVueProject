@@ -4,7 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import {
   Save,
   Image as ImageIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { Products } from "../../data/Products";
 import type { Product } from "../../types/produce";
 

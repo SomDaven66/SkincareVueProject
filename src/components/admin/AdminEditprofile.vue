@@ -5,7 +5,7 @@
     <div class="mb-8">
       <button
         @click="goBack"
-        class="mb-5 flex items-center gap-2 text-sm font-medium text-[#7A9E7E] transition hover:text-[#0F3D2E]"
+        class="mb-5 gap-2 text-sm font-medium text-[#7A9E7E] flex items-center transition hover:text-[#0F3D2E]"
       >
         <span class="text-lg">←</span>
         Back to Profile
@@ -13,7 +13,7 @@
 
       <div>
         <p
-          class="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A9E7E]"
+          class="text-xs font-semibold text-[#7A9E7E] uppercase tracking-[0.2em]"
         >
           Admin Settings
         </p>
@@ -32,13 +32,13 @@
     <section
       class="mb-6 overflow-hidden rounded-3xl border border-[#DCE6DC] bg-white shadow-sm"
     >
-      <div class="bg-[#F4F8F1] px-6 py-8 sm:px-8">
+      <div class="px-6 py-8 bg-[#F4F8F1] sm:px-8">
         <div
-          class="flex flex-col items-center gap-5 sm:flex-row"
+          class="flex-col gap-5 flex items-center sm:flex-row"
         >
           <!-- Avatar -->
           <div
-            class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-8 border-white bg-[#0F3D2E] text-3xl font-bold text-white shadow-sm"
+            class="h-24 w-24 justify-center rounded-full border-8 border-white bg-[#0F3D2E] text-3xl font-bold text-white shadow-sm flex shrink-0 items-center"
           >
             {{ form.name.charAt(0).toUpperCase() || "A" }}
           </div>
@@ -54,7 +54,7 @@
             </p>
 
             <span
-              class="mt-2 inline-block rounded-full bg-[#0F3D2E] px-3 py-1 text-xs font-semibold text-white"
+              class="mt-2 px-3 py-1 rounded-full bg-[#0F3D2E] text-xs font-semibold text-white inline-block"
             >
               ADMIN
             </span>
@@ -65,12 +65,12 @@
 
     <!-- ================= PERSONAL INFORMATION ================= -->
     <section
-      class="mb-6 rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm sm:p-8"
+      class="mb-6 p-6 rounded-3xl border border-[#DCE6DC] bg-white shadow-sm sm:p-8"
     >
       <!-- Header -->
       <div class="mb-7">
         <p
-          class="text-xs font-semibold uppercase tracking-wider text-[#7A9E7E]"
+          class="text-xs font-semibold text-[#7A9E7E] uppercase tracking-wider"
         >
           Account
         </p>
@@ -91,7 +91,7 @@
         <div class="sm:col-span-2">
           <label
             for="name"
-            class="mb-2 block text-sm font-medium text-[#0F3D2E]"
+            class="mb-2 text-sm font-medium text-[#0F3D2E] block"
           >
             Full Name
           </label>
@@ -101,7 +101,7 @@
             v-model="form.name"
             type="text"
             placeholder="Enter your full name"
-            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+            class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
           />
         </div>
 
@@ -109,7 +109,7 @@
         <div class="sm:col-span-2">
           <label
             for="email"
-            class="mb-2 block text-sm font-medium text-[#0F3D2E]"
+            class="mb-2 text-sm font-medium text-[#0F3D2E] block"
           >
             Email Address
           </label>
@@ -119,7 +119,7 @@
             v-model="form.email"
             type="email"
             placeholder="Enter your email"
-            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+            class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
           />
         </div>
 
@@ -128,12 +128,12 @@
 
     <!-- ================= CHANGE PASSWORD ================= -->
     <section
-      class="mb-6 rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm sm:p-8"
+      class="mb-6 p-6 rounded-3xl border border-[#DCE6DC] bg-white shadow-sm sm:p-8"
     >
       <!-- Header -->
       <div class="mb-7">
         <p
-          class="text-xs font-semibold uppercase tracking-wider text-[#7A9E7E]"
+          class="text-xs font-semibold text-[#7A9E7E] uppercase tracking-wider"
         >
           Security
         </p>
@@ -153,7 +153,7 @@
         <div>
           <label
             for="currentPassword"
-            class="mb-2 block text-sm font-medium text-[#0F3D2E]"
+            class="mb-2 text-sm font-medium text-[#0F3D2E] block"
           >
             Current Password
           </label>
@@ -164,12 +164,12 @@
             v-model="passwordForm.currentPassword"
             :type="showCurrentPassword ? 'text' : 'password'"
             placeholder="Enter current password"
-            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+            class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#0F3D2E] pr-10 outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
           />
           <button
             type="button"
             @click="showCurrentPassword = !showCurrentPassword"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
           >
             <Eye v-if="showCurrentPassword" class="h-5 w-5" :stroke-width="1.8" />
             <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -181,7 +181,7 @@
         <div>
           <label
             for="newPassword"
-            class="mb-2 block text-sm font-medium text-[#0F3D2E]"
+            class="mb-2 text-sm font-medium text-[#0F3D2E] block"
           >
             New Password
           </label>
@@ -192,12 +192,12 @@
             v-model="passwordForm.newPassword"
             :type="showNewPassword ? 'text' : 'password'"
             placeholder="Enter new password"
-            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+            class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#0F3D2E] pr-10 outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
           />
           <button
             type="button"
             @click="showNewPassword = !showNewPassword"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
           >
             <Eye v-if="showNewPassword" class="h-5 w-5" :stroke-width="1.8" />
             <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -209,7 +209,7 @@
         <div>
           <label
             for="confirmPassword"
-            class="mb-2 block text-sm font-medium text-[#0F3D2E]"
+            class="mb-2 text-sm font-medium text-[#0F3D2E] block"
           >
             Confirm New Password
           </label>
@@ -220,12 +220,12 @@
             v-model="passwordForm.confirmPassword"
             :type="showConfirmPassword ? 'text' : 'password'"
             placeholder="Confirm your new password"
-            class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 pr-10 text-sm text-[#0F3D2E] outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
+            class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm text-[#0F3D2E] pr-10 outline-none transition placeholder:text-gray-400 focus:border-[#7A9E7E] focus:bg-white focus:ring-2 focus:ring-[#A8C3A0]/30"
           />
           <button
             type="button"
             @click="showConfirmPassword = !showConfirmPassword"
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-[#64756B] transition hover:text-[#0F3D2E]"
+            class="top-1/2 text-[#64756B] absolute right-3 -translate-y-1/2 transition hover:text-[#0F3D2E]"
           >
             <Eye v-if="showConfirmPassword" class="h-5 w-5" :stroke-width="1.8" />
             <EyeOff v-else class="h-5 w-5" :stroke-width="1.8" />
@@ -238,13 +238,13 @@
 
     <!-- ================= ACTIONS ================= -->
     <div
-      class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end"
+      class="flex-col-reverse gap-3 flex sm:flex-row sm:justify-end"
     >
       <!-- Cancel -->
       <button
         type="button"
         @click="goBack"
-        class="rounded-full border border-[#DCE6DC] bg-white px-6 py-3 text-sm font-medium text-gray-600 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
+        class="px-6 py-3 rounded-full border border-[#DCE6DC] bg-white text-sm font-medium text-gray-600 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]"
       >
         Cancel
       </button>
@@ -253,7 +253,7 @@
       <button
         type="button"
         @click="saveChanges"
-        class="rounded-full bg-[#0F3D2E] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#174A3A]"
+        class="px-7 py-3 rounded-full bg-[#0F3D2E] text-sm font-medium text-white transition hover:bg-[#174A3A]"
       >
         Save Changes
       </button>
@@ -266,7 +266,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { Eye, EyeOff } from "lucide-vue-next";
+import { Eye, EyeOff } from "@lucide/vue";
 
 const router = useRouter();
 

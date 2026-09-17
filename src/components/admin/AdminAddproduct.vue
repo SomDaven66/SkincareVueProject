@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import {
   Save,
   Image as ImageIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { Products } from "../../data/Products";
 import type { Product } from "../../types/produce";
 
@@ -110,7 +110,7 @@ function addProduct() {
     <transition name="toast">
       <div
         v-if="showSuccess"
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-xl bg-[#0F3D2E] px-6 py-4 shadow-2xl"
+        class="gap-3 px-6 py-4 top-6 z-50 rounded-xl bg-[#0F3D2E] shadow-2xl fixed left-1/2 -translate-x-1/2 flex items-center"
       >
         <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -126,7 +126,7 @@ function addProduct() {
 
         <form
           @submit.prevent="addProduct"
-          class="rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-sm sm:p-8"
+          class="p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm sm:p-8"
         >
 
           <!-- SECTION TITLE -->
@@ -144,7 +144,7 @@ function addProduct() {
           <div class="mb-6">
             <label
               for="name"
-              class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+              class="mb-2 text-sm font-semibold text-[#0F3D2E] block"
             >
               Product Name
             </label>
@@ -154,25 +154,25 @@ function addProduct() {
               v-model="name"
               type="text"
               placeholder="Example: Gentle Acne Cleanser"
-              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+              class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
             />
           </div>
 
           <!-- PRICE + CATEGORY -->
-          <div class="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div class="grid grid-cols-1 mb-6 gap-6 sm:grid-cols-2">
 
             <!-- PRICE -->
             <div>
               <label
                 for="price"
-                class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+                class="mb-2 text-sm font-semibold text-[#0F3D2E] block"
               >
                 Price
               </label>
 
               <div class="relative">
                 <span
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-500"
+                  class="top-1/2 text-sm text-gray-500 absolute left-4 -translate-y-1/2"
                 >
                   $
                 </span>
@@ -184,7 +184,7 @@ function addProduct() {
                   min="0"
                   step="0.01"
                   placeholder="15.00"
-                  class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] py-3 pl-9 pr-4 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                  class="py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm pl-9 pr-4 outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
                 />
               </div>
             </div>
@@ -193,7 +193,7 @@ function addProduct() {
             <div>
               <label
                 for="category"
-                class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+                class="mb-2 text-sm font-semibold text-[#0F3D2E] block"
               >
                 Category
               </label>
@@ -201,7 +201,7 @@ function addProduct() {
               <select
                 id="category"
                 v-model="category"
-                class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+                class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
               >
                 <option value="" disabled>Select category</option>
                 <option
@@ -220,7 +220,7 @@ function addProduct() {
           <div class="mb-6">
             <label
               for="description"
-              class="mb-2 block text-sm font-semibold text-[#0F3D2E]"
+              class="mb-2 text-sm font-semibold text-[#0F3D2E] block"
             >
               Description
             </label>
@@ -230,7 +230,7 @@ function addProduct() {
               v-model="description"
               rows="5"
               placeholder="Write a description about the product..."
-              class="w-full resize-none rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+              class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm resize-none outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
             ></textarea>
           </div>
 
@@ -238,7 +238,7 @@ function addProduct() {
           <div class="mb-8">
             <label
               for="image"
-              class="mb-2 flex items-center gap-2 text-sm font-semibold text-[#0F3D2E]"
+              class="mb-2 gap-2 text-sm font-semibold text-[#0F3D2E] flex items-center"
             >
               <ImageIcon :size="17" />
               Product Image URL
@@ -249,13 +249,13 @@ function addProduct() {
               v-model="image"
               type="url"
               placeholder="https://example.com/product.jpg"
-              class="w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] px-4 py-3 text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
+              class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
             />
 
             <!-- IMAGE PREVIEW -->
             <div
               v-if="image"
-              class="mt-4 flex items-center gap-4 rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] p-4"
+              class="mt-4 gap-4 p-4 rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] flex items-center"
             >
               <img
                 :src="image"
@@ -277,20 +277,20 @@ function addProduct() {
 
           <!-- BUTTONS -->
           <div
-            class="flex flex-col-reverse gap-3 border-t border-[#DCE6DC] pt-6 sm:flex-row sm:justify-end"
+            class="flex-col-reverse gap-3 pt-6 border-t border-[#DCE6DC] flex sm:flex-row sm:justify-end"
           >
 
             <button
               type="button"
               @click="goBack"
-              class="rounded-xl border border-[#DCE6DC] px-6 py-3 text-sm font-semibold text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
+              class="px-6 py-3 rounded-xl border border-[#DCE6DC] text-sm font-semibold text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              class="flex items-center justify-center gap-2 rounded-xl bg-[#0F3D2E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+              class="gap-2 px-6 py-3 justify-center rounded-xl bg-[#0F3D2E] text-sm font-semibold text-white flex items-center transition hover:bg-[#174A3A]"
             >
               <Save :size="18" />
               Add Product

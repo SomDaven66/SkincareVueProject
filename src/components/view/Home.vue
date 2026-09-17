@@ -285,10 +285,10 @@
     <FeedBack  />
 
   <!-- Why choose us -->
-  <section class="bg-[#F4F8F1] py-16 sm:py-20 lg:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <section class="py-16 bg-[#F4F8F1] sm:py-20 lg:py-24">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
-      <div class="mx-auto mb-12 max-w-2xl text-center" data-aos="fade-up">
+      <div class="mb-12 mx-auto max-w-2xl text-center" data-aos="fade-up">
         <p
           class="mb-3 text-sm font-semibold text-[#7A9E7E] uppercase tracking-[0.2em]"
         >
@@ -512,7 +512,7 @@ import {
   LockKeyhole,
   ArrowLeft,
   ArrowRight,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import hero1 from "../../assets/hero1.jpg";
