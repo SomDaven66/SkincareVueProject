@@ -1,15 +1,13 @@
 <template>
-  <div class="min-h-screen bg-[#F9FBF7] px-4 py-8 sm:px-6 lg:px-8">
+  <div class="px-4 py-8 min-h-screen bg-[#F9FBF7] sm:px-6 lg:px-8">
     <div class="mx-auto max-w-5xl">
 
       <!-- ================= HEADER ================= -->
       <div class="mb-8">
-        <div class="flex items-center gap-3">
+        <div class="gap-3 flex items-center">
           <router-link
             to="/profile"
-            class="flex h-10 w-10 shrink-0 items-center justify-center
-                   rounded-full border border-[#DCE6DC] bg-white
-                   text-[#0F3D2E] transition hover:bg-[#F4F8F1]"
+            class="h-10 w-10 justify-center rounded-full border border-[#DCE6DC] bg-white text-[#0F3D2E] flex shrink-0 items-center transition hover:bg-[#F4F8F1]"
           >
             <!-- Arrow Left -->
             <svg
@@ -41,19 +39,13 @@
 
       <!-- ================= ORDER FILTER ================= -->
       <div
-        class="mb-6 flex gap-2 overflow-x-auto rounded-2xl
-               border border-[#DCE6DC] bg-white p-2"
+        class="mb-6 gap-2 p-2 overflow-x-auto rounded-2xl border border-[#DCE6DC] bg-white flex"
       >
         <button
           v-for="tab in tabs"
           :key="tab"
           @click="activeTab = tab"
-          class="whitespace-nowrap rounded-full px-5 py-2.5 text-sm
-                 font-medium transition"
-          :class="
-            activeTab === tab
-              ? 'bg-[#0F3D2E] text-white'
-              : 'text-gray-500 hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
+          class="px-5 py-2.5 rounded-full text-sm font-medium text-white' whitespace-nowrap transition activeTab === tab ? 'bg-[#0F3D2E] : 'text-gray-500 hover:bg-[#F4F8F1] hover:text-[#0F3D2E]'
           "
         >
           {{ tab }}
@@ -66,24 +58,21 @@
         <div
           v-for="order in activeOrders"
           :key="order.id"
-          class="overflow-hidden rounded-2xl border
-                 border-[#DCE6DC] bg-white"
+          class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white"
         >
 
           <!-- Order Header -->
           <div
-            class="flex flex-col gap-3 border-b border-[#DCE6DC]
-                   px-5 py-4 sm:flex-row sm:items-center
-                   sm:justify-between sm:px-6"
+            class="flex-col gap-3 px-5 py-4 border-b border-[#DCE6DC] flex sm:flex-row sm:items-center sm:justify-between sm:px-6"
           >
             <div>
-              <div class="flex items-center gap-2">
+              <div class="gap-2 flex items-center">
                 <span class="text-sm font-semibold text-[#0F3D2E]">
                   Order {{ order.id }}
                 </span>
 
                 <span
-                  class="rounded-full px-3 py-1 text-xs font-medium"
+                  class="px-3 py-1 rounded-full text-xs font-medium"
                   :class="getStatusClass(order.status)"
                 >
                   {{ order.status }}
@@ -109,13 +98,12 @@
             <div
               v-for="product in order.items"
               :key="product.id"
-              class="flex gap-4 px-5 py-4 sm:px-6"
+              class="gap-4 px-5 py-4 flex sm:px-6"
             >
 
               <!-- Product Image -->
               <div
-                class="h-20 w-20 shrink-0 overflow-hidden
-                       rounded-xl bg-[#F4F8F1] sm:h-24 sm:w-24"
+                class="h-20 w-20 overflow-hidden rounded-xl bg-[#F4F8F1] shrink-0 sm:h-24 sm:w-24"
               >
                 <img
                   :src="product.image"
@@ -125,10 +113,9 @@
               </div>
 
               <!-- Product Info -->
-              <div class="min-w-0 flex-1">
+              <div class="flex-1 min-w-0">
                 <h2
-                  class="truncate text-sm font-semibold
-                         text-[#0F3D2E] sm:text-base"
+                  class="text-sm font-semibold text-[#0F3D2E] truncate sm:text-base"
                 >
                   {{ product.name }}
                 </h2>
@@ -137,7 +124,7 @@
                   {{ product.category }}
                 </p>
 
-                <div class="mt-2 flex items-center gap-3">
+                <div class="mt-2 gap-3 flex items-center">
                   <span class="text-sm font-semibold text-[#0F3D2E]">
                     ${{ product.price.toFixed(2) }}
                   </span>
@@ -149,7 +136,7 @@
               </div>
 
               <!-- Product Total -->
-              <div class="hidden text-right sm:block">
+              <div class="text-right hidden sm:block">
                 <p class="text-xs text-gray-400">Subtotal</p>
                 <p class="mt-1 text-sm font-semibold text-[#0F3D2E]">
                   ${{ (product.price * product.quantity).toFixed(2) }}
@@ -162,9 +149,9 @@
 
           <!-- ================= ORDER TRACKING (Read-Only) ================= -->
           <div
-            class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-6 sm:px-6 select-none"
+            class="px-5 py-6 border-t border-[#DCE6DC] bg-[#F4F8F1] sm:px-6 select-none"
           >
-            <div class="mb-6 flex items-center justify-between">
+            <div class="mb-6 justify-between flex items-center">
               <div>
                 <p class="text-sm font-semibold text-[#0F3D2E]">
                   Order Progress
@@ -183,33 +170,27 @@
 
               <!-- Background Line -->
               <div
-                class="absolute left-[12%] right-[12%] top-6 h-[2px] bg-[#DCE6DC]"
+                class="top-6 bg-[#DCE6DC] absolute left-[12%] right-[12%]"
               ></div>
 
               <!-- Active Line -->
               <div
-                class="absolute left-[12%] top-6 h-[2px] bg-[#7A9E7E]"
+                class="top-6 bg-[#7A9E7E] absolute left-[12%]"
                 :style="{ width: `calc(${getProgressWidth(order.status)}% - 12%)` }"
               ></div>
 
               <!-- Steps -->
-              <div class="relative z-10 flex justify-between">
+              <div class="z-10 justify-between relative flex">
 
                 <div
                   v-for="step in steps"
                   :key="step.name"
-                  class="flex flex-1 flex-col items-center"
+                  class="flex-1 flex-col flex items-center"
                 >
                  
                   <!-- Icon Circle -->
                     <div
-                      class="flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300"
-                      :class="
-                        getStepState(order.status, step.name) === 'completed'
-                          ? 'border-[#7A9E7E] bg-[#7A9E7E] text-white'
-                          : getStepState(order.status, step.name) === 'current'
-                            ? 'border-[#7A9E7E] bg-white text-[#7A9E7E]'
-                            : 'border-[#DCE6DC] bg-white text-gray-300'
+                      class="h-12 w-12 justify-center rounded-full border-2 bg-[#7A9E7E] text-white' text-[#7A9E7E]' text-gray-300' flex items-center transition-all duration-300 getStepState(order.status, step.name) === 'completed' ? 'border-[#7A9E7E] : getStepState(order.status, step.name) === 'current' ? 'border-[#7A9E7E] : 'border-[#DCE6DC]
                       "
                     >
                       <!-- Completed: Check -->
@@ -224,11 +205,7 @@
                         v-else
                         :is="step.icon"
                         class="h-5 w-5"
-                        :class="{
-                          'animate-spin':
-                            getStepState(order.status, step.name) === 'current' &&
-                            step.name === 'Processing'
-                        }"
+                        :class="{ 'animate-spin': getStepState(order.status, step.name) === 'current' && step.name === 'Processing' }"
                         :stroke-width="2"
                       />
                     </div>
@@ -237,9 +214,7 @@
                   <span
                     class="mt-3 text-center text-[10px] font-medium sm:text-xs"
                     :class="
-                      getStepState(order.status, step.name) === 'upcoming'
-                        ? 'text-gray-400'
-                        : 'text-[#0F3D2E]'
+                      getStepState(order.status, step.name) === 'upcoming' ? 'text-gray-400' : 'text-[#0F3D2E]'
                     "
                   >
                     {{ step.name }}
@@ -249,9 +224,7 @@
                   <span
                     class="mt-1 text-[9px]"
                     :class="
-                      getStepState(order.status, step.name) === 'upcoming'
-                        ? 'text-gray-300'
-                        : 'text-[#7A9E7E]'
+                      getStepState(order.status, step.name) === 'upcoming' ? 'text-gray-300' : 'text-[#7A9E7E]'
                     "
                   >
                     {{ getStepState(order.status, step.name) === 'completed' ? 'Completed' : getStepState(order.status, step.name) === 'current' ? stepLabels[step.name] : '' }}
@@ -265,20 +238,17 @@
 
           <!-- Order Actions -->
           <div
-            class="flex flex-col gap-2 border-t border-[#DCE6DC]
-                   px-5 py-4 sm:flex-row sm:justify-end sm:px-6"
+            class="flex-col gap-2 px-5 py-4 border-t border-[#DCE6DC] flex sm:flex-row sm:justify-end sm:px-6"
           >
             <span
-              class="rounded-full border border-[#DCE6DC] px-5 py-2.5
-                     text-sm font-medium text-[#0F3D2E] select-none"
+              class="px-5 py-2.5 rounded-full border border-[#DCE6DC] text-sm font-medium text-[#0F3D2E] select-none"
             >
               View Details
             </span>
 
             <span
               v-if="order.status === 'Delivered'"
-              class="rounded-full bg-[#0F3D2E] px-5 py-2.5
-                     text-sm font-medium text-white select-none"
+              class="px-5 py-2.5 rounded-full bg-[#0F3D2E] text-sm font-medium text-white select-none"
             >
               Buy Again
             </span>
@@ -289,12 +259,10 @@
         <!-- ================= EMPTY ACTIVE ================= -->
         <div
           v-if="activeOrders.length === 0"
-          class="rounded-2xl border border-[#DCE6DC] bg-white
-                 px-6 py-16 text-center"
+          class="px-6 py-16 rounded-2xl border border-[#DCE6DC] bg-white text-center"
         >
           <div
-            class="mx-auto mb-5 flex h-20 w-20 items-center justify-center
-                   rounded-full bg-[#F4F8F1]"
+            class="mb-5 mx-auto h-20 w-20 justify-center rounded-full bg-[#F4F8F1] flex items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -322,9 +290,7 @@
 
           <router-link
             :to="currentUser ? '/products' : '/login'"
-            class="mt-6 inline-flex rounded-full bg-[#0F3D2E]
-                   px-6 py-3 text-sm font-medium text-white
-                   transition hover:bg-[#174A3A]"
+            class="mt-6 px-6 py-3 rounded-full bg-[#0F3D2E] text-sm font-medium text-white inline-flex transition hover:bg-[#174A3A]"
           >
             {{ currentUser ? "Start Shopping" : "Login" }}
           </router-link>
@@ -335,13 +301,13 @@
       <!-- ================= ORDER HISTORY ================= -->
       <div v-if="activeTab === 'All' && orderHistory.length > 0" class="mt-8">
 
-        <div class="mb-4 flex items-center gap-2">
+        <div class="mb-4 gap-2 flex items-center">
           <h2 class="text-lg font-semibold text-[#0F3D2E]">
             Order History
           </h2>
           <span
             v-if="orderHistory.length > 0"
-            class="rounded-full bg-[#E8F4EA] px-3 py-1 text-xs font-medium text-[#2F6B3C]"
+            class="px-3 py-1 rounded-full bg-[#E8F4EA] text-xs font-medium text-[#2F6B3C]"
           >
             {{ orderHistory.length }}
           </span>
@@ -352,24 +318,21 @@
           <div
             v-for="order in orderHistory"
             :key="order.id"
-            class="overflow-hidden rounded-2xl border
-                   border-[#DCE6DC] bg-white"
+            class="overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white"
           >
 
             <!-- Order Header -->
             <div
-              class="flex flex-col gap-3 border-b border-[#DCE6DC]
-                     px-5 py-4 sm:flex-row sm:items-center
-                     sm:justify-between sm:px-6"
+              class="flex-col gap-3 px-5 py-4 border-b border-[#DCE6DC] flex sm:flex-row sm:items-center sm:justify-between sm:px-6"
             >
               <div>
-                <div class="flex items-center gap-2">
+                <div class="gap-2 flex items-center">
                   <span class="text-sm font-semibold text-[#0F3D2E]">
                     Order {{ order.id }}
                   </span>
 
                   <span
-                    class="rounded-full px-3 py-1 text-xs font-medium bg-[#E8F4EA] text-[#2F6B3C]"
+                    class="px-3 py-1 rounded-full text-xs font-medium bg-[#E8F4EA] text-[#2F6B3C]"
                   >
                     Completed
                   </span>
@@ -394,13 +357,12 @@
               <div
                 v-for="product in order.items"
                 :key="product.id"
-                class="flex gap-4 px-5 py-4 sm:px-6"
+                class="gap-4 px-5 py-4 flex sm:px-6"
               >
 
                 <!-- Product Image -->
                 <div
-                  class="h-20 w-20 shrink-0 overflow-hidden
-                         rounded-xl bg-[#F4F8F1] sm:h-24 sm:w-24"
+                  class="h-20 w-20 overflow-hidden rounded-xl bg-[#F4F8F1] shrink-0 sm:h-24 sm:w-24"
                 >
                   <img
                     :src="product.image"
@@ -410,10 +372,9 @@
                 </div>
 
                 <!-- Product Info -->
-                <div class="min-w-0 flex-1">
+                <div class="flex-1 min-w-0">
                   <h2
-                    class="truncate text-sm font-semibold
-                           text-[#0F3D2E] sm:text-base"
+                    class="text-sm font-semibold text-[#0F3D2E] truncate sm:text-base"
                   >
                     {{ product.name }}
                   </h2>
@@ -422,7 +383,7 @@
                     {{ product.category }}
                   </p>
 
-                  <div class="mt-2 flex items-center gap-3">
+                  <div class="mt-2 gap-3 flex items-center">
                     <span class="text-sm font-semibold text-[#0F3D2E]">
                       ${{ product.price.toFixed(2) }}
                     </span>
@@ -434,7 +395,7 @@
                 </div>
 
                 <!-- Product Total -->
-                <div class="hidden text-right sm:block">
+                <div class="text-right hidden sm:block">
                   <p class="text-xs text-gray-400">Subtotal</p>
                   <p class="mt-1 text-sm font-semibold text-[#0F3D2E]">
                     ${{ (product.price * product.quantity).toFixed(2) }}
@@ -447,11 +408,11 @@
 
             <!-- Completed Message -->
             <div
-              class="border-t border-[#DCE6DC] bg-[#F4F8F1] px-5 py-4 sm:px-6"
+              class="px-5 py-4 border-t border-[#DCE6DC] bg-[#F4F8F1] sm:px-6"
             >
-              <div class="flex items-center gap-3">
+              <div class="gap-3 flex items-center">
                 <div
-                  class="flex h-10 w-10 items-center justify-center rounded-full bg-[#7A9E7E] text-white"
+                  class="h-10 w-10 justify-center rounded-full bg-[#7A9E7E] text-white flex items-center"
                 >
                   <CheckCircle class="h-5 w-5" />
                 </div>
@@ -468,19 +429,16 @@
 
             <!-- History Actions -->
             <div
-              class="flex flex-col gap-2 border-t border-[#DCE6DC]
-                     px-5 py-4 sm:flex-row sm:justify-end sm:px-6"
+              class="flex-col gap-2 px-5 py-4 border-t border-[#DCE6DC] flex sm:flex-row sm:justify-end sm:px-6"
             >
               <span
-                class="rounded-full border border-[#DCE6DC] px-5 py-2.5
-                       text-sm font-medium text-[#0F3D2E] select-none"
+                class="px-5 py-2.5 rounded-full border border-[#DCE6DC] text-sm font-medium text-[#0F3D2E] select-none"
               >
                 View Details
               </span>
 
               <span
-                class="rounded-full bg-[#0F3D2E] px-5 py-2.5
-                       text-sm font-medium text-white select-none"
+                class="px-5 py-2.5 rounded-full bg-[#0F3D2E] text-sm font-medium text-white select-none"
               >
                 Buy Again
               </span>

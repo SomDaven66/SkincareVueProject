@@ -77,9 +77,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCartStore } from '../store/Card'
+// import { useCartStore } from '../store/Card'
 
-const cartStore = useCartStore()
+// const cartStore = useCartStore()
 const addedId = ref<number | null>(null)
 
 interface Product {
@@ -144,11 +144,11 @@ function formatPrice(price: number): string {
   return `$${price.toFixed(2)}`
 }
 
-function addToCart(product: Product): void {
-  cartStore.addToCart(product)
-  addedId.value = product.id
-  setTimeout(() => {
-    addedId.value = null
-  }, 1500)
-}
+// function addToCart(product: Product): void {
+//   cartStore.addToCart(product)
+//   addedId.value = product.id
+//   setTimeout(() => {
+//     addedId.value = null
+//   }, 1500)
+// }
 </script>
