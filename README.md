@@ -101,7 +101,8 @@ Run the development server:
 ```bash
 npm run dev
 ```
-install icon in vue :  npm i lucide-vue-next
+install icon in vue :  npm i lucide-vue-next    //uninstall it then
+npm install @lucide/vue           // install it instead
 install animation in vue :  npm install aos 
 install animation in vue :  npm install -D @types/aos
 admineditproduct
