@@ -85,6 +85,13 @@ const processedProducts = computed(() => {
 
 const productCount = computed(() => processedProducts.value.length)
 
+function getCategoryClass(cat: string): string {
+  if (activeCategory.value === cat) {
+    return "bg-[#0F3D2E] text-white border-[#0F3D2E] shadow-md"
+  }
+  return 'bg-white text-[#536B59] border-[#DCE6DC] hover:border-[#7A9E7E] hover:bg-[#0F3D2E] hover:text-white'
+}
+
 function isLoggedIn(): boolean {
   return !!(
     localStorage.getItem("currentUser") || sessionStorage.getItem("currentUser")
@@ -179,14 +186,15 @@ const clearFilters = (): void => {
 
       <!-- Category Pills -->
       <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
-        <button
-          v-for="cat in categories"
-          :key="cat"
-          @click="activeCategory = cat"
-          class="py-2.5 rounded-full border text-sm font-semibold bg-[#0F3D2E] text-white shadow-md' bg-white text-[#536B59] [ 'px-5 whitespace-nowrap transition-all duration-200', activeCategory === cat ? 'border-[#0F3D2E] : 'border-[#DCE6DC] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]' ]"
-        >
-          {{ cat }}
-        </button>
+          <button
+  v-for="cat in categories"
+  :key="cat"
+  @click="activeCategory = cat"
+  class="px-5 py-2.5 rounded-full border text-sm font-semibold whitespace-nowrap transition-all duration-200"
+  :class="getCategoryClass(cat)"
+>
+  {{ cat }}
+</button>
       </div>
 
       <!-- ================= PRODUCT GRID ================= -->
