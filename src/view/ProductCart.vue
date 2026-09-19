@@ -121,7 +121,7 @@ const clearFilters = (): void => {
 
     <!-- ================= PAGE HEADER ================= -->
     <section
-      class="px-4 py-12 overflow-hidden border-b border-[#DCE6DC] bg-gradient-to-br relative from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      class="px-4 py-12 overflow-hidden border-b border-[#DCE6DC] relative from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
       <div class="h-56 w-56 rounded-full bg-[#A8C3A0]/15 absolute -right-20 -top-20"></div>
       <div class="h-44 w-44 rounded-full bg-[#7A9E7E]/10 absolute -bottom-16 -left-16"></div>
