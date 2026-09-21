@@ -31,7 +31,10 @@ function closeSidebar(): void {
 
     <!-- ================= SIDEBAR ================= -->
     <aside
-      class="top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white [ 'fixed left-0 transition-transform duration-300 lg:translate-x-0 lg:z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full' ]"
+      :class="[
+        'fixed top-0 left-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white transition-transform duration-300 lg:translate-x-0 lg:z-40',
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      ]"
     >
       <!-- Logo -->
       <div class="px-7 h-20 justify-between border-b border-[#E8EFE8] flex items-center">

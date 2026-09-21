@@ -1,58 +1,97 @@
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
 import {
-  ShoppingBag,
   Package,
-  Users,
-  TrendingUp,
   DollarSign,
   ShoppingCart,
   UserRound,
   MoreHorizontal,
   ArrowUpRight,
 } from '@lucide/vue'
-import { orders } from '../../data/orders'
+import { useOrderStore } from '../../store/orders'
+import { Products } from '../../data/Products'
 
+const orderStore = useOrderStore()
 
+onMounted(() => {
+  orderStore.init()
+})
 
+const productCount = computed(() => {
+  const saved = localStorage.getItem('lumie_admin_products')
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed)) return parsed.length
+    } catch {}
+  }
+  return Products.length
+})
 
-const stats = [
+const customerCount = computed(() => {
+  const stored = localStorage.getItem('users')
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored)
+      if (Array.isArray(parsed)) return parsed.length
+    } catch {}
+  }
+  return 1
+})
+
+const totalRevenueNumber = computed(() => {
+  return orderStore.allOrders.reduce((sum, order) => sum + (order.total || 0), 0)
+})
+
+const stats = computed(() => [
   {
     title: 'Total Products',
-    value: '128',
+    value: productCount.value.toString(),
     change: '+12%',
     icon: Package,
   },
   {
     title: 'Total Orders',
-    value: '56',
+    value: orderStore.allOrders.length.toString(),
     change: '+8.2%',
     icon: ShoppingCart,
   },
   {
     title: 'Customers',
-    value: '324',
+    value: customerCount.value.toString(),
     change: '+14.5%',
     icon: UserRound,
   },
   {
     title: 'Total Revenue',
-    value: '$12,480',
+    value: `$${totalRevenueNumber.value.toFixed(2)}`,
     change: '+18.7%',
     icon: DollarSign,
   },
-]
+])
+
+const recentOrdersList = computed(() => {
+  return orderStore.allOrders.slice(0, 5).map(o => ({
+    id: o.id,
+    customerName: o.customer?.fullName || 'Customer',
+    productName: o.items?.[0]?.name ? `${o.items[0].name}${o.items.length > 1 ? ` (+${o.items.length - 1} more)` : ''}` : 'Skincare Item',
+    total: o.total,
+    status: o.status,
+    date: o.date
+  }))
+})
 
 const getStatusClass = (status: string) => {
   switch (status) {
-    case 'Completed':
-      return 'bg-[#E8F4EA] text-[#2F6B3C]'
-
-    case 'Pending':
+    case 'Confirmed':
       return 'bg-[#FFF5DC] text-[#9A7415]'
-
     case 'Processing':
       return 'bg-[#E8F0F8] text-[#3D6287]'
-
+    case 'Shipping':
+      return 'bg-[#EAF2E9] text-[#174A3A]'
+    case 'Delivered':
+    case 'Completed':
+      return 'bg-[#E8F4EA] text-[#2F6B3C]'
     default:
       return 'bg-gray-100 text-gray-600'
   }
@@ -133,7 +172,7 @@ const getStatusClass = (status: string) => {
 
                 <div class="mt-1 gap-3 flex items-center">
                   <h2 class="text-2xl font-bold text-[#0F3D2E]">
-                    $12,480
+                    ${{ totalRevenueNumber.toFixed(2) }}
                   </h2>
 
                   <span class="text-xs font-semibold text-[#47734E]">
@@ -337,7 +376,7 @@ const getStatusClass = (status: string) => {
               <tbody>
 
                 <tr
-                  v-for="order in orders"
+                  v-for="order in recentOrdersList"
                   :key="order.id"
                   class="border-b border-[#EEF3EE] last:border-0 hover:bg-[#FCFDFC]"
                 >
@@ -387,7 +426,7 @@ const getStatusClass = (status: string) => {
           <div class="divide-y divide-[#E8EFE8] md:hidden">
 
             <div
-              v-for="order in orders"
+              v-for="order in recentOrdersList"
               :key="order.id"
               class="p-5"
             >

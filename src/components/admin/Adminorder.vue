@@ -1,4 +1,3 @@
-```vue
 <template>
   <div>
     <!-- Content -->
@@ -368,4 +367,3 @@ function deleteOrder(orderId: string) {
   }
 }
 </script>
-```

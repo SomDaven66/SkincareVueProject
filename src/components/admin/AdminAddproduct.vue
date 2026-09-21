@@ -52,6 +52,7 @@ function addProduct() {
   if (
     !name.value.trim() ||
     price.value === null ||
+    !category.value ||
     !description.value.trim() ||
     !image.value.trim()
   ) {

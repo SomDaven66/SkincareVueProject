@@ -186,6 +186,7 @@ function deleteProduct(product: Product) {
   products.value = products.value.filter(
     (item) => item.id !== product.id
   );
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(products.value));
 }
 </script>
 
@@ -615,7 +616,12 @@ function deleteProduct(product: Product) {
                   <button
                     v-else
                     @click="goToPage(page as number)"
-                    class="h-9 w-9 justify-center rounded-xl border text-sm font-medium text-white border-[#0F3D2E]' text-gray-700 border-[#DCE6DC] flex items-center transition currentPage === page ? 'bg-[#0F3D2E] : 'bg-white hover:bg-[#F9FBF7]'"
+                    :class="[
+                      'h-9 w-9 justify-center rounded-xl border text-sm font-medium flex items-center transition',
+                      currentPage === page
+                        ? 'bg-[#0F3D2E] text-white border-[#0F3D2E]'
+                        : 'bg-white text-gray-700 border-[#DCE6DC] hover:bg-[#F9FBF7]'
+                    ]"
                   >
                     {{ page }}
                   </button>
