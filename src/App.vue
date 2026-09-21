@@ -5,10 +5,6 @@ import { useRoute } from 'vue-router'
 import Navbar from './components/layout/Navbar.vue'
 import Afterlognav from './components/layout/Afterlognav.vue'
 import Footer from './components/Footer.vue'
-import SummerDis from './components/SummerDis.vue'
-import CategoryCard from './components/CategoryCard.vue'
-import Feature from './components/Feature.vue'
-import FeedBack from './components/FeedBack.vue'
 
 const route = useRoute()
 

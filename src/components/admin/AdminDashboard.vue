@@ -62,7 +62,7 @@ const getStatusClass = (status: string) => {
 <template>
   <div>
     <!-- ================= CONTENT ================= -->
-      <section class="px-5 py-7 sm:px-8 lg:px-10">
+      <section class="px-5 py-7 sm:px-8 lg:px-10 ">
 
         <!-- Welcome -->
         <div class="mb-8">

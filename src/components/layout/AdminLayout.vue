@@ -10,7 +10,7 @@ import {
   UserRound,
   Menu,
   X,
-} from '@lucide/vue'
+} from "@lucide/vue";
 
 const isSidebarOpen = ref(false);
 
@@ -21,7 +21,6 @@ function closeSidebar(): void {
 
 <template>
   <div class="min-h-screen bg-[#F9FBF7] text-[#0F3D2E]">
-
     <!-- ================= MOBILE SIDEBAR BACKDROP ================= -->
     <div
       v-if="isSidebarOpen"
@@ -30,11 +29,16 @@ function closeSidebar(): void {
     ></div>
 
     <!-- ================= SIDEBAR ================= -->
+    <!-- បានកែប្រែត្រង់នេះ៖ ថែម សញ្ញា : នៅពីមុខ class ( :class ) -->
     <aside
-      class="top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white [ 'fixed left-0 transition-transform duration-300 lg:translate-x-0 lg:z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full' ]"
+      :class="{ 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen, }"
+      class="top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white fixed left-0 transition-transform duration-300 lg:translate-x-0 lg:z-40"
     >
+      >
       <!-- Logo -->
-      <div class="px-7 h-20 justify-between border-b border-[#E8EFE8] flex items-center">
+      <div
+        class="px-7 h-20 justify-between border-b border-[#E8EFE8] flex items-center"
+      >
         <router-link to="/admin/dashboard" class="gap-2.5 flex items-center">
           <div
             class="h-11 w-11 justify-center rounded-full bg-[#EAF2E9] flex items-center"
@@ -46,16 +50,14 @@ function closeSidebar(): void {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M24 29C18 25 16 19 17.5 13
-                   C24 14 28 18 28 24"
+                d="M24 29C18 25 16 19 17.5 13 C24 14 28 18 28 24"
                 stroke="#0F3D2E"
                 stroke-width="2.2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
               <path
-                d="M24 28C24.5 21 29 16 35 14
-                   C36 20.5 32 26 25 29"
+                d="M24 28C24.5 21 29 16 35 14 C36 20.5 32 26 25 29"
                 stroke="#174A3A"
                 stroke-width="2.2"
                 stroke-linecap="round"
@@ -68,8 +70,7 @@ function closeSidebar(): void {
                 stroke-linecap="round"
               />
               <path
-                d="M23 32C18.5 30.5 15.5 32.5 15 36
-                   C19 37 22 35.5 23 32Z"
+                d="M23 32C18.5 30.5 15.5 32.5 15 36 C19 37 22 35.5 23 32Z"
                 fill="#174A3A"
               />
             </svg>
@@ -177,12 +178,8 @@ function closeSidebar(): void {
           </div>
 
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#0F3D2E] truncate">
-              Admin
-            </p>
-            <p class="text-xs text-[#7A9E7E] truncate">
-              Administrator
-            </p>
+            <p class="text-sm font-semibold text-[#0F3D2E] truncate">Admin</p>
+            <p class="text-xs text-[#7A9E7E] truncate">Administrator</p>
           </div>
         </router-link>
       </div>
@@ -204,9 +201,7 @@ function closeSidebar(): void {
           </button>
 
           <div>
-            <p class="text-xs font-medium text-[#7A9E7E]">
-              Admin Panel
-            </p>
+            <p class="text-xs font-medium text-[#7A9E7E]">Admin Panel</p>
             <h2 class="text-lg font-bold text-[#0F3D2E] sm:text-xl">
               Management
             </h2>
