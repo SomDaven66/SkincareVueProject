@@ -31,7 +31,8 @@ function closeSidebar(): void {
     <!-- ================= SIDEBAR ================= -->
     <!-- បានកែប្រែត្រង់នេះ៖ ថែម សញ្ញា : នៅពីមុខ class ( :class ) -->
     <aside
-      class="top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white [ 'fixed left-0 transition-transform duration-300 lg:translate-x-0 lg:z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full' ]"
+      class="fixed left-0 top-0 z-50 h-screen w-64 border-r border-[#DCE6DC] bg-white transition-transform duration-300 lg:translate-x-0 lg:z-40"
+      :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
       <!-- Logo -->
       <div

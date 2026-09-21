@@ -7,6 +7,9 @@ import {
   UserRound,
   MoreHorizontal,
   ArrowUpRight,
+  TrendingUp,
+  ShoppingBag,
+  Users,
 } from '@lucide/vue'
 import { useOrderStore } from '../../store/orders'
 import { Products } from '../../data/Products'

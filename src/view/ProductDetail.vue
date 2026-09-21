@@ -200,7 +200,7 @@ function addToCart() {
               class="top-4 z-10 h-11 w-11 justify-center rounded-full bg-white/90 shadow-sm absolute right-4 flex items-center backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
             >
               <Heart
-                class="h-5 w-5 text-red-500' wishlisted ? 'fill-red-500 : 'text-[#536B59]'"
+                :class="['h-5 w-5', wishlisted ? 'fill-red-500 text-red-500' : 'text-[#536B59]']"
                 stroke-width="2"
               />
             </button>
@@ -350,7 +350,7 @@ function addToCart() {
               class="h-14 w-14 justify-center rounded-full border border-[#DCE6DC] bg-white flex shrink-0 items-center transition hover:border-[#7A9E7E] hover:bg-[#F4F8F1]"
             >
               <Heart
-                class="h-5 w-5 text-red-500' wishlisted ? 'fill-red-500 : 'text-[#536B59]'"
+                :class="['h-5 w-5', wishlisted ? 'fill-red-500 text-red-500' : 'text-[#536B59]']"
                 stroke-width="2"
               />
             </button>
