@@ -57,16 +57,13 @@
           {{ formatPrice(product.price) }}
         </span>
 
-        <router-link
-          to="/products"
+        <button
           class="text-sm font-medium text-white px-4 py-2 rounded-full transition-colors duration-200"
           :style="{ backgroundColor: addedId === product.id ? '#0F3D2E' : '#A8C3A0' }"
-          @mouseenter="(e: MouseEvent) => setHover(e, true)"
-          @mouseleave="(e: MouseEvent) => setHover(e, false)"
-          
+          @click="addToCart(product)"
         >
           {{ addedId === product.id ? '✓ Added' : 'Add to Cart' }}
-        </router-link>
+        </button>
       </div>
     </div>
   </article>
@@ -77,9 +74,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-// import { useCartStore } from '../store/Card'
+import { useCartStore } from '../store/Card'
 
-// const cartStore = useCartStore()
+const cartStore = useCartStore()
 const addedId = ref<number | null>(null)
 
 interface Product {
@@ -144,11 +141,11 @@ function formatPrice(price: number): string {
   return `$${price.toFixed(2)}`
 }
 
-// function addToCart(product: Product): void {
-//   cartStore.addToCart(product)
-//   addedId.value = product.id
-//   setTimeout(() => {
-//     addedId.value = null
-//   }, 1500)
-// }
+function addToCart(product: Product): void {
+  cartStore.addToCart(product)
+  addedId.value = product.id
+  setTimeout(() => {
+    addedId.value = null
+  }, 1500)
+}
 </script>
