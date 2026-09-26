@@ -396,7 +396,7 @@ const getStatusClass = (status: string) => {
                   </td>
 
                   <td class="px-6 py-4 text-sm font-semibold text-[#0F3D2E]">
-                    ${{ order.total }}
+                    ${{ order.total.toFixed(2) }}
                   </td>
 
                   <td class="px-6 py-4">
@@ -459,7 +459,7 @@ const getStatusClass = (status: string) => {
                 </p>
 
                 <p class="font-semibold text-[#0F3D2E]">
-                  ${{ order.total }}
+                  ${{ order.total.toFixed(2) }}
                 </p>
               </div>
             </div>

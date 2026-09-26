@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-4 py-6 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
 
       <!-- ================= ADMIN PROFILE ================= -->
@@ -160,9 +160,9 @@
                     <span class="font-medium text-green-600">
                       Active
                     </span>
-                  </div>
-                </div>
-              </div>
+      </div>
+    </div>
+  </div>
             </section>
 
             <!-- ================= ADMIN QUICK ACTIONS ================= -->
@@ -189,9 +189,9 @@
                   class="group rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <div
-                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-2xl text-[#0F3D2E]"
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-[#0F3D2E]"
                   >
-                    +
+                    <Package class="h-6 w-6" :stroke-width="2" />
                   </div>
 
                   <h3
@@ -211,9 +211,9 @@
                   class="group rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <div
-                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-2xl text-[#0F3D2E]"
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-[#0F3D2E]"
                   >
-                    ◷
+                    <Clock class="h-6 w-6" :stroke-width="2" />
                   </div>
 
                   <h3
@@ -233,9 +233,9 @@
                   class="group rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <div
-                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-2xl text-[#0F3D2E]"
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-[#0F3D2E]"
                   >
-                    ♙
+                    <Users class="h-6 w-6" :stroke-width="2" />
                   </div>
 
                   <h3
@@ -255,9 +255,9 @@
                   class="group rounded-3xl border border-[#DCE6DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <div
-                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-2xl text-[#0F3D2E]"
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4F8F1] text-[#0F3D2E]"
                   >
-                    ⚙
+                    <Settings class="h-6 w-6" :stroke-width="2" />
                   </div>
 
                   <h3
@@ -278,7 +278,7 @@
                 @click="logout"
                 class="flex items-center gap-3 rounded-xl bg-red-50 px-6 py-3 font-medium text-red-500 transition hover:bg-red-100"
               >
-                <span class="text-lg">↪</span>
+                <LogOut class="h-5 w-5" :stroke-width="2" />
                 Logout from Admin
               </button>
             </div>
@@ -322,6 +322,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { Package, Clock, Users, Settings, LogOut } from "@lucide/vue";
 
 // ================= ROUTER =================
 const router = useRouter();
