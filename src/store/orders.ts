@@ -29,7 +29,7 @@ export interface Customer {
 export interface Order {
   id: string;
   date: string;
-  status: "Confirmed" | "Processing" | "Shipping" | "Delivered";
+  status: "Confirmed" | "Processing" | "Shipping" | "Delivered" | "Completed";
   total: number;
   items: OrderItem[];
   customer: Customer;
@@ -85,8 +85,76 @@ export const useOrderStore = defineStore("orders", {
     init() {
       const savedOrders = localStorage.getItem("orders");
       if (savedOrders) {
-        this.orders = JSON.parse(savedOrders);
+        try {
+          const parsed = JSON.parse(savedOrders);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            this.orders = parsed;
+            return;
+          }
+        } catch (e) {
+          console.error("Error parsing orders:", e);
+        }
       }
+
+      // Default initial orders if empty
+      this.orders = [
+        {
+          id: "ORD-1001",
+          date: "2026-09-07",
+          status: "Completed",
+          total: 25.00,
+          items: [
+            { id: 1, name: "Gentle Acne Cleanser", price: 25.00, category: "Cleanser", quantity: 1 }
+          ],
+          customer: {
+            fullName: "Sokha Kim",
+            email: "sokha@example.com",
+            phone: "012345678",
+            address: "Street 271",
+            city: "Phnom Penh",
+            postalCode: "12000",
+            paymentMethod: "Credit Card"
+          }
+        },
+        {
+          id: "ORD-1002",
+          date: "2026-09-07",
+          status: "Confirmed",
+          total: 35.00,
+          items: [
+            { id: 2, name: "Hydrating Serum", price: 35.00, category: "Serum", quantity: 1 }
+          ],
+          customer: {
+            fullName: "Dara Chan",
+            email: "dara@example.com",
+            phone: "098765432",
+            address: "Monivong Blvd",
+            city: "Phnom Penh",
+            postalCode: "12000",
+            paymentMethod: "ABA PAY"
+          }
+        },
+        {
+          id: "ORD-1003",
+          date: "2026-09-06",
+          status: "Processing",
+          total: 48.00,
+          items: [
+            { id: 3, name: "Daily Sunscreen SPF50+", price: 18.00, category: "Sunscreen", quantity: 1 },
+            { id: 4, name: "Moisturizing Cream", price: 30.00, category: "Cream", quantity: 1 }
+          ],
+          customer: {
+            fullName: "Lina Heng",
+            email: "lina@example.com",
+            phone: "011223344",
+            address: "Toul Kork",
+            city: "Phnom Penh",
+            postalCode: "12000",
+            paymentMethod: "Cash on Delivery"
+          }
+        }
+      ];
+      this.saveToLocalStorage();
     },
 
     // Add a new order
@@ -110,6 +178,21 @@ export const useOrderStore = defineStore("orders", {
         this.saveToLocalStorage();
         return true;
       }
+      return false;
+    },
+
+    // User confirms receipt - Delivered → Completed
+    confirmReceived(orderId: string): boolean {
+      const orderIndex = this.orders.findIndex(
+        order => order.id === orderId
+      );
+
+      if (orderIndex !== -1 && this.orders[orderIndex].status === "Delivered") {
+        this.orders[orderIndex].status = "Completed";
+        this.saveToLocalStorage();
+        return true;
+      }
+
       return false;
     },
 

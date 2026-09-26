@@ -6,13 +6,54 @@
         <div class="max-w-sm text-center mx-auto lg:text-left lg:mx-0">
           <div class="gap-2 mb-4 justify-center flex items-center lg:justify-start">
             <!-- LUMIÉ mark -->
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="17" cy="17" r="16" stroke="#A8C3A0" stroke-width="1.5" />
-              <path
-                d="M17 6C17 6 22 12 22 18C22 21.866 19.866 25 17 25C14.134 25 12 21.866 12 18C12 12 17 6 17 6Z"
-                fill="#A8C3A0"
-              />
-            </svg>
+             <!-- Logo Icon -->
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-[#EAF2E9]"
+        >
+          <svg
+            viewBox="0 0 48 48"
+            class="h-9 w-9"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+
+            <!-- Main Leaf -->
+            <path
+              d="M24 29C18 25 16 19 17.5 13
+                 C24 14 28 18 28 24"
+              stroke="#0F3D2E"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <!-- Second Leaf -->
+            <path
+              d="M24 28C24.5 21 29 16 35 14
+                 C36 20.5 32 26 25 29"
+              stroke="#174A3A"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <!-- Stem -->
+            <path
+              d="M24.5 27C24 32 22 36 19 39"
+              stroke="#0F3D2E"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+
+            <!-- Small Leaf -->
+            <path
+              d="M23 32C18.5 30.5 15.5 32.5 15 36
+                 C19 37 22 35.5 23 32Z"
+              fill="#174A3A"
+            />
+
+          </svg>
+        </div>
             <span class="text-2xl font-serif font-semibold text-white tracking-[0.2em]">
               LUMI<span style="color: #A8C3A0;">É</span>
             </span>

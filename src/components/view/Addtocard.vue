@@ -1,13 +1,13 @@
 
 
 <template>
-  <div class="min-h-screen bg-[#F9FBF7] px-4 py-8 sm:px-6 lg:px-8">
+  <div class="px-4 py-8 min-h-screen bg-[#F9FBF7] sm:px-6 lg:px-8">
     <div class="mx-auto max-w-7xl">
 
       <!-- ================= BACK BUTTON ================= -->
       <router-link
         to="/products"
-        class="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#0F3D2E] transition hover:text-[#174A3A]"
+        class="mb-6 gap-2 text-sm font-medium text-[#0F3D2E] inline-flex items-center transition hover:text-[#174A3A]"
       >
         <ArrowLeft class="h-4 w-4" />
         Continue Shopping
@@ -16,7 +16,7 @@
       <!-- ================= TITLE ================= -->
       <div class="mb-8">
         <h1
-          class="text-3xl font-semibold tracking-tight text-[#0F3D2E] sm:text-4xl"
+          class="text-3xl font-semibold text-[#0F3D2E] tracking-tight sm:text-4xl"
         >
           Your Shopping Cart
         </h1>
@@ -29,10 +29,10 @@
       <!-- ================= EMPTY CART ================= -->
       <div
         v-if="cardStore.isEmpty"
-        class="rounded-2xl border border-[#DCE6DC] bg-white px-6 py-16 text-center shadow-sm"
+        class="px-6 py-16 rounded-2xl border border-[#DCE6DC] bg-white text-center shadow-sm"
       >
         <div
-          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#F4F8F1]"
+          class="mx-auto h-16 w-16 justify-center rounded-full bg-[#F4F8F1] flex items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@
           Your cart is empty
         </h2>
 
-        <p class="mx-auto mt-2 max-w-md text-sm text-gray-500">
+        <p class="mt-2 mx-auto max-w-md text-sm text-gray-500">
           You haven't added anything to your cart yet.
         </p>
 
@@ -320,7 +320,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Trash2, Minus, Plus, ArrowLeft } from "lucide-vue-next";
+import { Trash2, Minus, Plus, ArrowLeft } from "@lucide/vue";
 import { useCartStore } from "../../store/Card";
 
 const router = useRouter();

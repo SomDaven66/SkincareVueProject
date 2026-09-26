@@ -654,9 +654,11 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useOrderStore } from "../../store/orders";
+import { useCartStore } from "../../store/Card";
 
 const router = useRouter();
 const orderStore = useOrderStore();
+const cardStore = useCartStore();
 
 // Initialize order store
 orderStore.init();
@@ -801,6 +803,7 @@ function placeOrder(): void {
 
     // Clear cart
     localStorage.removeItem("cart");
+    cardStore.clearCart();
 
     cart.value = [];
 

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from 'lucide-vue-next'
+import { RouterLink, useRouter } from 'vue-router'
+import { Search, SlidersHorizontal, Heart, Star, ShoppingBag } from '@lucide/vue'
 import { Products } from '../data/Products'
+import { useWishlistStore } from '../store/wishlist'
+
+const router = useRouter()
+const wishlistStore = useWishlistStore()
 
 const categories = [
-   "All",
+  "All",
   "Sunscreen",
   "Cleanser",
   "Foam",
@@ -46,38 +50,14 @@ type SortOption = 'default' | 'name-asc' | 'rating-desc' | 'price-asc' | 'price-
 const activeCategory = ref<string>('All')
 const searchQuery = ref<string>('')
 const sortBy = ref<SortOption>('default')
-// Ensure wishlistedIds is initialized as an array ref
-const wishlistedIds = ref<number[]>([]);
 
-function getHeartClass(id: number) {
-  // Safe null checks
-  if (!wishlistedIds.value || !Array.isArray(wishlistedIds.value)) {
-    return 'text-[#536B59]';
-  }
-  return wishlistedIds.value.includes(id) 
-    ? 'fill-red-500 text-red-500' 
-    : 'text-[#536B59]';
-}
+const wishlistedIds = computed(() => wishlistStore.items.map(item => item.id))
 
-function getImageSrc(images: any) {
-  if (!images) return '';
-  if (Array.isArray(images)) return images[0] || '';
-  return images.img1 || Object.values(images)[0] || '';
-}
-
-function getCategoryClass(cat: string) {
-  const isSelected = activeCategory.value === cat;
-  return isSelected
-    ? 'border-[#0F3D2E] bg-[#0F3D2E] text-white shadow-md'
-    : 'border-[#DCE6DC] bg-white text-[#536B59] hover:border-[#7A9E7E] hover:bg-[#F4F8F1] hover:text-[#0F3D2E]';
-}
 const processedProducts = computed(() => {
-  // 1. Filter by category
   let result = Products.filter(p => {
     return activeCategory.value === 'All' || p.category === activeCategory.value
   })
 
-  // 2. Filter by search query
   if (searchQuery.value.trim() !== '') {
     const query = searchQuery.value.toLowerCase().trim()
     result = result.filter(p =>
@@ -87,7 +67,6 @@ const processedProducts = computed(() => {
     )
   }
 
-  // 3. Sort products
   return result.slice().sort((a, b) => {
     switch (sortBy.value) {
       case 'name-asc':
@@ -106,12 +85,27 @@ const processedProducts = computed(() => {
 
 const productCount = computed(() => processedProducts.value.length)
 
-const toggleWishlist = (id: number): void => {
-  const index = wishlistedIds.value.indexOf(id)
-  if (index === -1) {
-    wishlistedIds.value.push(id)
-  } else {
-    wishlistedIds.value.splice(index, 1)
+function getCategoryClass(cat: string): string {
+  if (activeCategory.value === cat) {
+    return "bg-[#0F3D2E] text-white border-[#0F3D2E] shadow-md"
+  }
+  return 'bg-white text-[#536B59] border-[#DCE6DC] hover:border-[#7A9E7E] hover:bg-[#0F3D2E] hover:text-white'
+}
+
+function isLoggedIn(): boolean {
+  return !!(
+    localStorage.getItem("currentUser") || sessionStorage.getItem("currentUser")
+  );
+}
+
+function toggleWishlist(id: number): void {
+  if (!isLoggedIn()) {
+    router.push("/login");
+    return;
+  }
+  const product = Products.find((p) => p.id === id);
+  if (product) {
+    wishlistStore.toggleWishlist(product);
   }
 }
 
@@ -127,22 +121,17 @@ const clearFilters = (): void => {
 
     <!-- ================= PAGE HEADER ================= -->
     <section
-      class="px-4 py-12 overflow-hidden border-b border-[#DCE6DC] bg-gradient-to-br relative from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      class="px-4 py-12 overflow-hidden border-b border-[#DCE6DC] relative from-[#F4F8F1] via-[#F9FBF7] to-[#EAF2E9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
-      <!-- Decorative circles -->
       <div class="h-56 w-56 rounded-full bg-[#A8C3A0]/15 absolute -right-20 -top-20"></div>
       <div class="h-44 w-44 rounded-full bg-[#7A9E7E]/10 absolute -bottom-16 -left-16"></div>
 
       <div class="mx-auto max-w-7xl text-center relative">
-        <p
-          class="mb-3 text-xs font-semibold text-[#7A9E7E] uppercase tracking-[0.3em]"
-        >
+        <p class="mb-3 text-xs font-semibold text-[#7A9E7E] uppercase tracking-[0.3em]">
           Curated Skincare Collection
         </p>
 
-        <h1
-          class="text-4xl font-bold text-[#0F3D2E] tracking-tight sm:text-5xl lg:text-6xl"
-        >
+        <h1 class="text-4xl font-bold text-[#0F3D2E] tracking-tight sm:text-5xl lg:text-6xl">
           Our Products
         </h1>
 
@@ -157,9 +146,7 @@ const clearFilters = (): void => {
     <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
 
       <!-- Search & Sort Row -->
-      <div
-        class=" flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between"
-      >
+      <div class="flex-col mb-6 gap-4 flex sm:flex-row sm:items-center sm:justify-between">
         <!-- Search Bar -->
         <div class="w-full relative sm:max-w-md">
           <Search
@@ -198,17 +185,17 @@ const clearFilters = (): void => {
       </div>
 
       <!-- Category Pills -->
-    <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
-  <button
+      <div class="mb-10 gap-2 pb-2 overflow-x-auto flex scrollbar-none">
+          <button
   v-for="cat in categories"
-  v-bind:key="cat"
-  v-on:click="activeCategory = cat"
+  :key="cat"
+  @click="activeCategory = cat"
   class="px-5 py-2.5 rounded-full border text-sm font-semibold whitespace-nowrap transition-all duration-200"
-  v-bind:class="getCategoryClass(cat)"
+  :class="getCategoryClass(cat)"
 >
   {{ cat }}
 </button>
-</div>
+      </div>
 
       <!-- ================= PRODUCT GRID ================= -->
       <main
@@ -216,9 +203,11 @@ const clearFilters = (): void => {
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
         <div
-          v-for="item in processedProducts"
+          v-for="(item, index) in processedProducts"
           :key="item.id"
           class="flex-col overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white shadow-sm group flex transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+          data-aos="fade-up"
+          :data-aos-delay="(index % 4) * 100"
         >
           <!-- Card Image -->
           <div class="h-72 overflow-hidden bg-[#F4F8F1] relative">
@@ -240,30 +229,28 @@ const clearFilters = (): void => {
             </div>
 
             <!-- Wishlist Button -->
-           <button
-  v-on:click.stop.prevent="toggleWishlist(item.id)"
-  class="top-3 z-10 h-9 w-9 justify-center rounded-full bg-white/90 shadow-sm absolute right-3 flex items-center backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
-  v-bind:aria-label="'Add ' + item.name + ' to wishlist'"
->
-  <Heart
-    class="h-4 w-4 transition-colors duration-200"
-    v-bind:class="getHeartClass(item.id)"
-    v-bind:stroke-width="2"
-  />
-</button>
+            <button
+              @click.stop.prevent="toggleWishlist(item.id)"
+              class="top-3 z-10 h-9 w-9 justify-center rounded-full bg-white/90 shadow-sm absolute right-3 flex items-center backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
+              :aria-label="'Add ' + item.name + ' to wishlist'"
+            >
+              <Heart
+                class="h-4 w-4 text-red-500' transition-colors duration-200 wishlistedIds.includes(item.id) ? 'fill-red-500 : 'text-[#536B59]'"
+                :stroke-width="2"
+              />
+            </button>
 
-<!-- Clickable Image -->
-<RouterLink
-  v-bind:to="'/products/' + item.id"
-  class="h-full w-full justify-center flex items-center"
->
-  <img
-    v-bind:src="getImageSrc(item.images)"
-    v-bind:alt="item.name"
-    class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-  />
-</RouterLink>
-
+            <!-- Clickable Image -->
+            <RouterLink
+              :to="`/products/${item.id}`"
+              class="h-full w-full justify-center flex items-center"
+            >
+              <img
+                :src="Array.isArray(item.images) ? item.images[0] : item.images?.img1"
+                :alt="item.name"
+                class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+            </RouterLink>
           </div>
 
           <!-- Card Body -->
@@ -271,9 +258,7 @@ const clearFilters = (): void => {
             <div>
               <!-- Category + Rating -->
               <div class="mb-2 justify-between flex items-center">
-                <span
-                  class="px-2 py-1 rounded-md bg-[#F4F8F1] text-[11px] font-semibold text-[#7A9E7E] uppercase tracking-wider"
-                >
+                <span class="px-2 py-1 rounded-md bg-[#F4F8F1] text-[11px] font-semibold text-[#7A9E7E] uppercase tracking-wider">
                   {{ item.category }}
                 </span>
 
@@ -286,26 +271,19 @@ const clearFilters = (): void => {
 
               <!-- Product Name -->
               <RouterLink :to="`/products/${item.id}`">
-                <h3
-                  class="mb-1 text-[15px] font-bold text-[#0F3D2E] leading-snug transition-colors group-hover:text-[#174A3A]"
-                >
+                <h3 class="mb-1 text-[15px] font-bold text-[#0F3D2E] leading-snug transition-colors group-hover:text-[#174A3A]">
                   {{ item.name }}
                 </h3>
               </RouterLink>
 
               <!-- Brand -->
-              <p
-                v-if="item.brand"
-                class="text-xs text-[#7A9E7E]"
-              >
+              <p v-if="item.brand" class="text-xs text-[#7A9E7E]">
                 {{ item.brand }}
               </p>
             </div>
 
             <!-- Price + CTA -->
-            <div
-              class="mt-4 pt-4 justify-between border-t border-[#EAF2E9] flex items-center"
-            >
+            <div class="mt-4 pt-4 justify-between border-t border-[#EAF2E9] flex items-center">
               <span class="text-xl font-bold text-[#0F3D2E]">
                 ${{ item.price.toFixed(2) }}
               </span>
@@ -327,9 +305,7 @@ const clearFilters = (): void => {
         v-else
         class="px-6 py-20 rounded-2xl border border-[#DCE6DC] bg-white text-center"
       >
-        <div
-          class="mb-5 mx-auto h-20 w-20 justify-center rounded-full bg-[#F4F8F1] flex items-center"
-        >
+        <div class="mb-5 mx-auto h-20 w-20 justify-center rounded-full bg-[#F4F8F1] flex items-center">
           <Search class="h-8 w-8 text-[#7A9E7E]" :stroke-width="1.5" />
         </div>
 

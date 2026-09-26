@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import {
   Save,
   Image as ImageIcon,
@@ -9,16 +9,17 @@ import { Products } from "../../data/Products";
 import type { Product } from "../../types/produce";
 
 const router = useRouter();
+const route = useRoute();
 
 const STORAGE_KEY = "lumie_admin_products";
 
 const name = ref("");
 const price = ref<number | null>(null);
-const category = ref("");
-const showSuccess = ref(false);
-
+const category = ref<Product['category'] | ''>('');
 const description = ref("");
 const image = ref("");
+const showSuccess = ref(false);
+const notFound = ref(false);
 
 const categories = [
   { value: "Sunscreen", label: "Sunscreen" },
@@ -44,11 +45,40 @@ const categories = [
   { value: "Set", label: "Set" },
 ];
 
+function getProducts(): Product[] {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return [...Products];
+    }
+  }
+  return [...Products];
+}
+
 function goBack() {
   router.push("/admin/product");
 }
 
-function addProduct() {
+onMounted(() => {
+  const id = Number(route.params.id);
+  const products = getProducts();
+  const product = products.find((p) => p.id === id);
+
+  if (!product) {
+    notFound.value = true;
+    return;
+  }
+
+  name.value = product.name;
+  price.value = product.price;
+  category.value = product.category;
+  description.value = product.description;
+  image.value = product.images?.img1 || "";
+});
+
+function updateProduct() {
   if (
     !name.value.trim() ||
     price.value === null ||
@@ -60,40 +90,29 @@ function addProduct() {
     return;
   }
 
-  const saved = localStorage.getItem(STORAGE_KEY);
-  let products: Product[] = [];
-  if (saved) {
-    try {
-      products = JSON.parse(saved);
-    } catch {
-      products = [...Products];
-    }
-  } else {
-    products = [...Products];
+  const id = Number(route.params.id);
+  const products = getProducts();
+  const index = products.findIndex((p) => p.id === id);
+
+  if (index === -1) {
+    alert("Product not found.");
+    return;
   }
 
-  const newProduct: Product = {
-    id: Date.now(),
+  products[index] = {
+    ...products[index],
     name: name.value.trim(),
-    brand: "Lumie Skin",
     price: price.value,
-    category: category.value as Product["category"],
+    category: category.value as Product['category'],
     description: description.value.trim(),
-    rating: 0,
-    reviews: 0,
-    skinType: [],
-    ingredients: [],
-    benefits: [],
-    sizes: [],
     images: {
       img1: image.value.trim(),
-      img2: "",
-      img3: "",
-      img4: "",
+      img2: products[index].images?.img2 || "",
+      img3: products[index].images?.img3 || "",
+      img4: products[index].images?.img4 || "",
     },
   };
 
-  products.push(newProduct);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
 
   showSuccess.value = true;
@@ -111,33 +130,44 @@ function addProduct() {
     <transition name="toast">
       <div
         v-if="showSuccess"
-        class="gap-3 px-6 py-4 top-6 z-50 rounded-xl bg-[#0F3D2E] shadow-2xl fixed left-1/2 -translate-x-1/2 flex items-center"
+        class="gap-3 px-6 py-4 top-6 z-50 rounded-xl bg-[#0F3D2E] shadow-2xl fixed left-1/2 flex -translate-x-1/2 items-center"
       >
         <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
-        <span class="text-white font-medium">Product added successfully!</span>
+        <span class="font-medium text-white">Product updated successfully!</span>
       </div>
     </transition>
 
+    <!-- NOT FOUND -->
+    <div v-if="notFound" class="px-4 py-8 text-center sm:px-6">
+      <p class="text-gray-500">Product not found.</p>
+      <button
+        @click="goBack"
+        class="mt-4 px-6 py-3 rounded-xl bg-[#0F3D2E] text-sm font-semibold text-white transition hover:bg-[#174A3A]"
+      >
+        Back to Products
+      </button>
+    </div>
+
     <!-- CONTENT -->
-    <main class="px-4 py-8 sm:px-6">
+    <main v-else class="px-4 py-8 sm:px-6">
 
       <div class="mx-auto w-full">
 
         <form
-          @submit.prevent="addProduct"
+          @submit.prevent="updateProduct"
           class="p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-sm sm:p-8"
         >
 
           <!-- SECTION TITLE -->
           <div class="mb-8">
             <h2 class="text-lg font-bold text-[#0F3D2E]">
-              Product Information
+              Edit Product
             </h2>
 
             <p class="mt-1 text-sm text-gray-500">
-              Enter the information for your new product.
+              Update the information for this product.
             </p>
           </div>
 
@@ -204,7 +234,7 @@ function addProduct() {
                 v-model="category"
                 class="px-4 py-3 w-full rounded-xl border border-[#DCE6DC] bg-[#F9FBF7] text-sm outline-none transition focus:border-[#7A9E7E] focus:ring-2 focus:ring-[#A8C3A0]"
               >
-                <option value="" disabled>Select category</option>
+                <option :value="''" disabled>Select category</option>
                 <option
                   v-for="item in categories"
                   :key="item.value"
@@ -294,7 +324,7 @@ function addProduct() {
               class="gap-2 px-6 py-3 justify-center rounded-xl bg-[#0F3D2E] text-sm font-semibold text-white flex items-center transition hover:bg-[#174A3A]"
             >
               <Save :size="18" />
-              Add Product
+              Update Product
             </button>
 
           </div>

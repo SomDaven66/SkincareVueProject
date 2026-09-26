@@ -1,62 +1,100 @@
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
 import {
-  LayoutDashboard,
-  ShoppingBag,
   Package,
-  Users,
-  Settings,
-  Bell,
-  Search,
-  TrendingUp,
   DollarSign,
   ShoppingCart,
   UserRound,
   MoreHorizontal,
   ArrowUpRight,
-} from 'lucide-vue-next'
-import { orders } from '../../data/orders'
+  TrendingUp,
+  ShoppingBag,
+  Users,
+} from '@lucide/vue'
+import { useOrderStore } from '../../store/orders'
+import { Products } from '../../data/Products'
 
+const orderStore = useOrderStore()
 
+onMounted(() => {
+  orderStore.init()
+})
 
+const productCount = computed(() => {
+  const saved = localStorage.getItem('lumie_admin_products')
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed)) return parsed.length
+    } catch {}
+  }
+  return Products.length
+})
 
-const stats = [
+const customerCount = computed(() => {
+  const stored = localStorage.getItem('users')
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored)
+      if (Array.isArray(parsed)) return parsed.length
+    } catch {}
+  }
+  return 1
+})
+
+const totalRevenueNumber = computed(() => {
+  return orderStore.allOrders.reduce((sum, order) => sum + (order.total || 0), 0)
+})
+
+const stats = computed(() => [
   {
     title: 'Total Products',
-    value: '128',
+    value: productCount.value.toString(),
     change: '+12%',
     icon: Package,
   },
   {
     title: 'Total Orders',
-    value: '56',
+    value: orderStore.allOrders.length.toString(),
     change: '+8.2%',
     icon: ShoppingCart,
   },
   {
     title: 'Customers',
-    value: '324',
+    value: customerCount.value.toString(),
     change: '+14.5%',
     icon: UserRound,
   },
   {
     title: 'Total Revenue',
-    value: '$12,480',
+    value: `$${totalRevenueNumber.value.toFixed(2)}`,
     change: '+18.7%',
     icon: DollarSign,
   },
-]
+])
+
+const recentOrdersList = computed(() => {
+  return orderStore.allOrders.slice(0, 5).map(o => ({
+    id: o.id,
+    customerName: o.customer?.fullName || 'Customer',
+    productName: o.items?.[0]?.name ? `${o.items[0].name}${o.items.length > 1 ? ` (+${o.items.length - 1} more)` : ''}` : 'Skincare Item',
+    total: o.total,
+    status: o.status,
+    date: o.date
+  }))
+})
 
 const getStatusClass = (status: string) => {
   switch (status) {
-    case 'Completed':
-      return 'bg-[#E8F4EA] text-[#2F6B3C]'
-
-    case 'Pending':
+    case 'Confirmed':
       return 'bg-[#FFF5DC] text-[#9A7415]'
-
     case 'Processing':
       return 'bg-[#E8F0F8] text-[#3D6287]'
-
+    case 'Shipping':
+      return 'bg-[#EAF2E9] text-[#174A3A]'
+    case 'Delivered':
+    case 'Completed':
+      return 'bg-[#E8F4EA] text-[#2F6B3C]'
     default:
       return 'bg-gray-100 text-gray-600'
   }
@@ -66,7 +104,7 @@ const getStatusClass = (status: string) => {
 <template>
   <div>
     <!-- ================= CONTENT ================= -->
-      <section class="px-5 py-7 sm:px-8 lg:px-10">
+      <section class="px-5 py-7 sm:px-8 lg:px-10 ">
 
         <!-- Welcome -->
         <div class="mb-8">
@@ -89,12 +127,12 @@ const getStatusClass = (status: string) => {
           <div
             v-for="stat in stats"
             :key="stat.title"
-            class="rounded-2xl border border-[#DCE6DC] bg-white p-5 shadow-[0_3px_15px_rgba(15,61,46,0.04)]"
+            class="p-5 rounded-2xl border border-[#DCE6DC] bg-white shadow-[0_3px_15px_rgba(15,61,46,0.04)]"
           >
-            <div class="flex items-start justify-between">
+            <div class="justify-between flex items-start">
 
               <div
-                class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F4F8F1]"
+                class="h-11 w-11 justify-center rounded-xl bg-[#F4F8F1] flex items-center"
               >
                 <component
                   :is="stat.icon"
@@ -104,7 +142,7 @@ const getStatusClass = (status: string) => {
               </div>
 
               <span
-                class="flex items-center gap-1 rounded-full bg-[#EAF4EA] px-2 py-1 text-xs font-semibold text-[#47734E]"
+                class="gap-1 px-2 py-1 rounded-full bg-[#EAF4EA] text-xs font-semibold text-[#47734E] flex items-center"
               >
                 <TrendingUp :size="12" />
                 {{ stat.change }}
@@ -115,29 +153,29 @@ const getStatusClass = (status: string) => {
               {{ stat.title }}
             </p>
 
-            <h3 class="mt-1 text-2xl font-bold text-[#0F3D2E]">
+            <h3 class="mt-1 min-w-0 text-2xl font-bold text-[#0F3D2E] truncate">
               {{ stat.value }}
             </h3>
           </div>
         </div>
 
         <!-- ================= REVENUE + QUICK ACTIONS ================= -->
-        <div class="mt-6 grid gap-6 xl:grid-cols-3">
+        <div class="grid mt-6 gap-6 xl:grid-cols-3">
 
           <!-- Revenue -->
           <div
-            class="rounded-2xl border border-[#DCE6DC] bg-white p-6 xl:col-span-2"
+            class="p-6 rounded-2xl border border-[#DCE6DC] bg-white xl:col-span-2"
           >
-            <div class="flex items-center justify-between">
+            <div class="justify-between flex items-center">
 
               <div>
                 <p class="text-sm font-medium text-[#7A8C7A]">
                   Total Revenue
                 </p>
 
-                <div class="mt-1 flex items-center gap-3">
+                <div class="mt-1 gap-3 flex items-center">
                   <h2 class="text-2xl font-bold text-[#0F3D2E]">
-                    $12,480
+                    ${{ totalRevenueNumber.toFixed(2) }}
                   </h2>
 
                   <span class="text-xs font-semibold text-[#47734E]">
@@ -147,45 +185,46 @@ const getStatusClass = (status: string) => {
               </div>
 
               <button
-                class="rounded-lg border border-[#DCE6DC] px-3 py-2 text-xs font-medium text-[#536B59] hover:bg-[#F4F8F1]"
+                class="px-3 py-2 rounded-lg border border-[#DCE6DC] text-xs font-medium text-[#536B59] hover:bg-[#F4F8F1]"
               >
                 This Month
               </button>
             </div>
 
             <!-- Fake chart -->
-            <div class="mt-8 flex h-48 items-end gap-3 sm:gap-5">
+            <div class="mt-8 min-w-[300px]">
+              <div class="gap-2 h-48 flex items-end sm:gap-4">
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#DCE9D9]" style="height: 38%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#C9DCC7]" style="height: 55%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#B6CEB4]" style="height: 46%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#A8C3A0]" style="height: 68%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#8DAF8D]" style="height: 61%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#7A9E7E]" style="height: 79%"></div>
               </div>
 
-              <div class="flex h-full flex-1 items-end">
+              <div class="flex-1 h-full flex items-end">
                 <div class="w-full rounded-t-lg bg-[#0F3D2E]" style="height: 92%"></div>
               </div>
             </div>
 
-            <div class="mt-3 flex justify-between text-xs text-[#9AAD9A]">
+            <div class="mt-3 justify-between text-xs text-[#9AAD9A] flex">
               <span>Mon</span>
               <span>Tue</span>
               <span>Wed</span>
@@ -194,13 +233,14 @@ const getStatusClass = (status: string) => {
               <span>Sat</span>
               <span>Sun</span>
             </div>
+            </div>
           </div>
 
           <!-- Quick Actions -->
           <div
-            class="rounded-2xl border border-[#DCE6DC] bg-white p-6"
+            class="p-6 rounded-2xl border border-[#DCE6DC] bg-white"
           >
-            <div class="flex items-center justify-between">
+            <div class="justify-between flex items-center">
               <h3 class="font-bold text-[#0F3D2E]">
                 Quick Actions
               </h3>
@@ -212,10 +252,10 @@ const getStatusClass = (status: string) => {
 
               <router-link
                 to="/admin/product/add"
-                class="flex items-center gap-3 rounded-xl border border-[#DCE6DC] p-4 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
+                class="gap-3 p-4 rounded-xl border border-[#DCE6DC] flex items-center transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
               >
                 <div
-                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F0E5]"
+                  class="h-10 w-10 justify-center rounded-lg bg-[#E8F0E5] flex items-center"
                 >
                   <ShoppingBag :size="19" class="text-[#0F3D2E]" />
                 </div>
@@ -233,10 +273,10 @@ const getStatusClass = (status: string) => {
 
               <router-link
                 to="/admin/orders"
-                class="flex items-center gap-3 rounded-xl border border-[#DCE6DC] p-4 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
+                class="gap-3 p-4 rounded-xl border border-[#DCE6DC] flex items-center transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
               >
                 <div
-                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F0E5]"
+                  class="h-10 w-10 justify-center rounded-lg bg-[#E8F0E5] flex items-center"
                 >
                   <Package :size="19" class="text-[#0F3D2E]" />
                 </div>
@@ -253,11 +293,11 @@ const getStatusClass = (status: string) => {
               </router-link>
 
               <router-link
-                to="/admin/customers"
-                class="flex items-center gap-3 rounded-xl border border-[#DCE6DC] p-4 transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
+                to="/admin/users"
+                class="gap-3 p-4 rounded-xl border border-[#DCE6DC] flex items-center transition hover:border-[#A8C3A0] hover:bg-[#F4F8F1]"
               >
                 <div
-                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8F0E5]"
+                  class="h-10 w-10 justify-center rounded-lg bg-[#E8F0E5] flex items-center"
                 >
                   <Users :size="19" class="text-[#0F3D2E]" />
                 </div>
@@ -282,9 +322,9 @@ const getStatusClass = (status: string) => {
           class="mt-6 overflow-hidden rounded-2xl border border-[#DCE6DC] bg-white"
         >
 
-          <div class="flex items-center justify-between border-b border-[#E8EFE8] px-6 py-5">
+          <div class="px-6 py-5 min-w-0 justify-between border-b border-[#E8EFE8] flex items-center">
 
-            <div>
+            <div class="min-w-0">
               <h3 class="font-bold text-[#0F3D2E]">
                 Recent Orders
               </h3>
@@ -296,14 +336,14 @@ const getStatusClass = (status: string) => {
 
             <router-link
               to="/admin/orders"
-              class="text-sm font-semibold text-[#0F3D2E] hover:underline"
+              class="text-sm font-semibold text-[#0F3D2E] shrink-0 hover:underline"
             >
               View All
             </router-link>
           </div>
 
           <!-- Desktop Table -->
-          <div class="hidden overflow-x-auto md:block">
+          <div class="overflow-x-auto hidden md:block">
 
             <table class="w-full text-left">
               <thead>
@@ -339,7 +379,7 @@ const getStatusClass = (status: string) => {
               <tbody>
 
                 <tr
-                  v-for="order in orders"
+                  v-for="order in recentOrdersList"
                   :key="order.id"
                   class="border-b border-[#EEF3EE] last:border-0 hover:bg-[#FCFDFC]"
                 >
@@ -356,13 +396,13 @@ const getStatusClass = (status: string) => {
                   </td>
 
                   <td class="px-6 py-4 text-sm font-semibold text-[#0F3D2E]">
-                    ${{ order.total }}
+                    ${{ order.total.toFixed(2) }}
                   </td>
 
                   <td class="px-6 py-4">
                     <span
                       :class="getStatusClass(order.status)"
-                      class="rounded-full px-3 py-1 text-xs font-semibold"
+                      class="px-3 py-1 rounded-full text-xs font-semibold"
                     >
                       {{ order.status }}
                     </span>
@@ -389,11 +429,11 @@ const getStatusClass = (status: string) => {
           <div class="divide-y divide-[#E8EFE8] md:hidden">
 
             <div
-              v-for="order in orders"
+              v-for="order in recentOrdersList"
               :key="order.id"
               class="p-5"
             >
-              <div class="flex items-start justify-between">
+              <div class="justify-between flex items-start">
 
                 <div>
                   <p class="text-sm font-bold text-[#0F3D2E]">
@@ -407,19 +447,19 @@ const getStatusClass = (status: string) => {
 
                 <span
                   :class="getStatusClass(order.status)"
-                  class="rounded-full px-3 py-1 text-xs font-semibold"
+                  class="px-3 py-1 rounded-full text-xs font-semibold"
                 >
                   {{ order.status }}
                 </span>
               </div>
 
-              <div class="mt-3 flex items-center justify-between">
+              <div class="mt-3 justify-between flex items-center">
                 <p class="text-xs text-[#7A8C7A]">
                   {{ order.productName }}
                 </p>
 
                 <p class="font-semibold text-[#0F3D2E]">
-                  ${{ order.total }}
+                  ${{ order.total.toFixed(2) }}
                 </p>
               </div>
             </div>
